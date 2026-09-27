@@ -575,3 +575,7 @@ h2 .pun { font-style: italic; color: var(--warm); font-size: .8em; margin-left: 
   .word { font-size: 26px; } .mark { height: 28px; }
 }
 @media (max-width: 350px) { .theme { display: none; } .nav-cta { padding: 0 12px; } }
+@media (max-width: 380px) { .top.wrap { padding-inline: 14px; } .top, .nav, .tools { gap: 6px; } .nav-cta { padding: 0 12px; gap: 6px; font-size: 14.5px; } }
+.nav a.hide-sm { white-space: nowrap; }
+@media (max-width: 1120px) { .nav a.hide-sm { display: none; } }
+.top { background: color-mix(in srgb, var(--bg) 93%, transparent); box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--bg) 93%, transparent); }
