@@ -27,6 +27,7 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled = 
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 16,
+        paddingVertical: 12,
         opacity: disabled ? 0.5 : pressed ? 0.7 : 1,
       })}
     >
@@ -35,6 +36,7 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled = 
           color: plain ? theme.text : theme.accentFg,
           fontSize: plain ? 16 : typeScale.body,
           fontWeight: '800',
+          textAlign: 'center',
         }}
       >
         {label}

@@ -11,7 +11,7 @@ import { SceneHero } from '@/components/SceneHero';
 import { Title } from '@/components/Title';
 import { Wordmark } from '@/components/Wordmark';
 import { useAppStore } from '@/store/useAppStore';
-import { eyebrowStyle, radii, serif, type as typeScale, useTheme } from '@/theme';
+import { eyebrowStyle, maxTypeScale, radii, serif, type as typeScale, useTheme } from '@/theme';
 
 export default function WelcomeScreen() {
   const theme = useTheme();
@@ -93,10 +93,12 @@ export default function WelcomeScreen() {
             onChangeText={setName}
             placeholder={t('onboarding.name_placeholder')}
             placeholderTextColor={theme.textMuted}
+            maxFontSizeMultiplier={maxTypeScale}
             value={name}
             style={{
               marginTop: 8,
-              height: 50,
+              minHeight: 50,
+              paddingVertical: 12,
               paddingHorizontal: 16,
               borderRadius: radii.button,
               backgroundColor: theme.surface,

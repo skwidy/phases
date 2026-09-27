@@ -97,6 +97,9 @@ export function CalendarMonth({
                     }}
                   >
                     <Text
+                      numberOfLines={1}
+                      adjustsFontSizeToFit
+                      minimumFontScale={0.7}
                       style={{
                         color: isToday && color ? light.accentFg : isToday ? theme.regles : theme.text,
                         fontSize: 15,

@@ -79,6 +79,7 @@ export default function ScanScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: theme.bg }}>
       <CameraView
+        accessibilityLabel={t('sync.scan')}
         style={{ flex: 1 }}
         facing="back"
         barcodeScannerSettings={{ barcodeTypes: ['qr'] }}

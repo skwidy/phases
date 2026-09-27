@@ -18,7 +18,7 @@ import { Toggle } from '@/components/Toggle';
 import { deviceToday } from '@/lib/clock';
 import { authenticateDevice } from '@/security/authenticate';
 import { parseAppState, type AppLanguage, type ReminderClock, type ReminderFlag, useAppStore } from '@/store/useAppStore';
-import { cardChrome, eyebrowStyle, radii, serif, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, maxTypeScale, radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 function displayTime(time: string): string {
   return time.replace(/^0/, '');
@@ -342,7 +342,7 @@ export default function SettingsScreen() {
                     style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center' }}
                   >
                     <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginRight: 6 }}>
-                      {partnerName ?? '—'}
+                      {partnerName ?? t('common.unknown')}
                     </Text>
                     <ChevronIcon color={theme.textMuted} />
                   </Pressable>
@@ -355,6 +355,7 @@ export default function SettingsScreen() {
                     onSubmitEditing={commitName}
                     autoFocus
                     returnKeyType="done"
+                    maxFontSizeMultiplier={maxTypeScale}
                     placeholder={t('onboarding.name_placeholder')}
                     placeholderTextColor={theme.textMuted}
                     style={{

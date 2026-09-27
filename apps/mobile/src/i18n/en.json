@@ -6,7 +6,9 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "days_short": "{{count}} d",
-    "probably": "probably"
+    "probably": "probably",
+    "app_name": "Phases",
+    "unknown": "—"
   },
   "phase": {
     "regles": "Period",

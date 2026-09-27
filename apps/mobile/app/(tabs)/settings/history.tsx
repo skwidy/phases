@@ -43,8 +43,8 @@ function formatDelta(delta: number): string {
   return '0';
 }
 
-function formatSigma(sigma: number | null, locale: string): string {
-  if (sigma === null) return '—';
+function formatSigma(sigma: number | null, locale: string, unknown: string): string {
+  if (sigma === null) return unknown;
   const value = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -153,7 +153,7 @@ export default function HistoryScreen() {
           }}
         >
           <Stat label={t('history.median')} value={t('common.days_short', { count: view.median })} />
-          <Stat label={t('history.variation')} value={formatSigma(view.sigma, locale)} />
+          <Stat label={t('history.variation')} value={formatSigma(view.sigma, locale, t('common.unknown'))} />
           <Stat label={t('history.period')} value={t('common.days_short', { count: view.periodLength })} />
         </View>
         {view.sigma !== null ? (
@@ -181,7 +181,7 @@ export default function HistoryScreen() {
                   ? t('history.ongoing', { day: row.day })
                   : t('history.period_days', { count: row.periodLength })
               }
-              daysLabel={row.length === null ? '—' : t('common.days_short', { count: row.length })}
+              daysLabel={row.length === null ? t('common.unknown') : t('common.days_short', { count: row.length })}
               deltaLabel={row.delta === null ? '' : formatDelta(row.delta)}
               editLabel={t('history.edit')}
               deleteLabel={t('history.delete')}
@@ -249,7 +249,7 @@ export default function HistoryScreen() {
 function Stat({ label, value }: { label: string; value: string }) {
   const theme = useTheme();
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View accessible accessibilityLabel={`${label}, ${value}`} style={{ flex: 1, alignItems: 'center' }}>
       <Text style={eyebrowStyle(theme)}>{label}</Text>
       <Text style={{ ...serif, marginTop: 4, color: theme.text, fontSize: 22 }}>{value}</Text>
     </View>

@@ -74,6 +74,9 @@ export const type = {
   labelTracking: 1,
 } as const;
 
+// iOS xxxLarge, the last step of the standard text-size slider (XL sits inside it).
+export const maxTypeScale = 1.35;
+
 export const serif = {
   fontFamily: fonts.serif,
   fontWeight: '700' as const,

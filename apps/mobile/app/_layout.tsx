@@ -35,7 +35,7 @@ export default function RootLayout() {
   }, [theme.bg]);
 
   const inOnboarding = pathname.startsWith('/onboarding');
-  const inDev = pathname === '/dev';
+  const inDev = __DEV__ && pathname === '/dev';
 
   if (!ready) {
     return (

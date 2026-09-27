@@ -168,6 +168,9 @@ export function CycleRing({
           ) : null}
           {caption ? (
             <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
               style={{
                 marginTop: 2,
                 color: noteColor,
@@ -182,6 +185,9 @@ export function CycleRing({
           ) : null}
           {detail ? (
             <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
               style={{
                 color: noteColor,
                 fontSize: typeScale.secondary,

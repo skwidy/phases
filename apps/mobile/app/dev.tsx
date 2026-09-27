@@ -11,7 +11,7 @@ import { deviceToday, setDebugToday, today } from '@/lib/clock';
 import { formatDay, formatShort } from '@/lib/format';
 import { scheduleTestReminder } from '@/reminders/sync';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, serif, space, type as typeScale, useTheme } from '@/theme';
+import { maxTypeScale, radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 type ListedNotification = {
   id: string;
@@ -58,7 +58,7 @@ function listedNotification(item: Notifications.NotificationRequest): ListedNoti
   };
 }
 
-export default function DevScreen() {
+function DevScreen() {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const router = useRouter();
@@ -76,8 +76,6 @@ export default function DevScreen() {
   }, []);
 
   useFocusEffect(loadScheduled);
-
-  if (!__DEV__) return <Redirect href="/" />;
 
   function applyDate() {
     if (!isIsoDate(draft)) {
@@ -138,6 +136,7 @@ export default function DevScreen() {
           }}
           placeholder={t('dev.date_placeholder')}
           placeholderTextColor={theme.textMuted}
+          maxFontSizeMultiplier={maxTypeScale}
           value={draft}
           style={{
             minHeight: 44,
@@ -201,6 +200,11 @@ export default function DevScreen() {
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+export default function DevRoute() {
+  if (!__DEV__) return <Redirect href="/" />;
+  return <DevScreen />;
 }
 
 function ActionButton({

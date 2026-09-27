@@ -106,6 +106,9 @@ export function MonthCalendar({ month, selected, onMonth, onSelect }: Props) {
                   }}
                 >
                   <Text
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
                     style={{
                       color: isSelected ? light.accentFg : future ? theme.textMuted : theme.text,
                       fontSize: 15,

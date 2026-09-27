@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 
@@ -7,9 +8,10 @@ const LETTERS = "M14 0.9Q9.8 0.9 7.5 -1.4Q5.2 -3.7 5.2 -8.1V-62.4Q5.2 -66.8 7.5 
 
 export function Wordmark() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
-    <View accessibilityRole="image" accessibilityLabel="Phases">
+    <View accessible accessibilityRole="image" accessibilityLabel={t('common.app_name')}>
       <Svg width={130} height={40} viewBox="0 0 324.1 100">
         <Path
           d="M34 22 H52 A18 18 0 0 1 52 58 H34"

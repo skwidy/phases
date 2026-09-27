@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactNative, { StyleSheet, type TextProps } from 'react-native';
 
+import { maxTypeScale } from '@/theme';
+
 // React Native 0.86 Text ignores defaultProps, so the export itself is wrapped.
 const OriginalText = ReactNative.Text;
 
@@ -11,8 +13,15 @@ const styles = StyleSheet.create({
 });
 
 const RoundedText = React.forwardRef<React.ComponentRef<typeof OriginalText>, TextProps>(
-  function Text({ style, ...rest }, ref) {
-    return <OriginalText {...rest} ref={ref} style={[styles.base, style]} />;
+  function Text({ style, maxFontSizeMultiplier = maxTypeScale, ...rest }, ref) {
+    return (
+      <OriginalText
+        {...rest}
+        ref={ref}
+        maxFontSizeMultiplier={maxFontSizeMultiplier}
+        style={[styles.base, style]}
+      />
+    );
   },
 );
 

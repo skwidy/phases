@@ -104,4 +104,12 @@
 - L'illustration d'accueil est `scene-hero.svg`, metadata C2PA retirée, peinte par `SvgXml`. Les aplats restent dans `sceneHeroXml.ts`, pas dans le composant. L'écran n'ajoute pas de second dégradé : le coucher de soleil est dans le dessin.
 - Le splash reprend `bg` clair `#FBF3EA` et sombre `#17110E`. La teinte de notification iOS passe de l'ancien `#1C1A22` à l'encre `#231A17`.
 
+## Étape 10
+
+- Les maquettes `design/screens` gardent l'ancienne palette (fond `#FAF6F0`, bouton encre). L'app suit `design/BRAND.md` : crème chaud, accent terracotta, barre d'onglets en `surface` pour la détacher du fond. L'anneau affiché reste à 240 pt, déjà choisi à l'étape 5 pour les deux lignes de légende ; la maquette 04 le dessinait à 200 pt sur une seule ligne.
+- Dynamic Type grandit jusqu'au cran standard le plus grand (iOS xxxLarge, facteur 1,35, qui couvre XL). `Text` plafonne là via `applyRoundedFont`. Au-delà, les tailles d'accessibilité ne grandissent plus, pour que l'anneau et les pastilles de jour restent dans leur cadre. Les champs de saisie utilisent `minHeight`, pas une hauteur fixe.
+- Les seuls textes encore écrits dans les composants étaient le nom « Phases » du wordmark et le tiret « — » (variation inconnue, cycle en cours, prénom vide). Ils passent par `common.app_name` et `common.unknown`. Les arbres de clés fr/en sont déjà comparés par le test i18n.
+- Aucun appel réseau dans `app/` ni `src/`. La seule URL `https://` est `SITE` dans `src/sync/format.ts`. Le `xmlns` du SVG d'accueil n'est pas une requête. `Linking.openURL` (le livre) et `Linking.openSettings` ouvrent un écran du système.
+- L'écran `/dev` ne se monte qu'en `__DEV__`. En production la route redirige vers l'accueil avant d'afficher quoi que ce soit, et elle ne bloque plus la redirection vers l'onboarding.
+
 
