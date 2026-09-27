@@ -15,3 +15,13 @@
 - La fenêtre n'existe que si 2 < σ ≤ 5. Elle entoure les prochaines règles de ± ⌈σ⌉. En dehors, `window` est `null`.
 - `mergeCycles` : deux dates à moins de 5 jours sont le même cycle. Une date de `incoming` remplace celles de `existing` dans le groupe, parce que c'est la dernière saisie (`startCycle` et sync). Dans une même liste, la dernière dans l'ordre d'entrée gagne.
 - Les cas encode/decode de `tests/sync.test.mjs` restent sur le moteur web. Ils seront portés avec `src/sync/format.ts` à l'étape 9. Les cas de cycle sont repris ici, avec les mêmes entrées et les mêmes résultats.
+
+## Étape 3
+
+- `setDebugToday` ne change que `today()`, le jour affiché. `deviceToday()` lit toujours le calendrier de l'iPhone. L'historique relatif de l'écran dev, et plus tard les notifications, s'appuient sur `deviceToday()`.
+- L'historique d'exemple remplace `cycles` par les six dates du design, du 16 avril au 4 septembre 2026. Le reste de l'état reste en place. « Tout effacer » appelle `resetAll`. L'annulation des notifications attend l'étape 6.
+- `importState` n'accepte qu'un `AppState` complet de version 1. Une date impossible, une durée hors 21–45 ou 2–10, une heure qui n'est pas `HH:MM`, un doublon de date ou un champ manquant est refusé : l'état ne change pas. Les cycles acceptés sont triés. Un prénom vide devient absent. `setDefaults` ignore une durée hors de ces bornes.
+- La réhydratation passe par la `version` de Zustand persist (1). Un blob d'une autre version, ou un blob illisible, revient aux valeurs par défaut.
+- `startCycle` passe par `mergeCycles`. La durée de règles ne suit un nouveau départ que si la date est la même. `editCycle` emporte la durée de règles vers la nouvelle date.
+- La langue `auto` suit `expo-localization` : français si `languageCode` commence par `fr`, sinon anglais. i18next interpole `{{name}}` sans échappement HTML.
+- `weekdayShort` commence le lundi pour une locale `fr`, le dimanche sinon. Les dates sont formatées en UTC pour rester sur le jour calendaire.

@@ -1,4 +1,4 @@
-import { setDebugToday, today } from '../clock';
+import { deviceToday, setDebugToday, today } from '../clock';
 
 const dev = globalThis as { __DEV__?: boolean };
 
@@ -13,6 +13,13 @@ test('setDebugToday overrides the local calendar day in dev', () => {
   expect(today()).toBe('2026-09-27');
   setDebugToday(null);
   expect(today()).toBe(localToday());
+});
+
+test('deviceToday ignores the debug date', () => {
+  dev.__DEV__ = true;
+  setDebugToday('2026-09-27');
+  expect(today()).toBe('2026-09-27');
+  expect(deviceToday()).toBe(localToday());
 });
 
 test('setDebugToday is ignored in production', () => {

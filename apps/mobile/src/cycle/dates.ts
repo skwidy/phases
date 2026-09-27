@@ -18,3 +18,10 @@ export function addDays(iso: ISODate, days: number): ISODate {
 export function diffDays(from: ISODate, to: ISODate): number {
   return dayNumber(to) - dayNumber(from);
 }
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function isIsoDate(value: string): value is ISODate {
+  if (!ISO_DATE.test(value)) return false;
+  return fromDayNumber(dayNumber(value)) === value;
+}

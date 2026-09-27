@@ -151,6 +151,22 @@
     "apply": "Update",
     "ignore": "Ignore"
   },
+  "dev": {
+    "title": "Development",
+    "open": "Open the development screen",
+    "displayed_day": "Displayed day",
+    "clock_note": "Notifications follow the iPhone's real day.",
+    "date_placeholder": "YYYY-MM-DD",
+    "apply_date": "Use this date",
+    "real_today": "Back to the real day",
+    "example_history": "Sample history",
+    "example_history_sub": "Cycles from 16 April to 4 September 2026",
+    "relative_history": "Relative history",
+    "relative_history_sub": "Last day 1 was 20 days ago, then 5 cycles of 28 days",
+    "reset": "Clear everything",
+    "invalid_date": "Enter the date as YYYY-MM-DD",
+    "cycle_count": "{{count}} cycles saved"
+  },
   "nav": {
     "welcome": "Welcome",
     "last_period": "Last period",

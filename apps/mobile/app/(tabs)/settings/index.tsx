@@ -1,6 +1,17 @@
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+
 import { PlaceholderScreen } from '@/components/PlaceholderScreen';
-import { t } from '@/i18n/t';
 
 export default function SettingsScreen() {
-  return <PlaceholderScreen title={t('nav.settings')} />;
+  const { t } = useTranslation();
+  const router = useRouter();
+
+  return (
+    <PlaceholderScreen
+      title={t('nav.settings')}
+      longPressLabel={t('dev.open')}
+      onLongPressTitle={__DEV__ ? () => router.push('/dev') : undefined}
+    />
+  );
 }

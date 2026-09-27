@@ -151,6 +151,22 @@
     "apply": "Mettre à jour",
     "ignore": "Ignorer"
   },
+  "dev": {
+    "title": "Développement",
+    "open": "Ouvrir l'écran de développement",
+    "displayed_day": "Jour affiché",
+    "clock_note": "Les notifications suivent le jour réel de l'iPhone.",
+    "date_placeholder": "AAAA-MM-JJ",
+    "apply_date": "Utiliser cette date",
+    "real_today": "Revenir au jour réel",
+    "example_history": "Historique d'exemple",
+    "example_history_sub": "Cycles du 16 avril au 4 septembre 2026",
+    "relative_history": "Historique relatif",
+    "relative_history_sub": "Dernier jour 1 il y a 20 jours, puis 5 cycles de 28 jours",
+    "reset": "Tout effacer",
+    "invalid_date": "Écris la date au format AAAA-MM-JJ",
+    "cycle_count": "{{count}} cycles enregistrés"
+  },
   "nav": {
     "welcome": "Bienvenue",
     "last_period": "Dernières règles",

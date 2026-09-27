@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 import { PlaceholderScreen } from '@/components/PlaceholderScreen';
-import { t } from '@/i18n/t';
 
 export default function RemindersScreen() {
+  const { t } = useTranslation();
   return <PlaceholderScreen title={t('nav.reminders')} />;
 }

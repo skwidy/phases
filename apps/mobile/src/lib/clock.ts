@@ -13,9 +13,13 @@ function calendarToday(now: Date): ISODate {
   return `${y}-${m}-${d}`;
 }
 
+export function deviceToday(): ISODate {
+  return calendarToday(new Date());
+}
+
 export function today(): ISODate {
   if (isDev() && debugToday !== null) return debugToday;
-  return calendarToday(new Date());
+  return deviceToday();
 }
 
 export function setDebugToday(date: ISODate | null): void {

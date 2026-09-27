@@ -1,13 +1,14 @@
 import { Tabs } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { CalendarIcon } from '@/components/CalendarIcon';
 import { SettingsIcon } from '@/components/SettingsIcon';
 import { TodayIcon } from '@/components/TodayIcon';
-import { t } from '@/i18n/t';
 import { useTheme } from '@/theme';
 
 export default function TabLayout() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs

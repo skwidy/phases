@@ -1,13 +1,28 @@
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
-import { type as typeScale, useTheme } from '@/theme';
+import { space, type as typeScale, useTheme } from '@/theme';
 
 type Props = {
   title: string;
+  onLongPressTitle?: () => void;
+  longPressLabel?: string;
 };
 
-export function PlaceholderScreen({ title }: Props) {
+export function PlaceholderScreen({ title, onLongPressTitle, longPressLabel }: Props) {
   const theme = useTheme();
+  const titleNode = (
+    <Text
+      accessibilityRole="header"
+      style={{
+        color: theme.text,
+        fontSize: typeScale.title,
+        fontWeight: '700',
+        textAlign: 'center',
+      }}
+    >
+      {title}
+    </Text>
+  );
 
   return (
     <View
@@ -16,20 +31,22 @@ export function PlaceholderScreen({ title }: Props) {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: theme.bg,
-        padding: 20,
+        padding: space.screen,
       }}
     >
-      <Text
-        accessibilityRole="header"
-        style={{
-          color: theme.text,
-          fontSize: typeScale.title,
-          fontWeight: '700',
-          textAlign: 'center',
-        }}
-      >
-        {title}
-      </Text>
+      {onLongPressTitle ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={longPressLabel ?? title}
+          delayLongPress={3000}
+          onLongPress={onLongPressTitle}
+          style={{ minHeight: 44, justifyContent: 'center' }}
+        >
+          {titleNode}
+        </Pressable>
+      ) : (
+        titleNode
+      )}
     </View>
   );
 }
