@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "usage": "Contenu de l'onglet Apprendre. 'series.lessons' = leçons lues dans l'ordre (progression stockée localement). Chaque leçon : titre, durée de lecture, idée clé, paragraphes, citation courte attribuée, encadré 'Avec Phases' (lien vers une fonction de l'app via 'link'), exercice 'À essayer'. Les idées sont résumées et reformulées par Phases ; seules les expressions entre guillemets viennent de l'auteur.",
+    "links": "link.route = route Expo Router à ouvrir : '/(tabs)' (Aujourd'hui), '/(tabs)/calendar', '/guide', '/sync/share', '/(tabs)/settings'."
+  },
+  "home": {
+    "title": "Apprendre",
+    "subtitle": "Le cycle, le couple, et pourquoi c'est parfois compliqué.",
+    "cycle_section": "Le cycle",
+    "cycle_section_sub": "Les 5 phases, ce qui se passe, ce qui aide.",
+    "couple_section": "À deux",
+    "reading_section": "Lecture conseillée"
+  },
+  "series": {
+    "id": "brenot",
+    "title": "Pourquoi c'est si compliqué l'amour ?",
+    "subtitle": "6 leçons courtes inspirées du livre du Dr Philippe Brenot",
+    "total_time": "18 min au total",
+    "lessons": [
+      {
+        "id": "amour-ne-suffit-pas",
+        "number": 1,
+        "title": "L'amour ne suffit pas",
+        "minutes": 3,
+        "key_idea": "Le couple qui vit ensemble tout le temps est une invention récente. Pas étonnant que ce soit difficile.",
+        "body": [
+          "Pendant l'essentiel de l'histoire humaine, hommes et femmes passaient la plus grande partie de leurs journées séparés, chacun avec ses tâches et son groupe. Le couple moderne, deux adultes qui partagent tout, tout le temps, est une nouveauté.",
+          "Pour Philippe Brenot, psychiatre et thérapeute de couple, c'est le point de départ : la bonne volonté se heurte vite à des différences profondes, dans les codes, le langage et l'accès à la sexualité, héritées d'une très longue histoire.",
+          "Ces différences ne sont pas des fautes. Ce sont des malentendus prévisibles. Et ce qui est prévisible peut s'anticiper."
+        ],
+        "quote": { "text": "L'amour ne suffit pas.", "source": "Philippe Brenot, Pourquoi c'est si compliqué l'amour ? (Les Arènes, 2019)" },
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "Phases part du même constat : quand on sait ce qui arrive, on se dispute moins. Le cycle est un de ces rythmes invisibles qu'on peut rendre visibles.",
+          "link": { "label": "Voir où elle en est", "route": "/(tabs)" }
+        },
+        "try": "Cette semaine, repère un moment où vous vous êtes mal compris. Au lieu de chercher qui a tort, demande-toi : qu'est-ce que chacun attendait ?"
+      },
+      {
+        "id": "deux-horloges",
+        "number": 2,
+        "title": "Deux histoires, deux horloges",
+        "minutes": 3,
+        "key_idea": "On ne vit pas dans le même tempo. Les connaître évite de prendre personnellement ce qui est rythmique.",
+        "body": [
+          "Brenot décrit des différences façonnées par l'évolution puis par des millénaires de culture. Ce sont des tendances, pas des règles : chaque personne, chaque couple est différent.",
+          "Une différence est très concrète : le corps de chacun suit ses propres rythmes. Chez beaucoup de femmes, un cycle d'environ un mois s'ajoute au rythme de la journée, avec des semaines plus pleines d'énergie et d'autres plus lourdes.",
+          "Ne pas voir ce rythme, c'est risquer de lire comme un rejet ce qui est seulement de la fatigue, ou de programmer la grosse discussion au pire moment."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "C'est exactement le rôle des rappels : te dire la veille que les jours à venir risquent d'être plus durs, pour que tu ne découvres pas le SPM en plein débat sur les vacances.",
+          "link": { "label": "Voir les 5 phases", "route": "/guide" }
+        },
+        "try": "Regarde le calendrier de Phases pour les deux semaines à venir. Place le rendez-vous ou la discussion importante dans la phase folliculaire plutôt qu'en plein SPM."
+      },
+      {
+        "id": "langage-malentendu",
+        "number": 3,
+        "title": "On ne parle pas la même langue",
+        "minutes": 3,
+        "key_idea": "Quand elle raconte un problème, elle ne demande pas toujours une solution. Elle demande d'abord à être entendue.",
+        "body": [
+          "Brenot parle de « langage malentendu ». Souvent, lui cherche à régler le problème le plus vite possible, avec une réponse rationnelle. Elle attend d'abord un échange chaleureux, qu'on s'intéresse à ce qu'elle ressent.",
+          "Proposer une solution trop tôt peut sonner comme « on n'en parle plus ». Elle se sent coupée, il se sent incompris alors qu'il voulait aider.",
+          "Selon Brenot, se sentir écoutée est souvent la condition pour se sentir proche, et disponible pour le reste."
+        ],
+        "quote": { "text": "Le langage malentendu", "source": "Philippe Brenot" },
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "Pendant le SPM, un des gestes du jour revient souvent : écouter sans chercher à résoudre. Ce n'est pas un hasard, c'est le moment où ce malentendu coûte le plus.",
+          "link": { "label": "Voir les gestes du jour", "route": "/(tabs)" }
+        },
+        "try": "La prochaine fois qu'elle raconte sa journée, pose deux questions avant de proposer quoi que ce soit. Puis demande : « Tu veux mon avis, ou tu veux juste que je t'écoute ? »"
+      },
+      {
+        "id": "entretien",
+        "number": 4,
+        "title": "L'amour, ça s'entretient",
+        "minutes": 2,
+        "key_idea": "La tendresse n'est pas un bonus. C'est l'entretien quotidien qui rend le reste possible.",
+        "body": [
+          "Brenot insiste : le couple demande une attention de tous les jours, faite de tendresse, de petites attentions et de gestes sans arrière-pensée.",
+          "Ce n'est pas spectaculaire. Un message dans la journée, un café apporté, une main posée en passant. C'est ce climat qui fait qu'on a envie l'un de l'autre, pas l'inverse."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "Les 3 gestes proposés chaque jour sont faits pour ça : des attentions simples, adaptées au moment du cycle, sans rien attendre en retour.",
+          "link": { "label": "Voir les gestes du jour", "route": "/(tabs)" }
+        },
+        "try": "Un geste de tendresse par jour pendant une semaine, sans rien attendre en retour. Note ce qui change."
+      },
+      {
+        "id": "cinq-temps",
+        "number": 5,
+        "title": "Les 5 temps de l'amour",
+        "minutes": 4,
+        "key_idea": "Le désir se construit par étapes, et pas au même rythme pour les deux. Sauter les étapes, c'est souvent passer à côté.",
+        "body": [
+          "C'est la proposition centrale du livre, que Brenot appelle « la loi des 5 temps de l'amour ». L'intimité se construit en cinq temps successifs, et chacun compte.",
+          "Selon lui, l'excitation masculine est souvent quasi immédiate, alors que l'excitation féminine se déploie sur un temps beaucoup plus long. Quand les premiers temps sont écourtés, l'un est prêt, l'autre pas encore.",
+          "Brenot observe que beaucoup de difficultés viennent simplement d'un manque d'excitation, parce que le temps n'a pas été laissé."
+        ],
+        "steps": [
+          { "name": "Séduction", "text": "On se plaît, on se cherche. Pas encore de contact." },
+          { "name": "Tendresse", "text": "La main, les caresses, les baisers." },
+          { "name": "Érotisme", "text": "Un contact plus intime, sans se presser." },
+          { "name": "Excitation", "text": "Le désir monte, chez les deux." },
+          { "name": "Sexualité", "text": "Le dernier temps, pas le seul." }
+        ],
+        "quote": { "text": "La loi des 5 temps de l'amour", "source": "Philippe Brenot" },
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "Le désir n'est pas constant sur un mois : il varie souvent avec le cycle, et d'une personne à l'autre. Phases ne le prédit pas. La seule bonne méthode reste de demander, et de prendre le temps.",
+          "link": null
+        },
+        "try": "Prenez un soir pour les deux premiers temps seulement : séduction et tendresse, sans objectif. Voyez ce que ça change."
+      },
+      {
+        "id": "chacun-sa-part",
+        "number": 6,
+        "title": "Chacun sa part",
+        "minutes": 3,
+        "key_idea": "Personne n'a à tout porter. Chacun peut faire un pas vers la langue de l'autre.",
+        "body": [
+          "Brenot donne des pistes pour chacun. À lui : lâcher prise, développer l'écoute, oser dire ce qu'il ressent. À elle : formuler ses demandes plus clairement, expliquer ce qu'elle attend plutôt que d'espérer qu'il devine.",
+          "Ce n'est pas une répartition des torts. C'est une traduction dans les deux sens.",
+          "Et si ça coince durablement, un thérapeute de couple n'est pas un aveu d'échec. C'est le métier de Brenot depuis des décennies."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "Avec Phases",
+          "text": "Le bouton « Je lui demande » et la sync à deux servent la même idée : ne pas deviner, se dire les choses. Si elle a aussi Phases, vous partagez les mêmes dates.",
+          "link": { "label": "Synchroniser à deux", "route": "/sync/share" }
+        },
+        "try": "Chacun écrit une chose qu'il aimerait que l'autre fasse plus souvent, formulée comme une demande précise. Échangez vos papiers."
+      }
+    ]
+  },
+  "book": {
+    "label": "Lecture conseillée",
+    "title": "Pourquoi c'est si compliqué l'amour ?",
+    "subtitle": "Comprendre nos différences pour une vie à deux épanouie",
+    "author": "Dr Philippe Brenot",
+    "author_bio": "Psychiatre, anthropologue et thérapeute de couple, il a accompagné des milliers de couples et dirigé des enseignements de sexologie à l'université Paris-Descartes.",
+    "publisher": "Les Arènes, 2019. Existe en poche.",
+    "why": "Un livre clair, sans jargon, pour comprendre d'où viennent nos malentendus et quoi en faire. Avec des exercices pour deux.",
+    "cta": "Trouver le livre",
+    "url": "https://www.fnac.com/a13199763/Philippe-Brenot-Pourquoi-c-est-si-complique-l-amour",
+    "disclaimer": "Leçons résumées et reformulées par Phases à partir du livre et d'entretiens de l'auteur. Phases n'est affilié ni à l'auteur ni à l'éditeur, et ne perçoit rien sur les ventes. Les différences décrites sont des tendances générales : chaque couple est différent."
+  },
+  "ui": {
+    "minutes": "{{count}} min",
+    "lesson_of": "Leçon {{n}} sur {{total}}",
+    "key_idea": "L'idée clé",
+    "try": "À essayer cette semaine",
+    "next": "Leçon suivante",
+    "finish": "Terminer la série",
+    "done": "Lue",
+    "progress": "{{done}} sur {{total}} lues",
+    "continue": "Continuer",
+    "start": "Commencer",
+    "sources": "Sources et crédits"
+  }
+}

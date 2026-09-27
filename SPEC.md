@@ -75,6 +75,7 @@ interface AppState {
     discreet: boolean;   // défaut false
   };
   security: { faceId: boolean }; // défaut false
+  learn: { read: string[] };      // ids des leçons lues, défaut []
   onboarded: boolean;
 }
 ```
@@ -122,13 +123,16 @@ app/
     last-period.tsx      // 02
     reminders.tsx        // 03
   (tabs)/
-    _layout.tsx          // 3 onglets : Aujourd'hui, Calendrier, Réglages
+    _layout.tsx          // 4 onglets : Aujourd'hui, Calendrier, Apprendre, Réglages
     index.tsx            // 04 / 05 / 07 selon l'état
     calendar.tsx         // 09
+    learn.tsx            // 19
     settings/index.tsx   // 13
     settings/history.tsx // 14
-  guide/index.tsx        // 10
+  guide/index.tsx        // 10 (liste des 5 phases, ouverte depuis Apprendre)
   guide/[phase].tsx      // 11 (même gabarit pour les 5 phases)
+  learn/[lesson].tsx     // 20, 21 (même gabarit, variante « steps » pour la leçon 5)
+  learn/book.tsx         // 22
   confirm.tsx            // 06, présenté en sheet (presentation: 'formSheet')
   sync/share.tsx         // 16
   sync/receive.tsx       // 17, ouvert par le lien phases://s#… ou https://tryphases.io/s#…
@@ -140,7 +144,7 @@ app/
 | 01 | Bienvenue | Logo complet, titre, 2 cartes de mode, prénom optionnel, 2 lignes de réassurance | Continuer toujours actif (mode partenaire par défaut) |
 | 02 | Dernières règles | Calendrier du mois (futur désactivé), steppers durée cycle (21–45) et règles (2–10) | « Je ne sais pas, je lui demande » → feuille de partage avec `onboarding.ask_message` ; en mode self ce lien est masqué |
 | 03 | Rappels | 4 lignes avec interrupteurs, notifications discrètes | « Activer les rappels » demande la permission puis termine l'onboarding ; « Plus tard » termine sans permission |
-| 04 | Aujourd'hui | Date, titre de phase, CycleRing, 2 pastilles (compte à rebours règles, prochain rappel), carte « Ce qui se passe » + 3 gestes, bouton principal | Tap carte → guide de la phase ; bouton → 06 |
+| 04 | Aujourd'hui | Date, titre de phase, CycleRing, 2 pastilles (compte à rebours règles, prochain rappel), carte « Ce qui se passe » + 3 gestes, bouton principal | Tap carte → `guide/<phase>` ; bouton → 06 |
 | 05 | Aujourd'hui en retard | Anneau estompé, « J+N », carte d'explication, gestes `retard` | Deux boutons : confirmer (→ 06) / pas encore |
 | 07 | Aujourd'hui mode self + irrégulier | Bandeau irrégulier au-dessus de l'anneau | Même écran que 04, variantes de texte |
 | 06 | Confirmer | Sheet : 5 jours (J−2 … J+2, futur désactivé), « Autre date… », récap cycle précédent et prochaines dates, interrupteur « Envoyer la mise à jour à {name} » | Confirmer → `startCycle`, haptique succès, puis si interrupteur actif → feuille de partage avec le lien de sync |
@@ -153,8 +157,21 @@ app/
 | 15 | Verrouillé | Icône, titre, bouton Face ID | Affiché au lancement et au retour au premier plan si `security.faceId` |
 | 16 | Envoyer | QR code (lib `react-native-qrcode-svg`) de l'URL de sync, « Envoyer un lien », « Scanner son code » (`expo-camera`) | — |
 | 17 | Mise à jour reçue | Récap du nouveau cycle, dates recalculées, note de confidentialité | « Mettre à jour » applique la fusion ; « Ignorer » ferme |
+| 19 | Apprendre (onglet) | Carte série sombre (titre, auteur, progression x/6, « Continuer · Leçon N »), tuiles des 5 phases (→ 10/11), liste des 6 leçons avec état lue / en cours, carte « Lecture conseillée » (→ 22) | Progression = `learn.read` |
+| 20 | Leçon | Retour, barre de progression 6 segments + « Leçon n sur 6 · x min », titre, carte « L'idée clé », paragraphes, citation courte attribuée (si `quote`), encadré « Avec Phases » (+ bouton si `link`), encadré « À essayer cette semaine », bouton « Leçon suivante » / « Terminer la série » | Arriver en bas de la leçon (ou taper le bouton) la marque lue |
+| 21 | Leçon 5 | Même gabarit + bloc « Les 5 temps, dans l'ordre » (étapes numérotées reliées par un trait) quand la leçon a `steps` | — |
+| 22 | Lecture conseillée | Couverture générique (jamais la vraie couverture), titre, auteur, bio, éditeur, pourquoi on le recommande, bouton « Trouver le livre » (ouvre Safari via `Linking.openURL`), liste des 6 leçons, avertissement | — |
 
 **Gestes du jour** : pour la phase courante, 3 gestes tirés de `tips_partner` ou `tips_self`, tirage **déterministe par date** (seed = numéro du jour) pour que l'écran ne change pas à chaque ouverture.
+
+### Onglet Apprendre
+
+Contenu : `src/content/learn.{fr,en}.json`. Série de 6 leçons courtes (2 à 4 min) inspirées de *Pourquoi c'est si compliqué l'amour ?* du Dr Philippe Brenot (Les Arènes, 2019), plus l'accès au guide des phases.
+
+- Les leçons résument et reformulent les idées du livre avec nos mots. Seules les expressions entre guillemets dans `quote` viennent de l'auteur, toujours attribuées. Ne jamais ajouter d'extraits du livre ni reproduire sa couverture.
+- Chaque leçon relie une idée à une fonction de Phases (`with_phases.link.route`) et propose un exercice concret.
+- L'avertissement `book.disclaimer` (non affilié, tendances générales) est affiché sur l'écran 22.
+- Le lien « Trouver le livre » ouvre le navigateur ; ce n'est pas une requête réseau de l'app.
 
 ## 8. Sync à deux (sans serveur)
 
@@ -193,7 +210,7 @@ app/
 ## 10. Langues
 
 - `expo-localization` : FR si l'iPhone est en français, sinon EN. Surcharge dans Réglages (`language`).
-- `i18next` + `react-i18next`, ressources : `src/i18n/{fr,en}.json` (interface) et `src/content/phases.{fr,en}.json` (contenu éditorial).
+- `i18next` + `react-i18next`, ressources : `src/i18n/{fr,en}.json` (interface) `src/content/phases.{fr,en}.json` et `src/content/learn.{fr,en}.json` (contenu éditorial).
 - Dates : `Intl.DateTimeFormat(locale, …)`. Semaine du lundi en FR, du dimanche en EN.
 - Textes des autorisations iOS : `src/i18n/infoplist-{fr,en}.json`.
 

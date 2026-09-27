@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "usage": "Learn tab content. 'series.lessons' = lessons read in order (progress stored locally). Each lesson: title, reading time, key idea, paragraphs, short attributed quote, 'With Phases' box (links to an app feature via 'link'), 'Try this' exercise. Ideas are summarised and rephrased by Phases; only the short phrases in quotes come from the author (translated from French).",
+    "links": "link.route = Expo Router route: '/(tabs)' (Today), '/(tabs)/calendar', '/guide', '/sync/share', '/(tabs)/settings'."
+  },
+  "home": {
+    "title": "Learn",
+    "subtitle": "The cycle, the couple, and why it's sometimes complicated.",
+    "cycle_section": "The cycle",
+    "cycle_section_sub": "The 5 phases, what happens, what helps.",
+    "couple_section": "Together",
+    "reading_section": "Recommended reading"
+  },
+  "series": {
+    "id": "brenot",
+    "title": "Why is love so complicated?",
+    "subtitle": "6 short lessons inspired by Dr Philippe Brenot's book",
+    "total_time": "18 min in total",
+    "lessons": [
+      {
+        "id": "amour-ne-suffit-pas",
+        "number": 1,
+        "title": "Love isn't enough",
+        "minutes": 3,
+        "key_idea": "A couple living side by side all the time is a recent invention. No wonder it's hard.",
+        "body": [
+          "For most of human history, men and women spent most of their days apart, each with their own tasks and group. The modern couple, two adults sharing everything all the time, is new.",
+          "For Philippe Brenot, psychiatrist and couples therapist, that's the starting point: good will quickly runs into deep differences in codes, language and access to sexuality, inherited from a very long history.",
+          "These differences aren't faults. They're predictable misunderstandings. And what's predictable can be anticipated."
+        ],
+        "quote": { "text": "Love isn't enough.", "source": "Philippe Brenot, Pourquoi c'est si compliqué l'amour ? (Les Arènes, 2019)" },
+        "with_phases": {
+          "title": "With Phases",
+          "text": "Phases starts from the same idea: when you know what's coming, you argue less. The cycle is one of those invisible rhythms you can make visible.",
+          "link": { "label": "See where she's at", "route": "/(tabs)" }
+        },
+        "try": "This week, spot one moment you misunderstood each other. Instead of asking who was wrong, ask: what was each of us expecting?"
+      },
+      {
+        "id": "deux-horloges",
+        "number": 2,
+        "title": "Two histories, two clocks",
+        "minutes": 3,
+        "key_idea": "You don't live at the same tempo. Knowing it keeps you from taking personally what is just rhythm.",
+        "body": [
+          "Brenot describes differences shaped by evolution, then by thousands of years of culture. They're tendencies, not rules: every person and every couple is different.",
+          "One difference is very concrete: each body follows its own rhythms. For many women, a roughly monthly cycle adds to the daily one, with weeks full of energy and heavier ones.",
+          "Missing that rhythm means reading plain tiredness as rejection, or scheduling the big talk at the worst possible time."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "With Phases",
+          "text": "That's exactly what the reminders are for: telling you the day before that the next days may be harder, so PMS doesn't catch you mid-argument about the holidays.",
+          "link": { "label": "See the 5 phases", "route": "/guide" }
+        },
+        "try": "Look at the Phases calendar for the next two weeks. Put the important talk or plan in the follicular phase rather than in the middle of PMS."
+      },
+      {
+        "id": "langage-malentendu",
+        "number": 3,
+        "title": "Not speaking the same language",
+        "minutes": 3,
+        "key_idea": "When she talks about a problem, she isn't always asking for a solution. First, she's asking to be heard.",
+        "body": [
+          "Brenot calls it \"misunderstood language\". Often, he wants to fix the problem as fast as possible, with a rational answer. She first expects a warm exchange, interest in how she feels.",
+          "Offering a solution too early can sound like \"let's drop it\". She feels cut off; he feels misunderstood when he only wanted to help.",
+          "According to Brenot, feeling listened to is often what makes someone feel close, and available for the rest."
+        ],
+        "quote": { "text": "Misunderstood language", "source": "Philippe Brenot" },
+        "with_phases": {
+          "title": "With Phases",
+          "text": "During PMS, one tip comes up a lot: listen without trying to fix. That's no accident: it's when this misunderstanding costs the most.",
+          "link": { "label": "See today's tips", "route": "/(tabs)" }
+        },
+        "try": "Next time she tells you about her day, ask two questions before suggesting anything. Then ask: \"Do you want my take, or do you just want me to listen?\""
+      },
+      {
+        "id": "entretien",
+        "number": 4,
+        "title": "Love needs upkeep",
+        "minutes": 2,
+        "key_idea": "Tenderness isn't a bonus. It's the daily upkeep that makes the rest possible.",
+        "body": [
+          "Brenot insists: a couple needs attention every day, made of tenderness, small gestures and kindness with no strings attached.",
+          "It's not spectacular. A text during the day, a coffee brought over, a hand on the shoulder in passing. That climate is what makes you want each other, not the other way around."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "With Phases",
+          "text": "The 3 daily tips are made for this: simple gestures, fitted to the moment in the cycle, expecting nothing back.",
+          "link": { "label": "See today's tips", "route": "/(tabs)" }
+        },
+        "try": "One tender gesture a day for a week, expecting nothing back. Notice what changes."
+      },
+      {
+        "id": "cinq-temps",
+        "number": 5,
+        "title": "The 5 stages of love",
+        "minutes": 4,
+        "key_idea": "Desire builds in stages, and not at the same pace for both. Skipping stages often means missing each other.",
+        "body": [
+          "This is the book's central idea, which Brenot calls \"the law of the 5 stages of love\". Intimacy builds in five successive stages, and each one counts.",
+          "According to him, male arousal is often almost immediate, while female arousal unfolds over a much longer time. When the first stages are cut short, one is ready and the other isn't yet.",
+          "Brenot notes that many difficulties simply come from a lack of arousal, because the time wasn't given."
+        ],
+        "steps": [
+          { "name": "Seduction", "text": "You like each other, you look for each other. No touching yet." },
+          { "name": "Tenderness", "text": "Holding hands, caresses, kisses." },
+          { "name": "Eroticism", "text": "More intimate touch, unhurried." },
+          { "name": "Arousal", "text": "Desire rises, for both." },
+          { "name": "Sex", "text": "The last stage, not the only one." }
+        ],
+        "quote": { "text": "The law of the 5 stages of love", "source": "Philippe Brenot" },
+        "with_phases": {
+          "title": "With Phases",
+          "text": "Desire isn't constant across a month: it often varies with the cycle, and from person to person. Phases doesn't predict it. The only good method is still to ask, and take your time.",
+          "link": null
+        },
+        "try": "Spend one evening on the first two stages only: seduction and tenderness, no goal. See what it changes."
+      },
+      {
+        "id": "chacun-sa-part",
+        "number": 6,
+        "title": "Each to their part",
+        "minutes": 3,
+        "key_idea": "No one has to carry it all. Each can take a step toward the other's language.",
+        "body": [
+          "Brenot has advice for each side. For him: let go, build listening, dare to say what he feels. For her: phrase requests more clearly, explain what she expects rather than hoping he'll guess.",
+          "It's not a split of the blame. It's translation, both ways.",
+          "And if things stay stuck, seeing a couples therapist isn't failure. It's been Brenot's job for decades."
+        ],
+        "quote": null,
+        "with_phases": {
+          "title": "With Phases",
+          "text": "The \"I'll ask her\" button and two-phone sync serve the same idea: don't guess, say it. If she has Phases too, you share the same dates.",
+          "link": { "label": "Sync with each other", "route": "/sync/share" }
+        },
+        "try": "Each of you writes down one thing you'd like the other to do more often, phrased as a precise request. Swap notes."
+      }
+    ]
+  },
+  "book": {
+    "label": "Recommended reading",
+    "title": "Pourquoi c'est si compliqué l'amour ?",
+    "subtitle": "In French. Understanding our differences for a fulfilling life together",
+    "author": "Dr Philippe Brenot",
+    "author_bio": "Psychiatrist, anthropologist and couples therapist, he has worked with thousands of couples and led sexology teaching at Paris Descartes University.",
+    "publisher": "Les Arènes, 2019. Also in paperback.",
+    "why": "A clear, jargon-free book on where our misunderstandings come from and what to do about them. With exercises for two.",
+    "cta": "Find the book",
+    "url": "https://www.fnac.com/a13199763/Philippe-Brenot-Pourquoi-c-est-si-complique-l-amour",
+    "disclaimer": "Lessons summarised and rephrased by Phases from the book and the author's interviews. Phases is not affiliated with the author or the publisher and earns nothing from sales. The differences described are general tendencies: every couple is different."
+  },
+  "ui": {
+    "minutes": "{{count}} min",
+    "lesson_of": "Lesson {{n}} of {{total}}",
+    "key_idea": "Key idea",
+    "try": "Try this week",
+    "next": "Next lesson",
+    "finish": "Finish the series",
+    "done": "Read",
+    "progress": "{{done}} of {{total}} read",
+    "continue": "Continue",
+    "start": "Start",
+    "sources": "Sources and credits"
+  }
+}

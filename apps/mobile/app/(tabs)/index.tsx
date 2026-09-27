@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,7 +14,8 @@ import {
   todayStatus,
   type Phase,
 } from '@/cycle/engine';
-import { nextReminderDate } from '@/cycle/nextReminder';
+import { consumeCycleSaved, subscribeCycleSaved } from '@/reminders/notice';
+import { reminderSchedule } from '@/reminders/schedule';
 import { dailyTips } from '@/cycle/tips';
 import { formatDay, formatShort } from '@/lib/format';
 import { today } from '@/lib/clock';
@@ -41,8 +42,21 @@ export default function TodayScreen() {
   const cycles = useAppStore((state) => state.cycles);
   const defaults = useAppStore((state) => state.defaults);
   const mode = useAppStore((state) => state.mode);
+  const partnerName = useAppStore((state) => state.partnerName);
   const reminders = useAppStore((state) => state.reminders);
   const [dayIso, setDayIso] = useState<ISODate>(() => today());
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (consumeCycleSaved()) setSaved(true);
+    return subscribeCycleSaved(() => setSaved(true));
+  }, []);
+
+  useEffect(() => {
+    if (!saved) return;
+    const timer = setTimeout(() => setSaved(false), 4000);
+    return () => clearTimeout(timer);
+  }, [saved]);
 
   useFocusEffect(
     useCallback(() => {
@@ -65,10 +79,18 @@ export default function TodayScreen() {
       )
     : [];
   const happens = status.phase ? content(`${status.phase}.today_${audience}`) : '';
-  const reminder =
-    start && status.phase
-      ? nextReminderDate(start, status.cycleLength, reminders, dayIso)
-      : null;
+  const nextReminder = reminderSchedule(
+    { mode, cycles, defaults, reminders },
+    { date: dayIso, time: '00:00' },
+    (key) => key,
+  )[0];
+  const reminder = nextReminder ? nextReminder.date.slice(0, 10) : null;
+  const changeDayLabel =
+    mode === 'self'
+      ? t('today.change_day_self')
+      : partnerName
+        ? t('today.change_day_name', { name: partnerName })
+        : t('today.change_day');
   const until =
     start && status.day !== null && !late
       ? phaseEndDate(start, status.day, status.cycleLength, status.periodLength)
@@ -77,7 +99,11 @@ export default function TodayScreen() {
   const title = late
     ? t('today.title_late')
     : status.phase
-      ? t(mode === 'self' ? 'today.title_self' : 'today.title_partner', { phase: phaseName })
+      ? mode === 'self'
+        ? t('today.title_self', { phase: phaseName })
+        : partnerName
+          ? t('today.title_partner_name', { name: partnerName, phase: phaseName })
+          : t('today.title_partner', { phase: phaseName })
       : t('today.empty');
   const center = late
     ? t('today.late_day', { count: status.late })
@@ -87,8 +113,15 @@ export default function TodayScreen() {
   const caption = late && status.nextPeriod
     ? t('today.expected', { date: formatShort(status.nextPeriod, locale) })
     : until
-      ? t('today.until', { phase: phaseName, date: formatShort(until, locale) })
+      ? phaseName
       : '';
+  const detail = !late && until ? t('today.until_date', { date: formatShort(until, locale) }) : '';
+  const captionColor =
+    late || status.phase === 'retard'
+      ? theme.regles
+      : status.phase
+        ? theme[status.phase]
+        : theme.textMuted;
   const ringLabel = late
     ? t('today.ring_late', { count: status.late })
     : status.day !== null
@@ -131,6 +164,24 @@ export default function TodayScreen() {
         >
           {title}
         </Text>
+        {saved ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('today.cycle_saved')}
+            onPress={() => setSaved(false)}
+            style={{
+              marginTop: 12,
+              backgroundColor: theme.surface,
+              borderRadius: radii.card,
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+            }}
+          >
+            <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '700', textAlign: 'center' }}>
+              {t('today.cycle_saved')}
+            </Text>
+          </Pressable>
+        ) : null}
         {status.irregular && lengths.length > 0 ? (
           <View
             style={{
@@ -165,6 +216,8 @@ export default function TodayScreen() {
             dimFuture={status.irregular}
             center={center}
             caption={caption}
+            detail={detail}
+            captionColor={captionColor}
             accessibilityLabel={ringLabel}
           />
         </View>
@@ -260,10 +313,28 @@ export default function TodayScreen() {
         ) : null}
       </ScrollView>
       <View style={{ paddingHorizontal: space.screen, paddingBottom: Math.max(insets.bottom, 12) }}>
-        <PrimaryButton
-          label={t(mode === 'self' ? 'today.started_self' : 'today.started_partner')}
-          onPress={() => router.push('/confirm')}
-        />
+        {status.phase === 'regles' ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={changeDayLabel}
+            onPress={() => router.push('/confirm')}
+            style={({ pressed }) => ({
+              minHeight: 44,
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: pressed ? 0.55 : 1,
+            })}
+          >
+            <Text style={{ color: theme.text, fontSize: typeScale.secondary, fontWeight: '700', textAlign: 'center' }}>
+              {changeDayLabel}
+            </Text>
+          </Pressable>
+        ) : (
+          <PrimaryButton
+            label={t(mode === 'self' ? 'today.started_self' : 'today.started_partner')}
+            onPress={() => router.push('/confirm')}
+          />
+        )}
         {late ? (
           <View style={{ marginTop: 8 }}>
             <PrimaryButton label={t('today.not_yet')} variant="plain" onPress={() => undefined} />

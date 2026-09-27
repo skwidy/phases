@@ -9,13 +9,14 @@ You are building **Phases**, a free, local-only iPhone app (Expo) that follows a
 
 ## Hard rules
 
-- **No network.** Never add `fetch`, axios, WebSocket, analytics, crash reporting, ads, remote config, or any SDK that phones home. No accounts, no backend. If a library needs the network, do not use it.
-- **All user-facing text comes from** `apps/mobile/src/i18n/{fr,en}.json` or `apps/mobile/src/content/phases.{fr,en}.json`. Never hardcode strings in components. When you add a key, add it to both languages.
+- **No network.** Never add `fetch`, axios, WebSocket, analytics, crash reporting, ads, remote config, or any SDK that phones home. No accounts, no backend. If a library needs the network, do not use it. Opening an external URL in Safari with `Linking.openURL` (the book link in Learn) is allowed: it is not a request made by the app.
+- **All user-facing text comes from** `apps/mobile/src/i18n/{fr,en}.json` or `apps/mobile/src/content/{phases,learn}.{fr,en}.json`. Never hardcode strings in components. When you add a key, add it to both languages.
 - **Dates are calendar days** (`'YYYY-MM-DD'` strings). Cycle logic never uses timestamps, `Date.now()` arithmetic or time zones. Use a single `today()` helper (`src/lib/clock.ts`) that returns the local calendar day and can be overridden in dev.
 - **Cycle logic is pure** and lives in `src/cycle/`. It must match the reference implementation `apps/web/assets/sync.js` and its tests in `tests/sync.test.mjs`. Write or update Jest tests before changing it.
 - **Derived data is never stored.** The store holds `AppState` (see SPEC §5) only. Phase, next dates and reminders are computed.
 - **Notifications**: only local, scheduled through one function `syncNotifications()` that cancels everything and reschedules from `reminderSchedule(state, now)`. Never schedule notifications anywhere else.
 - **Tone**: respectful and concrete. Never write copy that blames hormones, mocks her or him, or makes medical or contraceptive claims.
+- Learn content: never paste passages from the book or recreate its cover. Only the short attributed phrases already in `learn.*.json`.
 - Do not use the words "scraping" or tracking-style language in code or copy.
 
 ## Stack

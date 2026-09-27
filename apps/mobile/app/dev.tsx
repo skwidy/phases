@@ -1,5 +1,6 @@
-import { Redirect, useRouter } from 'expo-router';
-import { useState } from 'react';
+import * as Notifications from 'expo-notifications';
+import { Redirect, useFocusEffect, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,9 +8,55 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { isIsoDate } from '@/cycle/dates';
 import { exampleCycles, relativeCycles } from '@/dev/fixtures';
 import { deviceToday, setDebugToday, today } from '@/lib/clock';
-import { formatDay } from '@/lib/format';
+import { formatDay, formatShort } from '@/lib/format';
+import { scheduleTestReminder } from '@/reminders/sync';
 import { useAppStore } from '@/store/useAppStore';
 import { radii, space, type as typeScale, useTheme } from '@/theme';
+
+type ListedNotification = {
+  id: string;
+  day: string;
+  time: string;
+  kind: 'pms' | 'period' | 'confirm' | 'ovulation' | 'test' | 'other';
+  title: string;
+  sort: string;
+};
+
+function listedNotification(item: Notifications.NotificationRequest): ListedNotification {
+  const match = item.identifier.match(
+    /^phases-(pms|period|confirm|ovulation)-(\d{4}-\d{2}-\d{2})(?:T(\d{2}:\d{2}))?$/,
+  );
+  if (match) {
+    const kind = match[1] as ListedNotification['kind'];
+    const time = match[3] ?? '';
+    return { id: item.identifier, day: match[2], time, kind, title: item.content.title ?? '', sort: `${match[2]}T${time || '00:00'}` };
+  }
+  if (item.identifier === 'phases-test') {
+    const seconds =
+      item.trigger && typeof item.trigger === 'object' && 'seconds' in item.trigger && typeof item.trigger.seconds === 'number'
+        ? item.trigger.seconds
+        : 60;
+    const at = new Date(Date.now() + seconds * 1000);
+    const hour = String(at.getHours()).padStart(2, '0');
+    const minute = String(at.getMinutes()).padStart(2, '0');
+    return {
+      id: item.identifier,
+      day: '',
+      time: `${hour}:${minute}`,
+      kind: 'test',
+      title: item.content.title ?? '',
+      sort: '0000',
+    };
+  }
+  return {
+    id: item.identifier,
+    day: '',
+    time: '',
+    kind: 'other',
+    title: item.content.title ?? item.identifier,
+    sort: '9999',
+  };
+}
 
 export default function DevScreen() {
   const theme = useTheme();
@@ -20,6 +67,15 @@ export default function DevScreen() {
   const [displayed, setDisplayed] = useState(() => today());
   const [draft, setDraft] = useState(() => today());
   const [invalid, setInvalid] = useState(false);
+  const [scheduled, setScheduled] = useState<ListedNotification[]>([]);
+
+  const loadScheduled = useCallback(() => {
+    void Notifications.getAllScheduledNotificationsAsync().then((items) => {
+      setScheduled(items.map(listedNotification).sort((left, right) => (left.sort < right.sort ? -1 : left.sort > right.sort ? 1 : 0)));
+    });
+  }, []);
+
+  useFocusEffect(loadScheduled);
 
   if (!__DEV__) return <Redirect href="/" />;
 
@@ -114,6 +170,31 @@ export default function DevScreen() {
           onPress={() => useAppStore.setState({ cycles: relativeCycles(deviceToday()) })}
         />
         <ActionButton label={t('dev.reset')} onPress={resetAll} secondary />
+        <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '700', marginBottom: space.grid }}>
+          {scheduled.length === 0 ? t('dev.scheduled') : t('dev.scheduled_heading', { count: scheduled.length })}
+        </Text>
+        <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, lineHeight: 20, marginBottom: space.grid * 2 }}>
+          {scheduled.length === 0 ? t('dev.scheduled_empty') : t('dev.scheduled_note')}
+        </Text>
+        {scheduled.map((item) => (
+          <View key={item.id} style={{ flexDirection: 'row', alignItems: 'baseline', marginBottom: 10 }}>
+            <Text style={{ width: 108, color: theme.text, fontSize: typeScale.secondary, fontWeight: '700' }}>
+              {item.day ? formatShort(item.day, i18n.language) : item.time}
+            </Text>
+            <Text style={{ width: 52, color: theme.textMuted, fontSize: typeScale.secondary }}>
+              {item.day ? item.time : ''}
+            </Text>
+            <Text style={{ flex: 1, color: theme.text, fontSize: typeScale.secondary }}>
+              {item.kind === 'other' ? item.title : t(`dev.kind_${item.kind}`)}
+            </Text>
+          </View>
+        ))}
+        <ActionButton
+          label={t('dev.test_reminder')}
+          onPress={() => {
+            void scheduleTestReminder().then(loadScheduled);
+          }}
+        />
         <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '700' }}>
           {t('dev.cycle_count', { count: cycles.length })}
         </Text>

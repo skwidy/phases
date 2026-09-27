@@ -1,11 +1,11 @@
 # Design references
 
-18 boards exported from the Claude Design canvas. Each screen exists as:
+22 boards exported from the Claude Design canvas. Each screen exists as:
 
 - `screens/NN-name.png` — the render, 390×844 pt at 2×.
 - `screens/NN-name.html` — the static markup (inline styles). Use it to read exact colours, spacing, font sizes and copy; do not copy the HTML into React Native, rebuild with RN components and `src/theme.ts`.
 
-Sample data frozen in every screen: today = Sunday 27 Sept 2026, day 24 of a 28-day cycle started 4 Sept, partner name Sophie. Real screens compute everything from the state.
+Sample data frozen in every screen: today = Sunday 27 Sept 2026, day 24 of a 28-day cycle started 4 Sept, partner name Sophie. Learn progress: lessons 1–2 read. The book cover is a generic placeholder on purpose: never use the real cover. Real screens compute everything from the state.
 
 | File | Screen | Route |
 | --- | --- | --- |
@@ -27,5 +27,9 @@ Sample data frozen in every screen: today = Sunday 27 Sept 2026, day 24 of a 28-
 | 16-sync-envoyer-qr | Send sync (QR / link) | `sync/share` |
 | 17-sync-mise-a-jour-recue | Sync received | `sync/receive` |
 | 18-logo | Logo (C3, P + half moon) | — |
+| 19-apprendre | Learn tab | `(tabs)/learn` |
+| 20-apprendre-lecon | Lesson (template, lesson 3 shown) | `learn/[lesson]` |
+| 21-apprendre-5-temps | Lesson 5 with the 5-step block | `learn/[lesson]` |
+| 22-apprendre-livre | Recommended book + credits | `learn/book` |
 
 Known gap in the mockups: in 13, the last row ("Tout effacer") sits under the tab bar; the real screen is a ScrollView with bottom inset.

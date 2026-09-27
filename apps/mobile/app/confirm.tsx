@@ -10,6 +10,7 @@ import { PrimaryButton } from '@/components/PrimaryButton';
 import { Toggle } from '@/components/Toggle';
 import { confirmPreview } from '@/cycle/confirmPreview';
 import { addDays, type ISODate } from '@/cycle/dates';
+import { todayStatus } from '@/cycle/engine';
 import { formatShort, formatWeekday } from '@/lib/format';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
@@ -55,7 +56,14 @@ export default function ConfirmScreen() {
     selected,
   );
   const showSend = Boolean(partnerName) || mode === 'self';
-  const title = t(mode === 'self' ? 'today.started_self' : 'today.started_partner');
+  const correcting = todayStatus({ cycles, defaults }, now).phase === 'regles';
+  const title = correcting
+    ? mode === 'self'
+      ? t('today.change_day_self')
+      : partnerName
+        ? t('today.change_day_name', { name: partnerName })
+        : t('today.change_day')
+    : t(mode === 'self' ? 'today.started_self' : 'today.started_partner');
 
   function onPick(_event: DateTimePickerEvent, date?: Date) {
     if (Platform.OS !== 'ios') setShowPicker(false);

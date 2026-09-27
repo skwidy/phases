@@ -36,6 +36,8 @@ type Props = {
   dimFuture: boolean;
   center: string;
   caption: string;
+  detail?: string;
+  captionColor?: string;
   accessibilityLabel: string;
 };
 
@@ -78,6 +80,8 @@ export function CycleRing({
   dimFuture,
   center,
   caption,
+  detail = '',
+  captionColor,
   accessibilityLabel,
 }: Props) {
   const theme = useTheme();
@@ -87,7 +91,7 @@ export function CycleRing({
   const current =
     day === null || late ? null : phaseOfDay(day, cycleLength, periodLength);
   const daySize = Math.round((typeScale.ring * DISPLAY) / RING_SIZE);
-  const captionSize = Math.max(13, Math.round((typeScale.secondary * DISPLAY) / RING_SIZE));
+  const noteColor = captionColor ?? (late ? theme.regles : theme.textMuted);
 
   useEffect(() => {
     progress.value = 0;
@@ -165,13 +169,28 @@ export function CycleRing({
           {caption ? (
             <Text
               style={{
-                color: late ? theme.regles : theme.textMuted,
-                fontSize: captionSize,
+                marginTop: 2,
+                color: noteColor,
+                fontSize: typeScale.secondary,
+                lineHeight: 20,
                 fontWeight: '700',
                 textAlign: 'center',
               }}
             >
               {caption}
+            </Text>
+          ) : null}
+          {detail ? (
+            <Text
+              style={{
+                color: noteColor,
+                fontSize: typeScale.secondary,
+                lineHeight: 20,
+                fontWeight: '700',
+                textAlign: 'center',
+              }}
+            >
+              {detail}
             </Text>
           ) : null}
         </View>

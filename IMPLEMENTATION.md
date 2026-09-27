@@ -90,12 +90,12 @@ apps/mobile contient déjà assets/, src/i18n/, src/content/ et store/ : ne les 
 3. Configure app.json d'après apps/mobile/store/README.md (section app.json) : name, slug, scheme "phases", bundleIdentifier io.tryphases.app, icônes light/dark/tinted, splash, userInterfaceStyle automatic, supportsTablet false, locales. Retire associatedDomains pour l'instant.
 4. TypeScript strict. Ajoute les scripts "test" (jest-expo) et "typecheck" (tsc --noEmit).
 5. Crée src/theme.ts avec les tokens clair/sombre de SPEC §9 et un hook useTheme() basé sur useColorScheme().
-6. Crée la navigation de SPEC §7 avec des écrans vides qui affichent juste leur nom : onboarding (3 écrans), (tabs) avec Aujourd'hui / Calendrier / Réglages, guide, confirm (formSheet), sync/share, sync/receive, lock. Icônes d'onglets : reprends les SVG de design/screens/04-aujourdhui.html.
+6. Crée la navigation de SPEC §7 avec des écrans vides qui affichent juste leur nom : onboarding (3 écrans), (tabs) avec Aujourd'hui / Calendrier / Apprendre / Réglages, guide, learn/[lesson], learn/book, confirm (formSheet), sync/share, sync/receive, lock. Icônes d'onglets : reprends les SVG de design/screens/04-aujourdhui.html.
 7. Police : fontFamily 'ui-rounded' par défaut sur le Text de base.
 Termine en vérifiant que typecheck passe et que l'app démarre.
 ```
 
-**Vérifier** : l'app s'ouvre dans Expo Go, les 3 onglets s'affichent, l'icône sur la page d'accueil d'Expo Go est le P à demi-lune, le mode sombre de l'iPhone change le fond.
+**Vérifier** : l'app s'ouvre dans Expo Go, les 4 onglets s'affichent, l'icône sur la page d'accueil d'Expo Go est le P à demi-lune, le mode sombre de l'iPhone change le fond.
 
 ---
 
@@ -123,7 +123,7 @@ Aucun composant React dans cette étape. Termine avec npm test vert.
 Étape 3 : l'état et les langues.
 
 1. src/store/useAppStore.ts : Zustand + persist sur expo-sqlite/kv-store, clé "phases-state", type AppState de SPEC §5, valeurs par défaut de SPEC §5. Actions : setMode, setPartnerName, setDefaults, completeOnboarding, startCycle(date) (via mergeCycles), editCycle, deleteCycle, setReminder, setReminderTime, setDiscreet, setFaceId, setLanguage, importState (avec validation), resetAll. Migration via version.
-2. src/i18n/index.ts : i18next + react-i18next, ressources src/i18n/{fr,en}.json + src/content/phases.{fr,en}.json (namespace "content"). Langue : state.language si fr/en, sinon expo-localization (fr si l'iPhone est en français, sinon en). Interpolation {{name}}.
+2. src/i18n/index.ts : i18next + react-i18next, ressources src/i18n/{fr,en}.json + src/content/phases.{fr,en}.json (namespace "content") + src/content/learn.{fr,en}.json (namespace "learn"). Langue : state.language si fr/en, sinon expo-localization (fr si l'iPhone est en français, sinon en). Interpolation {{name}}.
 3. src/lib/format.ts : formatDay(iso, locale), formatShort(iso, locale), weekdayShort, avec Intl.DateTimeFormat. Semaine du lundi en fr, du dimanche en en.
 4. Un écran dev caché (appui long 3 s sur le titre de Réglages, uniquement en __DEV__) pour : changer la date du jour affichée (setDebugToday, n'agit que sur l'affichage : les notifications suivent toujours l'horloge réelle de l'iPhone), injecter l'historique d'exemple de design/ (cycles du 16 avr. au 4 sept. 2026, pour comparer aux maquettes), injecter un historique relatif à aujourd'hui (dernier J1 = aujourd'hui − 20 jours, précédé de 5 cycles de 28 jours, pour tester les rappels), vider l'état.
 Tests : store (startCycle, import invalide rejeté), i18n (clés identiques en fr et en : écris un test qui compare les deux arbres de clés).
@@ -186,18 +186,23 @@ Tous les textes depuis src/i18n. Composants réutilisables dans src/components/ 
 
 ---
 
-## Étape 7 — Calendrier et guide
+## Étape 7 — Calendrier, guide et Apprendre
 
 ```text
-Étape 7 : calendrier et guide, d'après design/screens/09, 10 et 11.
+Étape 7 : calendrier, guide des phases et onglet Apprendre, d'après design/screens/09, 10, 11, 19, 20, 21 et 22.
 
 - (tabs)/calendar.tsx : grille du mois (semaine du lundi en fr, du dimanche en en), navigation mois ±, pastille par jour colorée selon la phase (passé = fond teinté, aujourd'hui = plein + contour, futur prédit = contour pointillé), initiale de la phase en accessibilityLabel, cloche sous les jours de rappel (depuis reminderSchedule), légende, carte du jour sélectionné (phase, jour du cycle, prochaines règles). Appui long sur un jour passé → « Règles commencées ce jour-là ? » → startCycle(date).
 - La couleur d'un jour se calcule à partir du cycle qui le contient : cycles passés réels pour le passé, cycles prédits (3 à venir) pour le futur.
 - guide/index.tsx : les 5 phases dans l'ordre, badge « Maintenant » sur la phase courante.
 - guide/[phase].tsx : gabarit unique pour les 5 phases, contenu depuis src/content/phases.<lang>.json (range_hint, subtitle, may_feel, helps, helps_less), barre des 5 phases avec la courante soulignée, disclaimer.
+- (tabs)/learn.tsx (19) : carte série (progression depuis state.learn.read, bouton « Continuer · Leçon N » vers la première non lue), tuiles des 5 phases → guide/<phase>, liste des 6 leçons (lue / en cours / à lire), carte « Lecture conseillée » → learn/book.
+- learn/[lesson].tsx (20, 21) : gabarit unique à partir de src/content/learn.<lang>.json ; bloc « Les 5 temps » seulement si la leçon a steps ; citation seulement si quote ; bouton de with_phases.link qui ouvre sa route ; leçon marquée lue (action markLessonRead) quand on atteint le bas du ScrollView ou qu'on tape « Leçon suivante ».
+- learn/book.tsx (22) : couverture générique dessinée en SVG (jamais la vraie), infos du livre, bouton « Trouver le livre » → Linking.openURL(book.url), liste des leçons, disclaimer.
+- Ajoute learn: { read: [] } à AppState (migration version 1 → valeur par défaut) et l'action markLessonRead(id).
+Aucun extrait du livre en dehors des citations courtes déjà présentes dans le JSON.
 ```
 
-**Vérifier** : septembre 2026 avec l'historique d'exemple ressemble à la maquette 09. Les 5 fiches du guide s'ouvrent, en FR et en EN.
+**Vérifier** : septembre 2026 avec l'historique d'exemple ressemble à la maquette 09. Les 5 fiches du guide s'ouvrent, en FR et en EN. Dans Apprendre, lire la leçon 1 jusqu'en bas la coche, la carte série passe à « 1 sur 6 », et les boutons « Avec Phases » ouvrent le bon écran.
 
 ---
 

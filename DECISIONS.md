@@ -40,10 +40,24 @@
 - Le point du jour est au milieu de l'arc de ce jour. En retard, les arcs passent à 0,35 et le point, en pointillés `regles`, est en haut. Le remplissage du point est le blanc du thème clair, pour rester blanc en mode sombre.
 - En cycle irrégulier, les phases encore à venir sont à 0,6. Le bandeau utilise `surface` et `ovulation` : le crème de la maquette n'est pas un jeton.
 - Sans cycle, l'anneau est un simple cercle, le titre est `today.empty`, et le bouton principal ouvre quand même la confirmation.
+- Sous le jour, la phase et la date sont sur deux lignes (`SPM` puis `jusqu'au 1 oct.`), en 15 pt et dans la couleur de la phase. Une seule ligne « phase · jusqu'au date » était réduite pour tenir dans le trou de l'anneau. En retard, une seule ligne reste `today.expected`.
 - Les 3 gestes sont un tirage stable pour la journée (`dayNumber`). S'il y en a moins de 3, on les affiche tous. L'ordre reste celui du contenu.
 - La pastille de rappel est la prochaine date parmi les rappels activés, sur les 3 prochains cycles (veille du SPM, veille de l'ovulation, veille des règles, matin du J1 puis J+1 à J+3). Rien n'est programmé. Si aucun rappel n'est activé, la pastille est absente. Quand 2 < σ ≤ 5, la pastille des règles montre la fenêtre à la place du compte à rebours.
 - L'écran Aujourd'hui relit `today()` à chaque focus, pour que la date de l'écran dev s'applique au retour.
 - « Autre date… » ouvre le sélecteur natif, borné de J−7 à aujourd'hui. Les jours futurs restent désactivés, y compris J+1 et J+2 de la rangée.
 - Le récapitulatif suit `mergeCycles` puis `todayStatus` sur la date choisie, sans écrire l'état avant Confirmer. Sans cycle précédent, la ligne « cycle précédent » est absente. L'interrupteur d'envoi n'est pas enregistré : l'envoi arrive à l'étape 9. En mode self sans prénom, le libellé est `confirm.send_update_self`.
 - « Pas encore, redemande demain » ne fait rien.
+- En mode partenaire, le titre du jour utilise le prénom quand il est renseigné (`today.title_partner_name`). Sans prénom, la phrase reste « Elle est en … ».
+- Pendant la phase règles, le bouton n'est plus « Ses règles ont commencé » : il dit « Corriger le début des règles » (avec le prénom s'il existe). C'est un lien de 44 pt, pas le gros bouton. La feuille de confirmation reprend le même titre. Hors de cette phase, le bouton principal reste celui qui enregistre un début.
+
+## Étape 6
+
+- `reminderSchedule` prend un instant `{ date, time }` en heure locale. Une notification est passée quand son horodatage est inférieur ou égal à cet instant. L'écran dev et la programmation utilisent `deviceToday()` et l'heure de l'iPhone, pas le jour affiché.
+- La fenêtre silencieuse est 22:00 inclus jusqu'à 08:00 exclu. L'heure choisie est ramenée à la borne la plus proche. À égale distance (03:00), c'est 08:00.
+- Quand 2 < σ ≤ 5, tous les rappels du cycle sont avancés de ⌈σ⌉ jours, pour tomber au début de la fenêtre. Au-delà, les dates restent sur la médiane et le titre passe à « possible ». Le corps du message ne change pas.
+- Les relances J+1 à J+3 sont prévues pour chacun des 3 cycles. S'il y en a plus de 16, on garde les 16 plus proches.
+- Sans cycle, ou si tous les rappels sont éteints, la liste est vide.
+- « Oui, aujourd'hui » appelle `startCycle(deviceToday())`. L'identifiant dédupliqué est celui de la notification plus l'action : expo-notifications n'expose pas un identifiant de réponse distinct. Il est gardé dans le kv-store, hors de l'état du cycle.
+- Le bandeau des réglages n'apparaît que si la permission est refusée. Le crème de la maquette n'est pas un jeton : fond `surface`, bord `ovulation`.
+- Sur iOS, une notification datée est relue comme un délai, pas comme un jour. L'écran dev lit donc l'identifiant `phases-<type>-AAAA-MM-JJTHH:MM`.
 

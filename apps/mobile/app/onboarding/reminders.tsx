@@ -7,6 +7,7 @@ import { Pressable, Text, View } from 'react-native';
 import { OnboardingFrame } from '@/components/OnboardingFrame';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { Toggle } from '@/components/Toggle';
+import { syncNotifications } from '@/reminders/sync';
 import { type ReminderFlag, useAppStore } from '@/store/useAppStore';
 import { radii, useTheme } from '@/theme';
 
@@ -30,6 +31,7 @@ export default function RemindersScreen() {
       // A refused or unavailable prompt still finishes onboarding.
     }
     completeOnboarding();
+    void syncNotifications();
   }
 
   const rows: { flag: ReminderFlag; color: string; title: string; detail: string }[] = [

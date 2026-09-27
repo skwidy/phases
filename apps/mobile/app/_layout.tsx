@@ -1,13 +1,14 @@
 import '@/lib/applyRoundedFont';
 import '@/i18n';
 
-import { Redirect, Stack, usePathname } from 'expo-router';
+import { Redirect, Stack, usePathname, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import * as SystemUI from 'expo-system-ui';
 
 import { syncLanguage } from '@/i18n';
+import { startReminders } from '@/reminders/sync';
 import { useAppStore } from '@/store/useAppStore';
 import { useTheme } from '@/theme';
 
@@ -38,6 +39,7 @@ export default function RootLayout() {
 
   return (
     <>
+      <ReminderSync />
       <StatusBar style="auto" />
       <Stack
         screenOptions={{
@@ -49,4 +51,16 @@ export default function RootLayout() {
       {onboarded && inOnboarding ? <Redirect href="/" /> : null}
     </>
   );
+}
+
+function ReminderSync() {
+  const router = useRouter();
+
+  useEffect(() => {
+    return startReminders(() => {
+      router.navigate('/');
+    });
+  }, [router]);
+
+  return null;
 }
