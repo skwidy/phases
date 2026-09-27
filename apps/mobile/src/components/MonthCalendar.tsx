@@ -6,7 +6,7 @@ import { type ISODate } from '@/cycle/dates';
 import { today } from '@/lib/clock';
 import { formatDay, formatMonth, weekdayInitial } from '@/lib/format';
 import { monthCells, shiftMonth } from '@/lib/month';
-import { light, radii, useTheme } from '@/theme';
+import { light, radii, serif, useTheme } from '@/theme';
 
 type Props = {
   month: { year: number; month: number };
@@ -28,7 +28,15 @@ export function MonthCalendar({ month, selected, onMonth, onSelect }: Props) {
   for (let index = 0; index < cells.length; index += 7) weeks.push(cells.slice(index, index + 7));
 
   return (
-    <View style={{ padding: 16, backgroundColor: theme.surface, borderRadius: radii.card }}>
+    <View
+      style={{
+        padding: 16,
+        backgroundColor: theme.surface,
+        borderRadius: radii.card,
+        borderWidth: 1,
+        borderColor: theme.line,
+      }}
+    >
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <Pressable
           accessibilityRole="button"
@@ -38,7 +46,7 @@ export function MonthCalendar({ month, selected, onMonth, onSelect }: Props) {
         >
           <Chevron color={theme.text} direction="left" />
         </Pressable>
-        <Text style={{ color: theme.text, fontSize: 17, fontWeight: '800' }}>
+        <Text style={{ ...serif, color: theme.text, fontSize: 17 }}>
           {formatMonth(`${monthKey}-01`, locale)}
         </Text>
         <Pressable

@@ -8,7 +8,7 @@ import { ChevronIcon } from '@/components/ChevronIcon';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { parseLessons, type LearnLesson, type LearnLink } from '@/content/learn';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, serif, space, type as typeScale, useTheme } from '@/theme';
 
 function lessonId(value: string | string[] | undefined): string {
   if (typeof value === 'string') return value;
@@ -91,7 +91,7 @@ export default function LessonScreen() {
             next={next}
             onNext={() => {
               if (next) router.push({ pathname: '/learn/[lesson]', params: { lesson: next.id } });
-              else router.dismissTo('/(tabs)/learn');
+              else router.push('/learn/done');
             }}
             onLink={(link) => openLinkedRoute(router, link.route)}
           />
@@ -141,11 +141,11 @@ function LessonBody({
       <Text
         accessibilityRole="header"
         style={{
+          ...serif,
           marginTop: 18,
           color: theme.text,
           fontSize: 32,
-          lineHeight: 37,
-          fontWeight: '900',
+          lineHeight: 38,
           letterSpacing: -0.6,
         }}
       >
@@ -153,17 +153,7 @@ function LessonBody({
       </Text>
 
       <Tint tone="luteale">
-        <Text
-          style={{
-            color: theme.spm,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-          }}
-        >
-          {t('ui.key_idea')}
-        </Text>
+        <Text style={eyebrowStyle(theme)}>{t('ui.key_idea')}</Text>
         <Text style={{ marginTop: 6, color: theme.text, fontSize: 18, lineHeight: 25, fontWeight: '800' }}>
           {lesson.key_idea}
         </Text>
@@ -180,15 +170,15 @@ function LessonBody({
       {lesson.steps ? <Steps steps={lesson.steps} title={t('ui.steps')} note={t('ui.steps_note')} /> : null}
 
       {lesson.quote ? (
-        <View style={{ marginTop: 20, padding: 18, borderRadius: radii.card, backgroundColor: theme.surface, gap: 6 }}>
+        <View style={{ ...cardChrome(theme), marginTop: 20, padding: 18, gap: 6 }}>
           <Text style={{ color: theme.luteale, fontSize: 44, lineHeight: 30, fontWeight: '900' }}>{t('ui.quote_mark')}</Text>
           <Text style={{ color: theme.text, fontSize: 20, lineHeight: 27, fontWeight: '800' }}>{lesson.quote.text}</Text>
           <Text style={{ color: theme.textMuted, fontSize: 13 }}>{lesson.quote.source}</Text>
         </View>
       ) : null}
 
-      <View style={{ marginTop: 14, padding: 18, borderRadius: radii.card, backgroundColor: theme.surface, gap: 8 }}>
-        <Text style={{ color: theme.text, fontSize: 16, fontWeight: '900' }}>{lesson.with_phases.title}</Text>
+      <View style={{ ...cardChrome(theme), marginTop: 14, padding: 18, gap: 8 }}>
+        <Text style={{ ...serif, color: theme.text, fontSize: 16 }}>{lesson.with_phases.title}</Text>
         <Text style={{ color: theme.text, fontSize: 16, lineHeight: 23 }}>{lesson.with_phases.text}</Text>
         {lesson.with_phases.link ? (
           <LinkButton link={lesson.with_phases.link} onPress={onLink} />
@@ -196,17 +186,7 @@ function LessonBody({
       </View>
 
       <Tint tone="ovulation">
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-          }}
-        >
-          {t('ui.try')}
-        </Text>
+        <Text style={eyebrowStyle(theme)}>{t('ui.try')}</Text>
         <Text style={{ marginTop: 8, color: theme.text, fontSize: 16, lineHeight: 23 }}>{lesson.try}</Text>
       </Tint>
 
@@ -246,19 +226,8 @@ function Steps({ steps, title, note }: { steps: { name: string; text: string }[]
   const theme = useTheme();
 
   return (
-    <View style={{ marginTop: 20, padding: 20, borderRadius: radii.card, backgroundColor: theme.surface }}>
-      <Text
-        style={{
-          marginBottom: 14,
-          color: theme.textMuted,
-          fontSize: typeScale.label,
-          fontWeight: '800',
-          letterSpacing: typeScale.labelTracking,
-          textTransform: 'uppercase',
-        }}
-      >
-        {title}
-      </Text>
+    <View style={{ ...cardChrome(theme), marginTop: 20, padding: 20 }}>
+      <Text style={{ ...eyebrowStyle(theme), marginBottom: 14 }}>{title}</Text>
       {steps.map((step, stepIndex) => {
         const last = stepIndex === steps.length - 1;
         return (
@@ -284,7 +253,7 @@ function Steps({ steps, title, note }: { steps: { name: string; text: string }[]
               {last ? null : <View style={{ width: 3, flexGrow: 1, minHeight: 22, backgroundColor: theme.line }} />}
             </View>
             <View style={{ flex: 1, paddingTop: 5, paddingBottom: last ? 0 : 16 }}>
-              <Text style={{ color: theme.text, fontSize: 17, fontWeight: '900' }}>{step.name}</Text>
+              <Text style={{ ...serif, color: theme.text, fontSize: 17 }}>{step.name}</Text>
               <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, lineHeight: 21 }}>{step.text}</Text>
             </View>
           </View>
@@ -301,10 +270,9 @@ function Tint({ tone, children }: { tone: 'luteale' | 'ovulation'; children: Rea
   return (
     <View
       style={{
+        ...cardChrome(theme),
         marginTop: 16,
-        borderRadius: radii.card,
         overflow: 'hidden',
-        backgroundColor: theme.surface,
       }}
     >
       <View

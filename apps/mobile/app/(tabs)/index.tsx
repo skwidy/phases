@@ -7,6 +7,8 @@ import Svg, { Circle, Path } from 'react-native-svg';
 
 import { CycleRing } from '@/components/CycleRing';
 import { PrimaryButton } from '@/components/PrimaryButton';
+import { SunsetFill } from '@/components/SunsetFill';
+import { Title } from '@/components/Title';
 import { dayNumber, diffDays, type ISODate } from '@/cycle/dates';
 import {
   phaseEndDate,
@@ -20,7 +22,7 @@ import { dailyTips } from '@/cycle/tips';
 import { formatDay, formatShort } from '@/lib/format';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme, type Theme } from '@/theme';
+import { cardChrome, eyebrowStyle, radii, space, type as typeScale, useTheme, type Theme } from '@/theme';
 
 function tipList(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
@@ -45,12 +47,9 @@ export default function TodayScreen() {
   const partnerName = useAppStore((state) => state.partnerName);
   const reminders = useAppStore((state) => state.reminders);
   const [dayIso, setDayIso] = useState<ISODate>(() => today());
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(consumeCycleSaved);
 
-  useEffect(() => {
-    if (consumeCycleSaved()) setSaved(true);
-    return subscribeCycleSaved(() => setSaved(true));
-  }, []);
+  useEffect(() => subscribeCycleSaved(() => setSaved(true)), []);
 
   useEffect(() => {
     if (!saved) return;
@@ -152,18 +151,34 @@ export default function TodayScreen() {
         >
           {formatDay(dayIso, locale)}
         </Text>
-        <Text
+        <Title
+          emphasis={status.phase ? phaseName : undefined}
           style={{
-            color: theme.text,
             fontSize: typeScale.title,
-            fontWeight: '800',
             letterSpacing: -0.4,
             textAlign: 'center',
             marginTop: 4,
           }}
         >
           {title}
-        </Text>
+        </Title>
+        {status.phase === 'regles' ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={changeDayLabel}
+            onPress={() => router.push('/confirm')}
+            style={({ pressed }) => ({
+              minHeight: 44,
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: pressed ? 0.55 : 1,
+            })}
+          >
+            <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, fontWeight: '600', textAlign: 'center' }}>
+              {changeDayLabel}
+            </Text>
+          </Pressable>
+        ) : null}
         {saved ? (
           <Pressable
             accessibilityRole="button"
@@ -171,8 +186,7 @@ export default function TodayScreen() {
             onPress={() => setSaved(false)}
             style={{
               marginTop: 12,
-              backgroundColor: theme.surface,
-              borderRadius: radii.card,
+              ...cardChrome(theme),
               paddingVertical: 12,
               paddingHorizontal: 16,
             }}
@@ -252,8 +266,7 @@ export default function TodayScreen() {
             onPress={openGuide}
             style={({ pressed }) => ({
               marginTop: 16,
-              backgroundColor: theme.surface,
-              borderRadius: radii.card,
+              ...cardChrome(theme),
               paddingVertical: 16,
               paddingHorizontal: 18,
               flexDirection: 'row',
@@ -280,22 +293,34 @@ export default function TodayScreen() {
             onPress={openGuide}
             style={({ pressed }) => ({
               marginTop: 12,
-              backgroundColor: theme.surface,
               borderRadius: radii.card,
-              paddingVertical: 16,
-              paddingHorizontal: 18,
               opacity: pressed ? 0.85 : 1,
+              shadowColor: theme.warm,
+              shadowOffset: { width: 0, height: 10 },
+              shadowOpacity: 0.15,
+              shadowRadius: 18,
+              elevation: 3,
             })}
           >
+            <View
+              style={{
+                borderRadius: radii.card,
+                borderWidth: 1,
+                borderColor: theme.line,
+                overflow: 'hidden',
+              }}
+            >
+            <SunsetFill />
+            <View style={{ paddingVertical: 16, paddingHorizontal: 18 }}>
             {late ? null : (
               <>
-                <Text style={labelStyle(theme)}>{t('today.what_happens')}</Text>
+                <Text style={{ ...eyebrowStyle(theme), marginBottom: 8 }}>{t('today.what_happens')}</Text>
                 <Text style={{ color: theme.text, fontSize: 16, lineHeight: 22, marginBottom: 16 }}>
                   {happens}
                 </Text>
               </>
             )}
-            <Text style={labelStyle(theme)}>
+            <Text style={{ ...eyebrowStyle(theme), marginBottom: 8 }}>
               {t(mode === 'self' ? 'today.what_to_do_self' : 'today.what_to_do_partner')}
             </Text>
             {tips.map((tip) => (
@@ -309,51 +334,26 @@ export default function TodayScreen() {
                 <Text style={{ flex: 1, color: theme.text, fontSize: 16, lineHeight: 22 }}>{tip}</Text>
               </View>
             ))}
+            </View>
+            </View>
           </Pressable>
         ) : null}
       </ScrollView>
-      <View style={{ paddingHorizontal: space.screen, paddingBottom: Math.max(insets.bottom, 12) }}>
-        {status.phase === 'regles' ? (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={changeDayLabel}
-            onPress={() => router.push('/confirm')}
-            style={({ pressed }) => ({
-              minHeight: 44,
-              alignItems: 'center',
-              justifyContent: 'center',
-              opacity: pressed ? 0.55 : 1,
-            })}
-          >
-            <Text style={{ color: theme.text, fontSize: typeScale.secondary, fontWeight: '700', textAlign: 'center' }}>
-              {changeDayLabel}
-            </Text>
-          </Pressable>
-        ) : (
+      {status.phase === 'regles' ? null : (
+        <View style={{ paddingHorizontal: space.screen, paddingBottom: Math.max(insets.bottom, 12) }}>
           <PrimaryButton
             label={t(mode === 'self' ? 'today.started_self' : 'today.started_partner')}
             onPress={() => router.push('/confirm')}
           />
-        )}
-        {late ? (
-          <View style={{ marginTop: 8 }}>
-            <PrimaryButton label={t('today.not_yet')} variant="plain" onPress={() => undefined} />
-          </View>
-        ) : null}
-      </View>
+          {late ? (
+            <View style={{ marginTop: 8 }}>
+              <PrimaryButton label={t('today.not_yet')} variant="plain" onPress={() => undefined} />
+            </View>
+          ) : null}
+        </View>
+      )}
     </View>
   );
-}
-
-function labelStyle(theme: Theme) {
-  return {
-    color: theme.textMuted,
-    fontSize: typeScale.label,
-    fontWeight: '800' as const,
-    letterSpacing: typeScale.labelTracking,
-    textTransform: 'uppercase' as const,
-    marginBottom: 8,
-  };
 }
 
 function Pill({ label, bell = false }: { label: string; bell?: boolean }) {
@@ -363,21 +363,19 @@ function Pill({ label, bell = false }: { label: string; bell?: boolean }) {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: theme.line,
         borderRadius: radii.pill,
         paddingHorizontal: 12,
         minHeight: 32,
         margin: 4,
-        backgroundColor: theme.bg,
+        backgroundColor: theme.warmSoft,
       }}
     >
       {bell ? (
         <View style={{ marginRight: 6 }}>
-          <BellIcon color={theme.text} />
+          <BellIcon color={theme.warm} />
         </View>
       ) : null}
-      <Text style={{ color: theme.text, fontSize: 13, fontWeight: '700' }}>{label}</Text>
+      <Text style={{ color: theme.warm, fontSize: 13, fontWeight: '700' }}>{label}</Text>
     </View>
   );
 }

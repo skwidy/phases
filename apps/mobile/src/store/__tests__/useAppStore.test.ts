@@ -123,3 +123,16 @@ test('persists under phases-state and restores it', async () => {
   await second.persist.rehydrate();
   expect(second.getState().cycles).toEqual([{ start: '2026-09-04' }]);
 });
+
+test('applySharedCycles merges dates and default lengths and leaves the name alone', async () => {
+  const store = storeWith();
+  await store.persist.rehydrate();
+  store.getState().setMode('self');
+  store.getState().setPartnerName('Sophie');
+  store.getState().startCycle('2026-09-04');
+  store.getState().applySharedCycles(['2026-10-02'], { cycleLength: 30, periodLength: 4 });
+  expect(store.getState().mode).toBe('self');
+  expect(store.getState().partnerName).toBe('Sophie');
+  expect(store.getState().cycles.map((cycle) => cycle.start)).toEqual(['2026-09-04', '2026-10-02']);
+  expect(store.getState().defaults).toEqual({ cycleLength: 30, periodLength: 4 });
+});

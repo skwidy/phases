@@ -11,7 +11,7 @@ import { deviceToday, setDebugToday, today } from '@/lib/clock';
 import { formatDay, formatShort } from '@/lib/format';
 import { scheduleTestReminder } from '@/reminders/sync';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme } from '@/theme';
+import { radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 type ListedNotification = {
   id: string;
@@ -114,7 +114,7 @@ export default function DevScreen() {
         </Pressable>
         <Text
           accessibilityRole="header"
-          style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '700', marginBottom: space.grid }}
+          style={{ ...serif, color: theme.text, fontSize: typeScale.title, marginBottom: space.grid }}
         >
           {t('dev.title')}
         </Text>

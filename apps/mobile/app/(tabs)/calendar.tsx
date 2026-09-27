@@ -13,7 +13,7 @@ import { formatDay, formatMonthName, formatShort, formatShortWithWeekday, weekda
 import { today } from '@/lib/clock';
 import { monthCells, shiftMonth } from '@/lib/month';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, serif, space, type as typeScale, useTheme } from '@/theme';
 
 export default function CalendarScreen() {
   const theme = useTheme();
@@ -77,7 +77,7 @@ export default function CalendarScreen() {
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-        <Text style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}>
+        <Text style={{ ...serif, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}>
           {formatMonthName(`${month.year}-${String(month.month).padStart(2, '0')}-01`, locale)}
         </Text>
         <View style={{ flexDirection: 'row' }}>
@@ -117,26 +117,9 @@ export default function CalendarScreen() {
         ))}
         <LegendItem color={theme.textMuted} label={t('calendar.planned')} dashed />
       </View>
-      <View
-        style={{
-          marginTop: 14,
-          paddingVertical: 16,
-          paddingHorizontal: 18,
-          backgroundColor: theme.surface,
-          borderRadius: radii.card,
-        }}
-      >
-        <Text
-          style={{
-            color: theme.textMuted,
-            fontSize: 13,
-            fontWeight: '800',
-            textTransform: 'uppercase',
-          }}
-        >
-          {card.kicker}
-        </Text>
-        <Text style={{ marginTop: 6, color: theme.text, fontSize: 18, fontWeight: '800' }}>{card.title}</Text>
+      <View style={{ ...cardChrome(theme), marginTop: 14, paddingVertical: 16, paddingHorizontal: 18 }}>
+        <Text style={eyebrowStyle(theme)}>{card.kicker}</Text>
+        <Text style={{ ...serif, marginTop: 6, color: theme.text, fontSize: 18 }}>{card.title}</Text>
         {card.sub ? (
           <Text style={{ marginTop: 6, color: theme.textMuted, fontSize: typeScale.secondary }}>{card.sub}</Text>
         ) : null}

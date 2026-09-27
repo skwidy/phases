@@ -1,9 +1,9 @@
 import '@/lib/applyRoundedFont';
-import '@/i18n';
 
 import { Redirect, Stack, usePathname, useRouter } from 'expo-router';
+import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SystemUI from 'expo-system-ui';
@@ -11,6 +11,7 @@ import * as SystemUI from 'expo-system-ui';
 import { syncLanguage } from '@/i18n';
 import { startReminders } from '@/reminders/sync';
 import { LockGate } from '@/security/LockGate';
+import { claimLink } from '@/sync/pending';
 import { useAppStore } from '@/store/useAppStore';
 import { useTheme } from '@/theme';
 
@@ -19,7 +20,11 @@ export default function RootLayout() {
   const pathname = usePathname();
   const language = useAppStore((state) => state.language);
   const onboarded = useAppStore((state) => state.onboarded);
-  const [ready, setReady] = useState(() => useAppStore.persist.hasHydrated());
+  const ready = useSyncExternalStore(
+    (onStoreChange) => useAppStore.persist.onFinishHydration(onStoreChange),
+    () => useAppStore.persist.hasHydrated(),
+    () => useAppStore.persist.hasHydrated(),
+  );
 
   useEffect(() => {
     syncLanguage(language);
@@ -28,11 +33,6 @@ export default function RootLayout() {
   useEffect(() => {
     void SystemUI.setBackgroundColorAsync(theme.bg);
   }, [theme.bg]);
-
-  useEffect(() => {
-    if (useAppStore.persist.hasHydrated()) setReady(true);
-    return useAppStore.persist.onFinishHydration(() => setReady(true));
-  }, []);
 
   const inOnboarding = pathname.startsWith('/onboarding');
   const inDev = pathname === '/dev';
@@ -49,6 +49,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.bg }}>
       <View style={{ flex: 1 }}>
         <ReminderSync />
+        <SyncLinks />
         <StatusBar style="auto" />
         <Stack
           screenOptions={{
@@ -62,6 +63,32 @@ export default function RootLayout() {
       <LockGate />
     </GestureHandlerRootView>
   );
+}
+
+function SyncLinks() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const path = useRef(pathname);
+  const opened = useRef<string | null>(null);
+
+  useEffect(() => {
+    path.current = pathname;
+  }, [pathname]);
+
+  useEffect(() => {
+    function open(url: string | null) {
+      if (!url || url === opened.current || !claimLink(url)) return;
+      opened.current = url;
+      if (path.current === '/s' || path.current === '/sync/receive') return;
+      router.push('/sync/receive');
+    }
+
+    void Linking.getInitialURL().then(open);
+    const subscription = Linking.addEventListener('url', (event) => open(event.url));
+    return () => subscription.remove();
+  }, [router]);
+
+  return null;
 }
 
 function ReminderSync() {

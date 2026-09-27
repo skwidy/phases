@@ -18,6 +18,10 @@ const T = {
     koTitle: 'Incomplete link',
     koText: "This link doesn't hold a readable update. Ask them to resend it from Phases.",
     discover: 'Discover Phases',
+    theme: 'Theme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
   },
 };
 
@@ -33,6 +37,10 @@ if (en) {
   document.querySelectorAll('[data-t]').forEach((el) => {
     const v = T.en[el.dataset.t];
     if (v) el.textContent = v;
+  });
+  document.querySelectorAll('[data-t-aria]').forEach((el) => {
+    const v = T.en[el.dataset.tAria];
+    if (v) el.setAttribute('aria-label', v);
   });
   document.querySelectorAll('[data-home]').forEach((a) => a.setAttribute('href', '/en'));
 }

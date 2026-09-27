@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Platform, Pressable, ScrollView, Text, View } from 'react-native';
+import { Platform, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '@/components/PrimaryButton';
@@ -13,8 +13,9 @@ import { addDays, type ISODate } from '@/cycle/dates';
 import { todayStatus } from '@/cycle/engine';
 import { formatShort, formatWeekday } from '@/lib/format';
 import { today } from '@/lib/clock';
+import { shareUrl } from '@/sync/format';
 import { useAppStore } from '@/store/useAppStore';
-import { light, radii, space, type as typeScale, useTheme } from '@/theme';
+import { eyebrowStyle, light, serif, space, type as typeScale, useTheme } from '@/theme';
 
 function localDate(iso: ISODate): Date {
   const [year, month, day] = iso.split('-').map(Number);
@@ -75,7 +76,16 @@ export default function ConfirmScreen() {
     if (selected > now) return;
     startCycle(selected);
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    const url =
+      showSend && sendUpdate
+        ? shareUrl({
+            cycles: useAppStore.getState().cycles.map((cycle) => cycle.start),
+            cycleLength: defaults.cycleLength,
+            periodLength: defaults.periodLength,
+          })
+        : null;
     router.back();
+    if (url) void Share.share({ message: url }).catch(() => undefined);
   }
 
   return (
@@ -100,9 +110,9 @@ export default function ConfirmScreen() {
       >
         <Text
           style={{
+            ...serif,
             color: theme.text,
             fontSize: typeScale.title,
-            fontWeight: '800',
             letterSpacing: -0.4,
             textAlign: 'center',
             marginBottom: 16,
@@ -110,18 +120,7 @@ export default function ConfirmScreen() {
         >
           {title}
         </Text>
-        <Text
-          style={{
-            color: theme.textMuted,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-            marginBottom: 8,
-          }}
-        >
-          {t('confirm.which_day')}
-        </Text>
+        <Text style={{ ...eyebrowStyle(theme), marginBottom: 8 }}>{t('confirm.which_day')}</Text>
         <View style={{ flexDirection: 'row', marginBottom: 12 }}>
           {chips.map((iso) => {
             const future = iso > now;

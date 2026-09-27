@@ -50,6 +50,7 @@ type AppActions = {
   setLanguage: (language: AppLanguage) => void;
   markLessonRead: (id: string) => void;
   importState: (value: unknown) => boolean;
+  applySharedCycles: (incoming: readonly ISODate[], defaults: AppState['defaults']) => void;
   resetAll: () => void;
 };
 
@@ -239,6 +240,21 @@ function createActions(set: (partial: Partial<AppState>) => void, get: () => App
       if (!parsed) return false;
       set(parsed);
       return true;
+    },
+    applySharedCycles: (incoming, defaults) => {
+      if (!isIntIn(defaults.cycleLength, 21, 45) || !isIntIn(defaults.periodLength, 2, 10)) return;
+      const dates = incoming.filter(isIsoDate);
+      if (dates.length === 0) return;
+      const current = get().cycles;
+      const merged = mergeCycles(
+        current.map((cycle) => cycle.start),
+        dates,
+      );
+      const periodByStart = new Map(current.map((cycle) => [cycle.start, cycle.periodLength]));
+      set({
+        cycles: cyclesFrom(merged, periodByStart),
+        defaults: { cycleLength: defaults.cycleLength, periodLength: defaults.periodLength },
+      });
     },
     resetAll: () => set(defaultAppState()),
   };

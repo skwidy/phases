@@ -15,11 +15,12 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.text,
+        tabBarActiveTintColor: theme.warm,
         tabBarInactiveTintColor: theme.textMuted,
         tabBarStyle: {
-          backgroundColor: theme.surface,
+          backgroundColor: theme.bg,
           borderTopColor: theme.line,
+          borderTopWidth: 1,
         },
         tabBarLabelStyle: {
           fontFamily: 'ui-rounded',

@@ -1,13 +1,16 @@
 {
   "name": "phases",
   "private": true,
+  "description": "Phases — local cycle app and static marketing site",
   "type": "module",
   "scripts": {
+    "dev": "serve apps/web --listen 3000",
     "test": "node tests/sync.test.mjs",
     "assets": "node tools/generate-assets.mjs"
   },
   "devDependencies": {
+    "@fontsource/nunito": "^5.2.0",
     "playwright": "^1.55.0",
-    "@fontsource/nunito": "^5.2.0"
+    "serve": "^14.2.5"
   }
 }

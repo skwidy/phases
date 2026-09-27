@@ -9,7 +9,7 @@ import { ChevronIcon } from '@/components/ChevronIcon';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { syncNotifications } from '@/reminders/sync';
 import { useAppStore } from '@/store/useAppStore';
-import { space, type as typeScale, useTheme } from '@/theme';
+import { serif, space, type as typeScale, useTheme } from '@/theme';
 
 export default function ImportScreen() {
   const theme = useTheme();
@@ -66,7 +66,7 @@ export default function ImportScreen() {
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text
           accessibilityRole="header"
-          style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}
+          style={{ ...serif, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}
         >
           {pending ? t('settings.import_title') : t('settings.import_invalid')}
         </Text>

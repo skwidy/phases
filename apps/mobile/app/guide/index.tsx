@@ -10,7 +10,7 @@ import { type ISODate } from '@/cycle/dates';
 import { todayStatus } from '@/cycle/engine';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
-import { light, radii, space, type as typeScale, useTheme } from '@/theme';
+import { radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 export default function GuideScreen() {
   const theme = useTheme();
@@ -43,7 +43,7 @@ export default function GuideScreen() {
       }}
     >
       <BackButton label={t('nav.today')} onPress={() => router.back()} />
-      <Text style={{ marginTop: 8, color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}>
+      <Text style={{ ...serif, marginTop: 8, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}>
         {t('guide.title')}
       </Text>
       <Text style={{ marginTop: 6, color: theme.textMuted, fontSize: typeScale.body, lineHeight: 22 }}>
@@ -102,8 +102,8 @@ function PhaseRow({
         paddingHorizontal: 16,
         backgroundColor: theme.surface,
         borderRadius: 18,
-        borderWidth: 2,
-        borderColor: current ? theme.text : 'transparent',
+        borderWidth: 1,
+        borderColor: current ? theme.warm : theme.line,
         opacity: pressed ? 0.7 : 1,
       })}
     >
@@ -122,7 +122,7 @@ function PhaseRow({
       </View>
       <View style={{ flex: 1 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '800' }}>{name}</Text>
+          <Text style={{ ...serif, color: theme.text, fontSize: typeScale.body }}>{name}</Text>
           {current ? (
             <View
               style={{
@@ -130,10 +130,10 @@ function PhaseRow({
                 paddingVertical: 2,
                 paddingHorizontal: 8,
                 borderRadius: radii.pill,
-                backgroundColor: theme.accentBg,
+                backgroundColor: theme.warmSoft,
               }}
             >
-              <Text style={{ color: light.accentFg, fontSize: 11, fontWeight: '800' }}>{nowLabel}</Text>
+              <Text style={{ color: theme.warm, fontSize: 11, fontWeight: '800' }}>{nowLabel}</Text>
             </View>
           ) : null}
         </View>

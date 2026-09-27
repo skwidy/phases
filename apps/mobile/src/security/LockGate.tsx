@@ -12,9 +12,7 @@ export function LockGate() {
   const backgroundedAt = useRef<number | null>(null);
   const unlock = useCallback(() => setLocked(false), []);
 
-  useEffect(() => {
-    if (!faceId) setLocked(false);
-  }, [faceId]);
+  if (!faceId && locked) setLocked(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (next) => {

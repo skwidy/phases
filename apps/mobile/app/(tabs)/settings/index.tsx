@@ -12,12 +12,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { appStateOf, setPendingImport } from '@/backup/pending';
 import { ChevronIcon } from '@/components/ChevronIcon';
+import { IconWell, type SettingsGlyphName } from '@/components/SettingsGlyph';
 import { Stepper } from '@/components/Stepper';
 import { Toggle } from '@/components/Toggle';
 import { deviceToday } from '@/lib/clock';
 import { authenticateDevice } from '@/security/authenticate';
 import { parseAppState, type AppLanguage, type ReminderClock, type ReminderFlag, useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 function displayTime(time: string): string {
   return time.replace(/^0/, '');
@@ -80,11 +81,19 @@ export default function SettingsScreen() {
   const syncLabel = mode === 'partner' && partnerName ? t('settings.sync_with', { name: partnerName }) : t('settings.sync');
   const version = Constants.expoConfig?.version ?? '1.0.0';
 
-  const rows: { flag: ReminderFlag; title: string; time: string; clock: ReminderClock }[] = [
-    { flag: 'pms', title: t('onboarding.pms_row'), time: reminders.eveningTime, clock: 'evening' },
-    { flag: 'period', title: t('onboarding.period_row'), time: reminders.eveningTime, clock: 'evening' },
-    { flag: 'confirm', title: t('onboarding.confirm_row'), time: reminders.morningTime, clock: 'morning' },
-    { flag: 'ovulation', title: t('onboarding.ovulation_row'), time: reminders.eveningTime, clock: 'evening' },
+  const rows: {
+    flag: ReminderFlag;
+    title: string;
+    hint: string;
+    time: string;
+    clock: ReminderClock;
+    icon: SettingsGlyphName;
+    color: string;
+  }[] = [
+    { flag: 'pms', title: t('onboarding.pms_row'), hint: t('settings.hint_pms'), time: reminders.eveningTime, clock: 'evening', icon: 'moon', color: theme.spm },
+    { flag: 'period', title: t('onboarding.period_row'), hint: t('settings.hint_period'), time: reminders.eveningTime, clock: 'evening', icon: 'drop', color: theme.regles },
+    { flag: 'confirm', title: t('onboarding.confirm_row'), hint: t('settings.hint_confirm'), time: reminders.morningTime, clock: 'morning', icon: 'sunrise', color: theme.luteale },
+    { flag: 'ovulation', title: t('onboarding.ovulation_row'), hint: t('settings.hint_ovulation'), time: reminders.eveningTime, clock: 'evening', icon: 'spark', color: theme.ovulation },
   ];
 
   function chooseMode() {
@@ -199,7 +208,7 @@ export default function SettingsScreen() {
           >
             <Text
               accessibilityRole="header"
-              style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}
+              style={{ ...serif, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}
             >
               {t('nav.settings')}
             </Text>
@@ -207,7 +216,7 @@ export default function SettingsScreen() {
         ) : (
           <Text
             accessibilityRole="header"
-            style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}
+            style={{ ...serif, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}
           >
             {t('nav.settings')}
           </Text>
@@ -225,6 +234,7 @@ export default function SettingsScreen() {
               alignItems: 'center',
             }}
           >
+            <IconWell name="bellOff" color={theme.ovulation} />
             <Text style={{ flex: 1, color: theme.text, fontSize: typeScale.secondary, lineHeight: 20, marginRight: 12 }}>
               <Text style={{ fontWeight: '800' }}>{t('settings.notifs_off')}</Text> {t('settings.notifs_off_sub')}
             </Text>
@@ -251,35 +261,44 @@ export default function SettingsScreen() {
             <View
               key={row.flag}
               style={{
-                minHeight: 54,
+                minHeight: 64,
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderBottomWidth: index === rows.length - 1 ? 0 : 1,
                 borderBottomColor: theme.line,
               }}
             >
-              <Text style={{ flex: 1, color: theme.text, fontSize: 16, fontWeight: '700' }}>{row.title}</Text>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={`${row.clock === 'evening' ? t('settings.evening') : t('settings.morning')} ${
-                  reminders[row.flag] ? displayTime(row.time) : t('settings.off')
-                }`}
-                onPress={() => setClock((current) => (current === row.clock ? null : row.clock))}
-                style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8 }}
-              >
-                <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary }}>
-                  {reminders[row.flag] ? displayTime(row.time) : t('settings.off')}
-                </Text>
-              </Pressable>
-              <Pressable
-                accessibilityRole="switch"
-                accessibilityLabel={row.title}
-                accessibilityState={{ checked: reminders[row.flag] }}
-                onPress={() => setReminder(row.flag, !reminders[row.flag])}
-                style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}
-              >
-                <Toggle value={reminders[row.flag]} />
-              </Pressable>
+              <RowCopy
+                icon={row.icon}
+                iconColor={row.color}
+                label={row.title}
+                hint={row.hint}
+                aside={
+                  <>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`${row.clock === 'evening' ? t('settings.evening') : t('settings.morning')} ${
+                        reminders[row.flag] ? displayTime(row.time) : t('settings.off')
+                      }`}
+                      onPress={() => setClock((current) => (current === row.clock ? null : row.clock))}
+                      style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8 }}
+                    >
+                      <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary }}>
+                        {reminders[row.flag] ? displayTime(row.time) : t('settings.off')}
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      accessibilityRole="switch"
+                      accessibilityLabel={`${row.title}. ${row.hint}`}
+                      accessibilityState={{ checked: reminders[row.flag] }}
+                      onPress={() => setReminder(row.flag, !reminders[row.flag])}
+                      style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <Toggle value={reminders[row.flag]} />
+                    </Pressable>
+                  </>
+                }
+              />
             </View>
           ))}
         </Section>
@@ -292,55 +311,70 @@ export default function SettingsScreen() {
           />
         ) : null}
         <Section title={t('settings.cycle')}>
-          <ValueRow label={t('settings.mode')} value={t(mode === 'self' ? 'settings.mode_self' : 'settings.mode_partner')} onPress={chooseMode} />
+          <ValueRow
+            icon="people"
+            iconColor={theme.spm}
+            label={t('settings.mode')}
+            hint={t('settings.hint_mode')}
+            value={t(mode === 'self' ? 'settings.mode_self' : 'settings.mode_partner')}
+            onPress={chooseMode}
+          />
           <View
             style={{
-              minHeight: 54,
+              minHeight: 64,
               flexDirection: 'row',
               alignItems: 'center',
               borderBottomWidth: 1,
               borderBottomColor: theme.line,
             }}
           >
-            <Text style={{ flex: 1, color: theme.text, fontSize: 16, fontWeight: '700' }}>
-              {t(mode === 'self' ? 'settings.name_self' : 'settings.name')}
-            </Text>
-            {nameDraft === null ? (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={t(mode === 'self' ? 'settings.name_self' : 'settings.name')}
-                onPress={() => setNameDraft(partnerName ?? '')}
-                style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center' }}
-              >
-                <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginRight: 6 }}>
-                  {partnerName ?? '—'}
-                </Text>
-                <ChevronIcon color={theme.textMuted} />
-              </Pressable>
-            ) : (
-              <TextInput
-                accessibilityLabel={t(mode === 'self' ? 'settings.name_self' : 'settings.name')}
-                value={nameDraft}
-                onChangeText={setNameDraft}
-                onBlur={commitName}
-                onSubmitEditing={commitName}
-                autoFocus
-                returnKeyType="done"
-                placeholder={t('onboarding.name_placeholder')}
-                placeholderTextColor={theme.textMuted}
-                style={{
-                  minHeight: 44,
-                  minWidth: 120,
-                  color: theme.text,
-                  fontSize: typeScale.secondary,
-                  fontFamily: 'ui-rounded',
-                  textAlign: 'right',
-                }}
-              />
-            )}
+            <RowCopy
+              icon="person"
+              iconColor={theme.folliculaire}
+              label={t(mode === 'self' ? 'settings.name_self' : 'settings.name')}
+              hint={t('settings.hint_name')}
+              aside={
+                nameDraft === null ? (
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t(mode === 'self' ? 'settings.name_self' : 'settings.name')}. ${t('settings.hint_name')}`}
+                    onPress={() => setNameDraft(partnerName ?? '')}
+                    style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center' }}
+                  >
+                    <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginRight: 6 }}>
+                      {partnerName ?? '—'}
+                    </Text>
+                    <ChevronIcon color={theme.textMuted} />
+                  </Pressable>
+                ) : (
+                  <TextInput
+                    accessibilityLabel={t(mode === 'self' ? 'settings.name_self' : 'settings.name')}
+                    value={nameDraft}
+                    onChangeText={setNameDraft}
+                    onBlur={commitName}
+                    onSubmitEditing={commitName}
+                    autoFocus
+                    returnKeyType="done"
+                    placeholder={t('onboarding.name_placeholder')}
+                    placeholderTextColor={theme.textMuted}
+                    style={{
+                      minHeight: 44,
+                      minWidth: 120,
+                      color: theme.text,
+                      fontSize: typeScale.secondary,
+                      fontFamily: 'ui-rounded',
+                      textAlign: 'right',
+                    }}
+                  />
+                )
+              }
+            />
           </View>
           <ValueRow
+            icon="calendar"
+            iconColor={theme.luteale}
             label={t('settings.defaults')}
+            hint={t('settings.hint_defaults')}
             value={t('settings.lengths', { cycle: defaults.cycleLength, period: defaults.periodLength })}
             onPress={() => setLengthsOpen((open) => !open)}
           />
@@ -369,32 +403,85 @@ export default function SettingsScreen() {
             </View>
           ) : null}
           <ValueRow
+            icon="list"
+            iconColor={theme.ovulation}
             label={t('settings.history')}
+            hint={t('settings.hint_history')}
             value={t('settings.cycle_count', { count: cycles.length })}
             onPress={() => router.push('/settings/history')}
             last
           />
         </Section>
         <Section title={t('settings.privacy')}>
-          <SwitchRow label={t('settings.face_id')} value={faceId} onPress={() => void toggleFaceId()} />
-          <SwitchRow label={t('settings.discreet')} value={reminders.discreet} onPress={() => setDiscreet(!reminders.discreet)} />
-          <ValueRow label={t('settings.language')} value={languageValue} onPress={chooseLanguage} last />
+          <SwitchRow
+            icon="lock"
+            iconColor={theme.spm}
+            label={t('settings.face_id')}
+            hint={t('settings.hint_face')}
+            value={faceId}
+            onPress={() => void toggleFaceId()}
+          />
+          <SwitchRow
+            icon="eyeOff"
+            iconColor={theme.luteale}
+            label={t('settings.discreet')}
+            hint={t('settings.hint_discreet')}
+            value={reminders.discreet}
+            onPress={() => setDiscreet(!reminders.discreet)}
+          />
+          <ValueRow
+            icon="globe"
+            iconColor={theme.folliculaire}
+            label={t('settings.language')}
+            hint={t('settings.hint_language')}
+            value={languageValue}
+            onPress={chooseLanguage}
+            last
+          />
         </Section>
         <Section title={t('settings.data')}>
-          <DetailRow label={syncLabel} detail={t('settings.sync_sub')} onPress={() => router.push('/sync/share')} />
-          <ValueRow label={t('settings.export')} value="" onPress={() => void exportBackup()} />
-          <ValueRow label={t('settings.import')} value="" onPress={() => void importBackup()} />
+          <ValueRow
+            icon="sync"
+            iconColor={theme.spm}
+            label={syncLabel}
+            hint={t('settings.hint_sync')}
+            value=""
+            onPress={() => router.push('/sync/share')}
+          />
+          <ValueRow
+            icon="upload"
+            iconColor={theme.luteale}
+            label={t('settings.export')}
+            hint={t('settings.hint_export')}
+            value=""
+            onPress={() => void exportBackup()}
+          />
+          <ValueRow
+            icon="download"
+            iconColor={theme.folliculaire}
+            label={t('settings.import')}
+            hint={t('settings.hint_import')}
+            value=""
+            onPress={() => void importBackup()}
+          />
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={t('settings.erase')}
+            accessibilityLabel={`${t('settings.erase')}. ${t('settings.hint_erase')}`}
             onPress={erase}
             style={({ pressed }) => ({
-              minHeight: 54,
-              justifyContent: 'center',
+              minHeight: 64,
+              flexDirection: 'row',
+              alignItems: 'center',
               opacity: pressed ? 0.7 : 1,
             })}
           >
-            <Text style={{ color: theme.regles, fontSize: 16, fontWeight: '700' }}>{t('settings.erase')}</Text>
+            <RowCopy
+              icon="trash"
+              iconColor={theme.regles}
+              label={t('settings.erase')}
+              hint={t('settings.hint_erase')}
+              labelColor={theme.regles}
+            />
           </Pressable>
         </Section>
         <Text
@@ -417,43 +504,66 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   const theme = useTheme();
   return (
     <View style={{ marginTop: 22 }}>
-      <Text
-        style={{
-          marginBottom: 8,
-          marginLeft: 4,
-          color: theme.textMuted,
-          fontSize: typeScale.label,
-          fontWeight: '800',
-          letterSpacing: typeScale.labelTracking,
-          textTransform: 'uppercase',
-        }}
-      >
-        {title}
-      </Text>
-      <View style={{ backgroundColor: theme.surface, borderRadius: radii.card, paddingHorizontal: 16 }}>{children}</View>
+      <Text style={{ ...eyebrowStyle(theme), marginBottom: 8, marginLeft: 4 }}>{title}</Text>
+      <View style={{ ...cardChrome(theme), paddingHorizontal: 16 }}>{children}</View>
     </View>
   );
 }
 
-function ValueRow({
+function RowCopy({
+  icon,
+  iconColor,
   label,
+  hint,
+  labelColor,
+  aside,
+}: {
+  icon: SettingsGlyphName;
+  iconColor: string;
+  label: string;
+  hint: string;
+  labelColor?: string;
+  aside?: ReactNode;
+}) {
+  const theme = useTheme();
+  return (
+    <>
+      <IconWell name={icon} color={iconColor} />
+      <View style={{ flex: 1, paddingVertical: 12, marginRight: 8 }}>
+        <Text style={{ color: labelColor ?? theme.text, fontSize: 16, fontWeight: '700' }}>{label}</Text>
+        <Text style={{ marginTop: 2, color: theme.textMuted, fontSize: 13, lineHeight: 18 }}>{hint}</Text>
+      </View>
+      {aside}
+    </>
+  );
+}
+
+function ValueRow({
+  icon,
+  iconColor,
+  label,
+  hint,
   value,
   onPress,
   last = false,
 }: {
+  icon: SettingsGlyphName;
+  iconColor: string;
   label: string;
+  hint: string;
   value: string;
   onPress: () => void;
   last?: boolean;
 }) {
   const theme = useTheme();
+  const spoken = value === '' ? `${label}. ${hint}` : `${label}, ${value}. ${hint}`;
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={value === '' ? label : `${label}, ${value}`}
+      accessibilityLabel={spoken}
       onPress={onPress}
       style={({ pressed }) => ({
-        minHeight: 54,
+        minHeight: 64,
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: last ? 0 : 1,
@@ -461,58 +571,60 @@ function ValueRow({
         opacity: pressed ? 0.7 : 1,
       })}
     >
-      <Text style={{ flex: 1, color: theme.text, fontSize: 16, fontWeight: '700' }}>{label}</Text>
-      {value === '' ? null : (
-        <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginRight: 6 }}>{value}</Text>
-      )}
-      <ChevronIcon color={theme.textMuted} />
+      <RowCopy
+        icon={icon}
+        iconColor={iconColor}
+        label={label}
+        hint={hint}
+        aside={
+          <>
+            {value === '' ? null : (
+              <Text
+                numberOfLines={1}
+                style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginRight: 6, textAlign: 'right' }}
+              >
+                {value}
+              </Text>
+            )}
+            <ChevronIcon color={theme.textMuted} />
+          </>
+        }
+      />
     </Pressable>
   );
 }
 
-function DetailRow({ label, detail, onPress }: { label: string; detail: string; onPress: () => void }) {
-  const theme = useTheme();
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`${label}. ${detail}`}
-      onPress={onPress}
-      style={({ pressed }) => ({
-        minHeight: 54,
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: theme.line,
-        opacity: pressed ? 0.7 : 1,
-      })}
-    >
-      <View style={{ flex: 1, paddingVertical: 10 }}>
-        <Text style={{ color: theme.text, fontSize: 16, fontWeight: '700' }}>{label}</Text>
-        <Text style={{ marginTop: 2, color: theme.textMuted, fontSize: 14 }}>{detail}</Text>
-      </View>
-      <ChevronIcon color={theme.textMuted} />
-    </Pressable>
-  );
-}
-
-function SwitchRow({ label, value, onPress }: { label: string; value: boolean; onPress: () => void }) {
+function SwitchRow({
+  icon,
+  iconColor,
+  label,
+  hint,
+  value,
+  onPress,
+}: {
+  icon: SettingsGlyphName;
+  iconColor: string;
+  label: string;
+  hint: string;
+  value: boolean;
+  onPress: () => void;
+}) {
   const theme = useTheme();
   return (
     <Pressable
       accessibilityRole="switch"
-      accessibilityLabel={label}
+      accessibilityLabel={`${label}. ${hint}`}
       accessibilityState={{ checked: value }}
       onPress={onPress}
       style={{
-        minHeight: 54,
+        minHeight: 64,
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: theme.line,
       }}
     >
-      <Text style={{ flex: 1, color: theme.text, fontSize: 16, fontWeight: '700', marginRight: 12 }}>{label}</Text>
-      <Toggle value={value} />
+      <RowCopy icon={icon} iconColor={iconColor} label={label} hint={hint} aside={<Toggle value={value} />} />
     </Pressable>
   );
 }

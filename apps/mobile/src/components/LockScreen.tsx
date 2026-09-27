@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { authenticateDevice } from '@/security/authenticate';
 import { useAppStore } from '@/store/useAppStore';
-import { space, type as typeScale, useTheme } from '@/theme';
+import { serif, space, type as typeScale, useTheme } from '@/theme';
 
 import { PrimaryButton } from './PrimaryButton';
 
@@ -21,17 +21,20 @@ export function LockScreen({ onUnlock }: Props) {
   const [unavailable, setUnavailable] = useState(false);
   const busy = useRef(false);
   const onUnlockRef = useRef(onUnlock);
-  onUnlockRef.current = onUnlock;
   const labelsRef = useRef({
     prompt: t('lock.reason'),
     cancel: t('common.cancel'),
     fallback: t('lock.passcode'),
   });
-  labelsRef.current = {
-    prompt: t('lock.reason'),
-    cancel: t('common.cancel'),
-    fallback: t('lock.passcode'),
-  };
+
+  useEffect(() => {
+    onUnlockRef.current = onUnlock;
+    labelsRef.current = {
+      prompt: t('lock.reason'),
+      cancel: t('common.cancel'),
+      fallback: t('lock.passcode'),
+    };
+  });
 
   const unlock = useCallback(async () => {
     if (busy.current) return;
@@ -53,7 +56,7 @@ export function LockScreen({ onUnlock }: Props) {
     <View
       style={{
         flex: 1,
-        backgroundColor: theme.bg,
+        backgroundColor: theme.ink,
         paddingHorizontal: space.screen,
         paddingTop: insets.top + 24,
         paddingBottom: Math.max(insets.bottom, 24),
@@ -62,14 +65,14 @@ export function LockScreen({ onUnlock }: Props) {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text
           accessibilityRole="header"
-          style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', textAlign: 'center' }}
+          style={{ ...serif, color: theme.inkFg, fontSize: typeScale.title, textAlign: 'center' }}
         >
           {t('lock.title')}
         </Text>
         <Text
           style={{
             marginTop: 10,
-            color: theme.textMuted,
+            color: theme.inkFg,
             fontSize: typeScale.body,
             lineHeight: 22,
             textAlign: 'center',
@@ -81,7 +84,7 @@ export function LockScreen({ onUnlock }: Props) {
           <Text
             style={{
               marginTop: 16,
-              color: theme.regles,
+              color: theme.inkFg,
               fontSize: typeScale.secondary,
               lineHeight: 20,
               textAlign: 'center',

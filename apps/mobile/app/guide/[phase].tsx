@@ -10,7 +10,7 @@ import { type ISODate } from '@/cycle/dates';
 import { todayStatus } from '@/cycle/engine';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
-import { light, radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, light, radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 export default function PhaseScreen() {
   const params = useLocalSearchParams<{ phase?: string; from?: string }>();
@@ -68,7 +68,7 @@ function PhasePage({ phase, fromList }: { phase: GuidePhase; fromList: boolean }
       >
         <Text style={{ color: light.accentFg, fontSize: 13, fontWeight: '800' }}>{content(`${phase}.range_hint`)}</Text>
       </View>
-      <Text style={{ marginTop: 12, color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}>
+      <Text style={{ ...serif, marginTop: 12, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}>
         {t(`phase.${phase}`)}
       </Text>
       <Text style={{ marginTop: 4, color: theme.textMuted, fontSize: typeScale.body, lineHeight: 22 }}>
@@ -95,16 +95,7 @@ function PhasePage({ phase, fromList }: { phase: GuidePhase; fromList: boolean }
           </Pressable>
         ))}
       </View>
-      <Text
-        style={{
-          marginTop: 20,
-          color: theme.textMuted,
-          fontSize: typeScale.label,
-          fontWeight: '800',
-          letterSpacing: typeScale.labelTracking,
-          textTransform: 'uppercase',
-        }}
-      >
+      <Text style={{ ...eyebrowStyle(theme), marginTop: 20 }}>
         {t(self ? 'guide.may_feel_self' : 'guide.may_feel')}
       </Text>
       <View style={{ marginTop: 10, flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -117,10 +108,10 @@ function PhasePage({ phase, fromList }: { phase: GuidePhase; fromList: boolean }
               paddingVertical: 8,
               paddingHorizontal: 12,
               borderRadius: radii.pill,
-              backgroundColor: theme.surface,
+              backgroundColor: theme.warmSoft,
             }}
           >
-            <Text style={{ color: theme.text, fontSize: typeScale.secondary, fontWeight: '700' }}>{item}</Text>
+            <Text style={{ color: theme.warm, fontSize: typeScale.secondary, fontWeight: '700' }}>{item}</Text>
           </View>
         ))}
       </View>
@@ -158,23 +149,12 @@ function AdviceCard({
   return (
     <View
       style={{
+        ...cardChrome(theme),
         marginTop: 16,
         padding: 18,
-        backgroundColor: theme.surface,
-        borderRadius: radii.card,
       }}
     >
-      <Text
-        style={{
-          color,
-          fontSize: typeScale.label,
-          fontWeight: '800',
-          letterSpacing: typeScale.labelTracking,
-          textTransform: 'uppercase',
-        }}
-      >
-        {title}
-      </Text>
+      <Text style={{ ...eyebrowStyle(theme), marginBottom: 4 }}>{title}</Text>
       {items.map((item) => (
         <View key={item} style={{ flexDirection: 'row', marginTop: 10 }}>
           <View style={{ marginRight: 10, marginTop: 1 }}>

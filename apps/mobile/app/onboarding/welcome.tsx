@@ -1,20 +1,23 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, useWindowDimensions, View } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 import { Card } from '@/components/Card';
 import { OnboardingFrame } from '@/components/OnboardingFrame';
 import { PrimaryButton } from '@/components/PrimaryButton';
+import { SceneHero } from '@/components/SceneHero';
+import { Title } from '@/components/Title';
 import { Wordmark } from '@/components/Wordmark';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, type as typeScale, useTheme } from '@/theme';
+import { eyebrowStyle, radii, serif, type as typeScale, useTheme } from '@/theme';
 
 export default function WelcomeScreen() {
   const theme = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
+  const { width } = useWindowDimensions();
   const mode = useAppStore((state) => state.mode);
   const setMode = useAppStore((state) => state.setMode);
   const setPartnerName = useAppStore((state) => state.setPartnerName);
@@ -32,23 +35,24 @@ export default function WelcomeScreen() {
       footer={<PrimaryButton label={t('common.continue')} onPress={continueOnboarding} />}
     >
       <Wordmark />
-      <Text
-        accessibilityRole="header"
+      <View style={{ marginTop: 16, alignItems: 'center' }}>
+        <SceneHero label={t('onboarding.welcome_art')} width={Math.min(width - 80, 280)} />
+      </View>
+      <Title
+        emphasis={t('onboarding.welcome_emphasis')}
         style={{
-          marginTop: 20,
-          color: theme.text,
+          marginTop: 16,
           fontSize: typeScale.title,
           lineHeight: 36,
-          fontWeight: '800',
           letterSpacing: -0.4,
         }}
       >
         {t('onboarding.welcome_title')}
-      </Text>
+      </Title>
       <Text style={{ marginTop: 8, color: theme.textMuted, fontSize: 16, lineHeight: 22 }}>
         {t('onboarding.welcome_text')}
       </Text>
-      <Text style={labelStyle(theme.textMuted)}>{t('onboarding.who')}</Text>
+      <Text style={{ ...eyebrowStyle(theme), marginTop: 20 }}>{t('onboarding.who')}</Text>
       <View style={{ marginTop: 10 }}>
         <View style={{ marginBottom: 10 }}>
           <Card
@@ -57,7 +61,7 @@ export default function WelcomeScreen() {
             onPress={() => setMode('partner')}
           >
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '800' }}>
+            <Text style={{ ...serif, color: theme.text, fontSize: typeScale.body }}>
               {t('onboarding.mode_partner')}
             </Text>
             <Text style={{ color: theme.textMuted, fontSize: 14 }}>{t('onboarding.mode_partner_sub')}</Text>
@@ -71,7 +75,7 @@ export default function WelcomeScreen() {
           onPress={() => setMode('self')}
         >
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '800' }}>
+            <Text style={{ ...serif, color: theme.text, fontSize: typeScale.body }}>
               {t('onboarding.mode_self')}
             </Text>
             <Text style={{ color: theme.textMuted, fontSize: 14 }}>{t('onboarding.mode_self_sub')}</Text>
@@ -81,7 +85,7 @@ export default function WelcomeScreen() {
       </View>
       {mode === 'partner' ? (
         <>
-          <Text style={labelStyle(theme.textMuted)}>{t('onboarding.name_label')}</Text>
+          <Text style={{ ...eyebrowStyle(theme), marginTop: 20 }}>{t('onboarding.name_label')}</Text>
           <TextInput
             accessibilityLabel={t('onboarding.name_label')}
             autoCapitalize="words"
@@ -119,17 +123,6 @@ export default function WelcomeScreen() {
       </View>
     </OnboardingFrame>
   );
-}
-
-function labelStyle(color: string) {
-  return {
-    marginTop: 20,
-    color,
-    fontSize: 12,
-    fontWeight: '800' as const,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase' as const,
-  };
 }
 
 function ChoiceMark({ selected }: { selected: boolean }) {

@@ -9,7 +9,7 @@ import { PrimaryButton } from '@/components/PrimaryButton';
 import { Toggle } from '@/components/Toggle';
 import { syncNotifications } from '@/reminders/sync';
 import { type ReminderFlag, useAppStore } from '@/store/useAppStore';
-import { radii, useTheme } from '@/theme';
+import { cardChrome, radii, serif, useTheme } from '@/theme';
 
 export default function RemindersScreen() {
   const theme = useTheme();
@@ -80,14 +80,14 @@ export default function RemindersScreen() {
     >
       <Text
         accessibilityRole="header"
-        style={{ color: theme.text, fontSize: 30, lineHeight: 36, fontWeight: '800', letterSpacing: -0.4 }}
+        style={{ ...serif, color: theme.text, fontSize: 30, lineHeight: 36, letterSpacing: -0.4 }}
       >
         {t('onboarding.reminders_title')}
       </Text>
       <Text style={{ marginTop: 8, color: theme.textMuted, fontSize: 16, lineHeight: 22 }}>
         {t('onboarding.reminders_text')}
       </Text>
-      <View style={{ marginTop: 20, paddingHorizontal: 16, backgroundColor: theme.surface, borderRadius: radii.card }}>
+      <View style={{ ...cardChrome(theme), marginTop: 20, paddingHorizontal: 16 }}>
         {rows.map((row, index) => (
           <ReminderRow
             key={row.flag}
@@ -151,6 +151,8 @@ function ReminderRow({
         gap: 12,
         borderRadius: boxed ? radii.card : 0,
         backgroundColor: boxed ? theme.surface : 'transparent',
+        borderWidth: boxed ? 1 : 0,
+        borderColor: theme.line,
         borderBottomWidth: divider ? 1 : 0,
         borderBottomColor: theme.line,
         opacity: pressed ? 0.75 : 1,

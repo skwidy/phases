@@ -10,7 +10,7 @@ import { Stepper } from '@/components/Stepper';
 import { type ISODate } from '@/cycle/dates';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, useTheme } from '@/theme';
+import { cardChrome, serif, useTheme } from '@/theme';
 
 export default function LastPeriodScreen() {
   const theme = useTheme();
@@ -47,7 +47,7 @@ export default function LastPeriodScreen() {
     >
       <Text
         accessibilityRole="header"
-        style={{ color: theme.text, fontSize: 28, lineHeight: 34, fontWeight: '800', letterSpacing: -0.3 }}
+        style={{ ...serif, color: theme.text, fontSize: 28, lineHeight: 34, letterSpacing: -0.3 }}
       >
         {t(mode === 'self' ? 'onboarding.last_period_self' : 'onboarding.last_period_partner')}
       </Text>
@@ -57,7 +57,7 @@ export default function LastPeriodScreen() {
       <View style={{ marginTop: 18 }}>
         <MonthCalendar month={month} selected={selected} onMonth={setMonth} onSelect={setSelected} />
       </View>
-      <View style={{ marginTop: 14, paddingHorizontal: 16, backgroundColor: theme.surface, borderRadius: radii.card }}>
+      <View style={{ ...cardChrome(theme), marginTop: 14, paddingHorizontal: 16 }}>
         <Stepper
           label={t('onboarding.cycle_length')}
           valueLabel={t('common.days_short', { count: defaults.cycleLength })}

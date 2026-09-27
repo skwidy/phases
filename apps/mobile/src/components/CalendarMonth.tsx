@@ -35,7 +35,16 @@ export function CalendarMonth({
   const theme = useTheme();
 
   return (
-    <View style={{ paddingVertical: 14, paddingHorizontal: 10, backgroundColor: theme.surface, borderRadius: radii.card }}>
+    <View
+      style={{
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        backgroundColor: theme.surface,
+        borderRadius: radii.card,
+        borderWidth: 1,
+        borderColor: theme.line,
+      }}
+    >
       <View style={{ flexDirection: 'row', marginBottom: 6 }}>
         {letters.map((letter, index) => (
           <Text

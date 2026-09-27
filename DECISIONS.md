@@ -80,10 +80,28 @@
 - Face ID est un voile par-dessus l'app. Au lancement, il couvre l'écran si l'option est active. Au retour, seuls les 60 secondes passées en arrière-plan comptent : l'état inactif (Centre de contrôle, invite Face ID) ne verrouille pas. Ce délai est une horloge murale, pas un calcul de cycle. Activer l'option demande une authentification réussie et ne verrouille pas la session en cours. Le repli est le code de l'iPhone. Sans biométrie ni code, l'option ne s'active pas.
 - « Synchroniser » ouvre l'écran de partage. Le QR et le lien restent l'étape suivante.
 
+## Étape 9
+
+- Le lien partage les dates de début et les deux durées par défaut. Le prénom, le mode et les réglages ne sont pas dans le JSON.
+- `phases://s#…` et `https://tryphases.io/s#…` sont les seules formes acceptées. Le fragment après `#` est décodé, puis fusionné avec `mergeCycles`, et rien n'est écrit avant « Mettre à jour ».
+- L'écran `/s` redirige vers la réception pour que le routeur ne reste pas sur une adresse sans écran. Le même lien n'ouvre la réception qu'une fois, jusqu'à ce qu'on la quitte.
+- Après confirmation, l'interrupteur ouvre la feuille de partage avec l'URL seule. Sans cycle enregistré, le QR n'est pas affiché.
+
 ## Apprendre
 
 - `learn` est optionnel dans un état version 1. S'il manque, ou si `read` n'est pas une liste de textes, la valeur est `{ read: [] }`. La version reste 1 : une autre version ferait rejeter tout l'état par `parseAppState`.
 - Une leçon est marquée lue à l'ouverture, pas en bas de l'écran. « En cours » est la première leçon non lue, une fois qu'au moins une leçon a été ouverte.
-- La carte série utilise la paire `accentBg` / `accentFg`, donc elle s'inverse en mode sombre. La couverture du livre reste le violet clair du thème : c'est un objet dessiné, jamais la vraie couverture.
+- L'en-tête de la série porte le dégradé sunset (voir Marque). Le bouton « Continuer » reste `accentBg` / `accentFg`. La couverture du livre reste le violet clair du thème : c'est un objet dessiné, jamais la vraie couverture.
 - Les tuiles des phases ouvrent `/guide/[phase]`. Aucune route nouvelle pour le cycle.
+
+## Marque chaleureuse
+
+- Les titres d'écran, de carte et de leçon utilisent `fonts.serif` en graisse 700. `<Title>` n'est posé qu'une fois par écran, là où un mot passe en italique `warm` : le nom de la phase sur Aujourd'hui, le titre de la série sur Apprendre (sans mot italique : le titre du livre n'a pas de mot désigné), « en phase » / « in sync » sur l'accueil de l'onboarding.
+- Les cartes partagent `cardChrome` : `surface`, bord 1 pt `line`, rayon 22. Une carte sélectionnée (onboarding, ligne de phase courante) garde un bord 1 pt, en `warm`, pour rester lisible sans reprendre l'ancien contour de 2 pt.
+- L'ombre teintée `warm` (opacité 0,15) est seulement sur la carte « Ce que tu peux faire », qui est aussi le seul dégradé sunset d'Aujourd'hui. L'en-tête de la série et l'écran `/learn/done` portent chacun le leur, et aucun autre écran n'en a. Le texte posé sur le dégradé est `text` : `textMuted` tombe sous 4,5:1 sur l'abricot clair. Le label en capitales reste `warm`, en haut du dégradé (4,5:1 sur `sunsetFrom` en clair, 6,6:1 en sombre).
+- Les pastilles neutres sont `warmSoft` / `warm`. En clair ce couple est à environ 4,3:1 pour un texte de 13 px, sous le seuil AA. Les pastilles de phase ne changent pas. Les boutons `accentBg` / `accentFg` passent AA : 5,3:1 en clair, 7,4:1 en sombre.
+- L'écran de verrouillage est une surface « nuit » : fond `ink`, texte `inkFg`. Le message d'indisponibilité reste `inkFg` aussi, parce que `regles` sur l'encre inversée du mode sombre tombe à 2,6:1. Le bouton d'action garde la paire accent.
+- L'illustration d'accueil est `scene-hero.svg`, metadata C2PA retirée, peinte par `SvgXml`. Les aplats restent dans `sceneHeroXml.ts`, pas dans le composant. L'écran n'ajoute pas de second dégradé : le coucher de soleil est dans le dessin.
+- Le splash reprend `bg` clair `#FBF3EA` et sombre `#17110E`. La teinte de notification iOS passe de l'ancien `#1C1A22` à l'encre `#231A17`.
+
 

@@ -36,3 +36,6 @@ Expo SDK 57, Expo Router (file-based, `app/` in `apps/mobile`), TypeScript `stri
 - One `IMPLEMENTATION.md` step at a time. Finish with: typecheck passes (`npx tsc --noEmit`), tests pass (`npm test`), the app runs in Expo Go.
 - Before editing, list the files you will touch. After editing, summarise what changed and how to test it on the iPhone.
 - If the SPEC is ambiguous, pick the simplest option that respects the hard rules and write the assumption in `DECISIONS.md`.
+
+## Marque
+- Avant toute modif visuelle, lire `design/BRAND.md`. Couleurs uniquement via `useTheme()` (jamais de hex dans un composant), titres en `fonts.serif`, un seul dégradé `sunset` par écran.

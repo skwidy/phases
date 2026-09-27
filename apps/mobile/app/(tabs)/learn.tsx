@@ -7,9 +7,11 @@ import Svg, { Circle, Path } from 'react-native-svg';
 
 import { BookCover } from '@/components/BookCover';
 import { ChevronIcon } from '@/components/ChevronIcon';
+import { SunsetFill } from '@/components/SunsetFill';
+import { Title } from '@/components/Title';
 import { lessonRowStatus, parseLessons, seriesProgress, type LearnLesson } from '@/content/learn';
 import { useAppStore } from '@/store/useAppStore';
-import { radii, space, type as typeScale, useTheme, type Theme } from '@/theme';
+import { cardChrome, eyebrowStyle, fonts, serif, space, type as typeScale, useTheme, type Theme } from '@/theme';
 
 const PHASES = ['regles', 'folliculaire', 'ovulation', 'luteale', 'spm'] as const;
 
@@ -17,7 +19,13 @@ function phaseInitial(name: string): string {
   return name.trim().charAt(0).toLocaleUpperCase();
 }
 
-function useUniformLineSize(samples: readonly string[], boxWidth: number, max: number, min: number) {
+function useUniformLineSize(
+  samples: readonly string[],
+  boxWidth: number,
+  max: number,
+  min: number,
+  fontFamily?: string,
+) {
   const key = samples.join('\n');
   const [measure, setMeasure] = useState({ key, widest: 0 });
   if (measure.key !== key) setMeasure({ key, widest: 0 });
@@ -45,7 +53,11 @@ function useUniformLineSize(samples: readonly string[], boxWidth: number, max: n
       style={{ position: 'absolute', opacity: 0, left: 0, top: 0 }}
     >
       {samples.map((sample) => (
-        <Text key={sample} style={{ fontSize: max, fontWeight: '800' }} onTextLayout={rememberWidth}>
+        <Text
+          key={sample}
+          style={{ fontSize: max, fontWeight: '700', fontFamily }}
+          onTextLayout={rememberWidth}
+        >
           {sample}
         </Text>
       ))}
@@ -109,7 +121,7 @@ export default function LearnScreen() {
   const lessonTitles = lessons.map((lesson) => `${lesson.number}. ${lesson.title}`);
   const lessonTitleWidth = width - space.screen * 2 - 32 - 58;
   const phases = useUniformLineSize(phaseNames, phaseLabelWidth, 11, 8);
-  const titles = useUniformLineSize(lessonTitles, lessonTitleWidth, 16, 13);
+  const titles = useUniformLineSize(lessonTitles, lessonTitleWidth, 16, 13, fonts.serif);
 
   function openLesson(id: string) {
     router.push({ pathname: '/learn/[lesson]', params: { lesson: id } });
@@ -126,10 +138,7 @@ export default function LearnScreen() {
           paddingBottom: 32,
         }}
       >
-        <Text
-          accessibilityRole="header"
-          style={{ color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}
-        >
+        <Text accessibilityRole="header" style={{ ...serif, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}>
           {t('home.title')}
         </Text>
         <Text style={{ marginTop: 4, color: theme.textMuted, fontSize: 16, lineHeight: 22 }}>{t('home.subtitle')}</Text>
@@ -137,27 +146,17 @@ export default function LearnScreen() {
         <View
           style={{
             marginTop: 18,
-            padding: 20,
-            borderRadius: 24,
-            backgroundColor: theme.accentBg,
-            gap: 10,
+            borderRadius: 28,
+            overflow: 'hidden',
           }}
         >
-          <Text
-            style={{
-              color: theme.accentFg,
-              fontSize: typeScale.label,
-              fontWeight: '800',
-              letterSpacing: typeScale.labelTracking,
-              textTransform: 'uppercase',
-            }}
-          >
+          <SunsetFill />
+          <View style={{ padding: 20, gap: 10 }}>
+          <Text style={eyebrowStyle(theme)}>
             {t('ui.series_kicker', { count: total, time: t('series.total_time') })}
           </Text>
-          <Text style={{ color: theme.accentFg, fontSize: 24, lineHeight: 29, fontWeight: '900', letterSpacing: -0.4 }}>
-            {t('series.title')}
-          </Text>
-          <Text style={{ color: theme.accentFg, opacity: 0.72, fontSize: typeScale.secondary, lineHeight: 20 }}>
+          <Title style={{ fontSize: 24, lineHeight: 30, letterSpacing: -0.4 }}>{t('series.title')}</Title>
+          <Text style={{ color: theme.text, fontSize: typeScale.secondary, lineHeight: 20 }}>
             {t('series.subtitle')}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 4 }}>
@@ -175,8 +174,8 @@ export default function LearnScreen() {
                   right: 0,
                   top: 0,
                   bottom: 0,
-                  backgroundColor: theme.accentFg,
-                  opacity: 0.25,
+                  backgroundColor: theme.text,
+                  opacity: 0.18,
                 }}
               />
               <View
@@ -184,11 +183,11 @@ export default function LearnScreen() {
                   width: total === 0 ? 0 : `${(done / total) * 100}%`,
                   height: 6,
                   borderRadius: 3,
-                  backgroundColor: theme.ovulation,
+                  backgroundColor: theme.text,
                 }}
               />
             </View>
-            <Text style={{ color: theme.accentFg, opacity: 0.72, fontSize: 13, fontWeight: '800' }}>
+            <Text style={{ color: theme.text, fontSize: 13, fontWeight: '800' }}>
               {t('ui.progress', { done, total })}
             </Text>
           </View>
@@ -201,29 +200,20 @@ export default function LearnScreen() {
                 marginTop: 6,
                 minHeight: 52,
                 borderRadius: 16,
-                backgroundColor: theme.accentFg,
+                backgroundColor: theme.accentBg,
                 alignItems: 'center',
                 justifyContent: 'center',
                 paddingHorizontal: 16,
                 opacity: pressed ? 0.75 : 1,
               })}
             >
-              <Text style={{ color: theme.accentBg, fontSize: 16, fontWeight: '800' }}>{continueLabel}</Text>
+              <Text style={{ color: theme.accentFg, fontSize: 16, fontWeight: '800' }}>{continueLabel}</Text>
             </Pressable>
           ) : null}
+          </View>
         </View>
 
-        <Text
-          style={{
-            marginTop: 22,
-            marginHorizontal: 4,
-            color: theme.textMuted,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-          }}
-        >
+        <Text style={{ ...eyebrowStyle(theme), marginTop: 22, marginHorizontal: 4 }}>
           {t('home.cycle_section')}
         </Text>
         <Text style={{ marginTop: 4, marginHorizontal: 4, marginBottom: 10, color: theme.textMuted, fontSize: 14 }}>
@@ -247,8 +237,8 @@ export default function LearnScreen() {
                   paddingTop: 12,
                   paddingBottom: 10,
                   paddingHorizontal: 3,
+                  ...cardChrome(theme),
                   borderRadius: 16,
-                  backgroundColor: theme.surface,
                   opacity: pressed ? 0.75 : 1,
                 })}
               >
@@ -290,21 +280,10 @@ export default function LearnScreen() {
           })}
         </View>
 
-        <Text
-          style={{
-            marginTop: 22,
-            marginBottom: 8,
-            marginHorizontal: 4,
-            color: theme.textMuted,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-          }}
-        >
+        <Text style={{ ...eyebrowStyle(theme), marginTop: 22, marginBottom: 8, marginHorizontal: 4 }}>
           {t('home.couple_section')}
         </Text>
-        <View style={{ paddingHorizontal: 16, borderRadius: radii.card, backgroundColor: theme.surface }}>
+        <View style={{ ...cardChrome(theme), paddingHorizontal: 16 }}>
           {lessons.map((lesson, index) => {
             const status = lessonRowStatus(lesson.id, lessons, read);
             const minutes =
@@ -327,18 +306,7 @@ export default function LearnScreen() {
           })}
         </View>
 
-        <Text
-          style={{
-            marginTop: 22,
-            marginBottom: 8,
-            marginHorizontal: 4,
-            color: theme.textMuted,
-            fontSize: typeScale.label,
-            fontWeight: '800',
-            letterSpacing: typeScale.labelTracking,
-            textTransform: 'uppercase',
-          }}
-        >
+        <Text style={{ ...eyebrowStyle(theme), marginTop: 22, marginBottom: 8, marginHorizontal: 4 }}>
           {t('home.reading_section')}
         </Text>
         <Pressable
@@ -346,9 +314,8 @@ export default function LearnScreen() {
           accessibilityLabel={t('book.title')}
           onPress={() => router.push('/learn/book')}
           style={({ pressed }) => ({
+            ...cardChrome(theme),
             padding: 16,
-            borderRadius: radii.card,
-            backgroundColor: theme.surface,
             flexDirection: 'row',
             alignItems: 'center',
             gap: 14,
@@ -357,7 +324,7 @@ export default function LearnScreen() {
         >
           <BookCover />
           <View style={{ flex: 1, gap: 3 }}>
-            <Text style={{ color: theme.text, fontSize: 16, lineHeight: 21, fontWeight: '800' }}>{t('book.title')}</Text>
+            <Text style={{ ...serif, color: theme.text, fontSize: 16, lineHeight: 21 }}>{t('book.title')}</Text>
             <Text style={{ color: theme.textMuted, fontSize: 14 }}>{t('book.author')}</Text>
           </View>
           <ChevronIcon color={theme.textMuted} />
@@ -407,10 +374,10 @@ function LessonRow({
           adjustsFontSizeToFit
           minimumFontScale={0.8}
           style={{
+            ...serif,
             color: theme.text,
             fontSize: titleSize,
             lineHeight: titleSize + 4,
-            fontWeight: '800',
           }}
         >
           {lesson.number}. {lesson.title}

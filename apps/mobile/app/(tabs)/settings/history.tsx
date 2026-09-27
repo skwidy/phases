@@ -11,7 +11,7 @@ import { historyView, type HistoryRow } from '@/cycle/history';
 import { isIsoDate, type ISODate } from '@/cycle/dates';
 import { today } from '@/lib/clock';
 import { useAppStore } from '@/store/useAppStore';
-import { light, radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, light, serif, space, type as typeScale, useTheme } from '@/theme';
 
 type Picking = { kind: 'add' } | { kind: 'edit'; from: ISODate };
 
@@ -140,15 +140,14 @@ export default function HistoryScreen() {
         </Pressable>
         <Text
           accessibilityRole="header"
-          style={{ marginTop: 8, color: theme.text, fontSize: typeScale.title, fontWeight: '800', letterSpacing: -0.4 }}
+          style={{ ...serif, marginTop: 8, color: theme.text, fontSize: typeScale.title, letterSpacing: -0.4 }}
         >
           {t('settings.history')}
         </Text>
         <View
           style={{
+            ...cardChrome(theme),
             marginTop: 18,
-            backgroundColor: theme.surface,
-            borderRadius: radii.card,
             paddingVertical: 16,
             flexDirection: 'row',
           }}
@@ -170,7 +169,7 @@ export default function HistoryScreen() {
             {t(view.irregular ? 'history.irregular' : 'history.regular')}
           </Text>
         ) : null}
-        <View style={{ marginTop: 18, backgroundColor: theme.surface, borderRadius: radii.card, overflow: 'hidden' }}>
+        <View style={{ ...cardChrome(theme), marginTop: 18, overflow: 'hidden' }}>
           {view.rows.map((row, index) => (
             <CycleRow
               key={row.start}
@@ -201,10 +200,9 @@ export default function HistoryScreen() {
           accessibilityLabel={t('history.add_old')}
           onPress={openAdd}
           style={({ pressed }) => ({
+            ...cardChrome(theme),
             marginTop: 16,
             minHeight: 54,
-            borderRadius: radii.card,
-            backgroundColor: theme.surface,
             alignItems: 'center',
             justifyContent: 'center',
             opacity: pressed ? 0.7 : 1,
@@ -252,18 +250,8 @@ function Stat({ label, value }: { label: string; value: string }) {
   const theme = useTheme();
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <Text
-        style={{
-          color: theme.textMuted,
-          fontSize: typeScale.label,
-          fontWeight: '800',
-          letterSpacing: typeScale.labelTracking,
-          textTransform: 'uppercase',
-        }}
-      >
-        {label}
-      </Text>
-      <Text style={{ marginTop: 4, color: theme.text, fontSize: 22, fontWeight: '800' }}>{value}</Text>
+      <Text style={eyebrowStyle(theme)}>{label}</Text>
+      <Text style={{ ...serif, marginTop: 4, color: theme.text, fontSize: 22 }}>{value}</Text>
     </View>
   );
 }

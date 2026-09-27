@@ -36,23 +36,31 @@
         {
           "image": "./assets/splash-icon.png",
           "imageWidth": 160,
-          "backgroundColor": "#FAF6F0",
+          "backgroundColor": "#FBF3EA",
           "dark": {
             "image": "./assets/splash-icon-dark.png",
-            "backgroundColor": "#0E0D12"
+            "backgroundColor": "#17110E"
           }
         }
       ],
       [
         "expo-notifications",
         {
-          "color": "#1C1A22"
+          "color": "#231A17"
         }
       ],
       "expo-sqlite",
       "expo-localization",
       "@react-native-community/datetimepicker",
       "expo-sharing",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Phases uses the camera only to scan a sync QR code.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
       [
         "expo-local-authentication",
         {

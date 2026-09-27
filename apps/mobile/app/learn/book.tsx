@@ -7,7 +7,7 @@ import Svg, { Path } from 'react-native-svg';
 import { BookCover } from '@/components/BookCover';
 import { ChevronIcon } from '@/components/ChevronIcon';
 import { parseLessons } from '@/content/learn';
-import { radii, space, type as typeScale, useTheme } from '@/theme';
+import { cardChrome, eyebrowStyle, radii, serif, space, type as typeScale, useTheme } from '@/theme';
 
 export default function BookScreen() {
   const theme = useTheme();
@@ -47,19 +47,13 @@ export default function BookScreen() {
           <BookCover width={84} height={114} />
           <View style={{ flex: 1, gap: 4 }}>
             <Text
-              style={{
-                color: theme.textMuted,
-                fontSize: typeScale.label,
-                fontWeight: '800',
-                letterSpacing: typeScale.labelTracking,
-                textTransform: 'uppercase',
-              }}
+              style={eyebrowStyle(theme)}
             >
               {t('book.label')}
             </Text>
             <Text
               accessibilityRole="header"
-              style={{ color: theme.text, fontSize: 22, lineHeight: 27, fontWeight: '900', letterSpacing: -0.3 }}
+              style={{ ...serif, color: theme.text, fontSize: 22, lineHeight: 27, letterSpacing: -0.3 }}
             >
               {t('book.title')}
             </Text>
@@ -67,24 +61,14 @@ export default function BookScreen() {
           </View>
         </View>
 
-        <View style={{ marginTop: 20, padding: 18, borderRadius: radii.card, backgroundColor: theme.surface, gap: 6 }}>
+        <View style={{ ...cardChrome(theme), marginTop: 20, padding: 18, gap: 6 }}>
           <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '900' }}>{t('book.author')}</Text>
           <Text style={{ color: theme.text, fontSize: typeScale.secondary, lineHeight: 22 }}>{t('book.author_bio')}</Text>
           <Text style={{ color: theme.textMuted, fontSize: 14 }}>{t('book.publisher')}</Text>
         </View>
 
-        <View style={{ marginTop: 12, padding: 18, borderRadius: radii.card, backgroundColor: theme.surface, gap: 6 }}>
-          <Text
-            style={{
-              color: theme.textMuted,
-              fontSize: typeScale.label,
-              fontWeight: '800',
-              letterSpacing: typeScale.labelTracking,
-              textTransform: 'uppercase',
-            }}
-          >
-            {t('ui.why')}
-          </Text>
+        <View style={{ ...cardChrome(theme), marginTop: 12, padding: 18, gap: 6 }}>
+          <Text style={eyebrowStyle(theme)}>{t('ui.why')}</Text>
           <Text style={{ color: theme.text, fontSize: 16, lineHeight: 23 }}>{t('book.why')}</Text>
         </View>
 
@@ -125,21 +109,12 @@ export default function BookScreen() {
           </Svg>
         </Pressable>
 
-        <View style={{ marginTop: 20, padding: 18, borderRadius: radii.card, backgroundColor: theme.surface }}>
-          <Text
-            style={{
-              marginBottom: 6,
-              color: theme.textMuted,
-              fontSize: typeScale.label,
-              fontWeight: '800',
-              letterSpacing: typeScale.labelTracking,
-              textTransform: 'uppercase',
-            }}
-          >
+        <View style={{ ...cardChrome(theme), marginTop: 20, padding: 18 }}>
+          <Text style={{ ...eyebrowStyle(theme), marginBottom: 6 }}>
             {t('ui.lessons', { count: lessons.length })}
           </Text>
           {lessons.map((lesson) => (
-            <Text key={lesson.id} style={{ color: theme.text, fontSize: typeScale.secondary, lineHeight: 24 }}>
+            <Text key={lesson.id} style={{ ...serif, color: theme.text, fontSize: typeScale.secondary, lineHeight: 24 }}>
               {lesson.number}. {lesson.title}
             </Text>
           ))}
