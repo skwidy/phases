@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 
-import { PlaceholderScreen } from '@/components/PlaceholderScreen';
+import { LockScreen } from '@/components/LockScreen';
 
-export default function LockScreen() {
-  const { t } = useTranslation();
-  return <PlaceholderScreen title={t('nav.lock')} />;
+export default function LockRoute() {
+  const router = useRouter();
+  return <LockScreen onUnlock={() => router.back()} />;
 }

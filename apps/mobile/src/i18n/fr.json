@@ -166,6 +166,9 @@
     "mode_partner": "Partenaire",
     "mode_self": "C'est mon cycle",
     "name": "Son prénom",
+    "name_self": "Ton prénom",
+    "lengths": "{{cycle}} j · {{period}} j",
+    "cycle_count": "{{count}} cycles",
     "defaults": "Durées par défaut",
     "history": "Historique",
     "privacy": "Confidentialité",
@@ -174,9 +177,17 @@
     "language": "Langue",
     "language_auto": "Auto ({{lang}})",
     "data": "Données",
+    "sync": "Synchroniser",
+    "sync_sub": "QR ou lien",
     "sync_with": "Synchroniser avec {{name}}",
+    "off": "Non",
     "export": "Exporter une sauvegarde",
+    "export_fail": "La sauvegarde n'a pas pu être partagée.",
     "import": "Importer une sauvegarde",
+    "import_invalid": "Ce fichier n'est pas une sauvegarde Phases.",
+    "import_title": "Remplacer les données de ce téléphone ?",
+    "import_body": "{{count}} cycles seront importés. Les cycles, réglages et rappels actuels seront remplacés.",
+    "replace": "Remplacer",
     "erase": "Tout effacer",
     "erase_confirm": "Tout effacer ? Les cycles, réglages et rappels seront supprimés de ce téléphone.",
     "footer": "Phases {{version}} · Rien ne quitte ce téléphone."
@@ -187,13 +198,22 @@
     "period": "Règles",
     "regular": "Cycle régulier : prédictions fiables à ± 1 jour.",
     "ongoing": "En cours · J{{day}}",
+    "period_days": "Règles {{count}} j",
+    "irregular": "Les écarts dépassent 5 jours : les dates prévues sont moins précises.",
     "add_old": "Ajouter un ancien cycle",
-    "swipe_hint": "Glisse une ligne vers la gauche pour la modifier ou la supprimer."
+    "swipe_hint": "Glisse une ligne vers la gauche pour la modifier ou la supprimer.",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "delete_confirm": "Supprimer le cycle du {{date}} ?"
   },
   "lock": {
     "title": "Phases est verrouillé",
     "text": "Déverrouille pour voir où elle en est.",
-    "unlock": "Déverrouiller avec Face ID"
+    "text_self": "Déverrouille pour voir où tu en es.",
+    "unlock": "Déverrouiller avec Face ID",
+    "reason": "Déverrouiller Phases",
+    "passcode": "Code de l'iPhone",
+    "unavailable": "Face ID n'est pas disponible sur cet iPhone."
   },
   "sync": {
     "title": "Synchroniser",

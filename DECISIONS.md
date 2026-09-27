@@ -70,6 +70,16 @@
 - La lutéale est bleue (`#3A6FA8` / `#6AAEE6`), le SPM reste violet. Les deux violets d'origine se confondaient, surtout en sombre.
 - Les titres du guide passent au « tu » en mode self. Le corps des fiches reste le JSON commun : il n'existe pas de variante self pour `helps`. La barre souligne la fiche ouverte. Le badge « Maintenant » suit la phase du jour.
 
+## Étape 8
+
+- Les lignes de rappel gardent l'interrupteur. Quand un rappel est coupé, l'heure est remplacée par « Non » / « Off ».
+- L'historique va du cycle le plus récent au plus ancien. La durée d'un cycle clos est l'écart jusqu'au début suivant, et l'écart affiché est cette durée moins la médiane. Le plus récent, s'il a déjà commencé, est « en cours » : son jour suit `today()`.
+- La variation est σ. Elle reste « — » tant qu'il n'y a pas trois écarts. La phrase sur un cycle régulier n'apparaît que lorsque σ est connu et ne dépasse pas 5.
+- L'import ouvre un écran de confirmation. L'état déjà validé est gardé en mémoire, pas dans l'adresse. Un fichier refusé par `parseAppState` n'est pas importé. Le nom du fichier exporté utilise `deviceToday()`.
+- « Tout effacer » remet l'état par défaut, annule les notifications, puis renvoie à l'accueil de l'onboarding.
+- Face ID est un voile par-dessus l'app. Au lancement, il couvre l'écran si l'option est active. Au retour, seuls les 60 secondes passées en arrière-plan comptent : l'état inactif (Centre de contrôle, invite Face ID) ne verrouille pas. Ce délai est une horloge murale, pas un calcul de cycle. Activer l'option demande une authentification réussie et ne verrouille pas la session en cours. Le repli est le code de l'iPhone. Sans biométrie ni code, l'option ne s'active pas.
+- « Synchroniser » ouvre l'écran de partage. Le QR et le lien restent l'étape suivante.
+
 ## Apprendre
 
 - `learn` est optionnel dans un état version 1. S'il manque, ou si `read` n'est pas une liste de textes, la valeur est `{ read: [] }`. La version reste 1 : une autre version ferait rejeter tout l'état par `parseAppState`.

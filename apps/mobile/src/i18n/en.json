@@ -166,6 +166,9 @@
     "mode_partner": "Partner",
     "mode_self": "It's my cycle",
     "name": "Her first name",
+    "name_self": "Your first name",
+    "lengths": "{{cycle}} d · {{period}} d",
+    "cycle_count": "{{count}} cycles",
     "defaults": "Default lengths",
     "history": "History",
     "privacy": "Privacy",
@@ -174,9 +177,17 @@
     "language": "Language",
     "language_auto": "Auto ({{lang}})",
     "data": "Data",
+    "sync": "Sync",
+    "sync_sub": "QR or link",
     "sync_with": "Sync with {{name}}",
+    "off": "Off",
     "export": "Export a backup",
+    "export_fail": "The backup could not be shared.",
     "import": "Import a backup",
+    "import_invalid": "This file is not a Phases backup.",
+    "import_title": "Replace the data on this phone?",
+    "import_body": "{{count}} cycles will be imported. Current cycles, settings and reminders will be replaced.",
+    "replace": "Replace",
     "erase": "Erase everything",
     "erase_confirm": "Erase everything? Cycles, settings and reminders will be deleted from this phone.",
     "footer": "Phases {{version}} · Nothing leaves this phone."
@@ -187,13 +198,22 @@
     "period": "Period",
     "regular": "Regular cycle: predictions accurate to ± 1 day.",
     "ongoing": "Ongoing · D{{day}}",
+    "period_days": "Period {{count}} d",
+    "irregular": "The gaps are over 5 days: predicted dates are less precise.",
     "add_old": "Add a past cycle",
-    "swipe_hint": "Swipe a row left to edit or delete it."
+    "swipe_hint": "Swipe a row left to edit or delete it.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete_confirm": "Delete the cycle from {{date}}?"
   },
   "lock": {
     "title": "Phases is locked",
     "text": "Unlock to see where she's at.",
-    "unlock": "Unlock with Face ID"
+    "text_self": "Unlock to see where you're at.",
+    "unlock": "Unlock with Face ID",
+    "reason": "Unlock Phases",
+    "passcode": "iPhone passcode",
+    "unavailable": "Face ID isn't available on this iPhone."
   },
   "sync": {
     "title": "Sync",

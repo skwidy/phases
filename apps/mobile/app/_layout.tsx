@@ -5,10 +5,12 @@ import { Redirect, Stack, usePathname, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SystemUI from 'expo-system-ui';
 
 import { syncLanguage } from '@/i18n';
 import { startReminders } from '@/reminders/sync';
+import { LockGate } from '@/security/LockGate';
 import { useAppStore } from '@/store/useAppStore';
 import { useTheme } from '@/theme';
 
@@ -35,21 +37,30 @@ export default function RootLayout() {
   const inOnboarding = pathname.startsWith('/onboarding');
   const inDev = pathname === '/dev';
 
-  if (!ready) return <View style={{ flex: 1, backgroundColor: theme.bg }} />;
+  if (!ready) {
+    return (
+      <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.bg }}>
+        <View style={{ flex: 1, backgroundColor: theme.bg }} />
+      </GestureHandlerRootView>
+    );
+  }
 
   return (
-    <>
-      <ReminderSync />
-      <StatusBar style="auto" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: theme.bg },
-        }}
-      />
-      {!onboarded && !inOnboarding && !inDev ? <Redirect href="/onboarding/welcome" /> : null}
-      {onboarded && inOnboarding ? <Redirect href="/" /> : null}
-    </>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.bg }}>
+      <View style={{ flex: 1 }}>
+        <ReminderSync />
+        <StatusBar style="auto" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: theme.bg },
+          }}
+        />
+        {!onboarded && !inOnboarding && !inDev ? <Redirect href="/onboarding/welcome" /> : null}
+        {onboarded && inOnboarding ? <Redirect href="/" /> : null}
+      </View>
+      <LockGate />
+    </GestureHandlerRootView>
   );
 }
 
