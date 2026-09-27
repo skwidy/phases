@@ -1,4 +1,13 @@
-import { formatDay, formatMonth, formatShort, formatWeekday, weekdayInitial, weekdayShort } from '../format';
+import {
+  formatDay,
+  formatMonth,
+  formatMonthName,
+  formatShort,
+  formatShortWithWeekday,
+  formatWeekday,
+  weekdayInitial,
+  weekdayShort,
+} from '../format';
 
 test('formatDay and formatShort keep the calendar day', () => {
   expect(formatDay('2026-09-27', 'en-US').toLowerCase()).toContain('september');
@@ -18,6 +27,13 @@ test('weekdayShort starts on Monday in French and Sunday in English', () => {
 test('formatWeekday is a short uppercase name of that calendar day', () => {
   expect(formatWeekday('2026-09-27', 'fr').toLowerCase()).toMatch(/dim/);
   expect(formatWeekday('2026-09-27', 'en').toLowerCase()).toMatch(/sun/);
+});
+
+test('formatMonthName is the month alone and formatShortWithWeekday keeps the weekday', () => {
+  expect(formatMonthName('2026-09-01', 'fr-FR').toLowerCase()).toBe('septembre');
+  expect(formatMonthName('2026-09-01', 'en-US').toLowerCase()).toBe('september');
+  expect(formatShortWithWeekday('2026-10-02', 'fr-FR').toLowerCase()).toContain('2');
+  expect(formatShortWithWeekday('2026-10-02', 'fr-FR').toLowerCase()).toMatch(/ven/);
 });
 
 test('weekdayInitial uses one capital letter and formatMonth keeps the month', () => {

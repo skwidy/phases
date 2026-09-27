@@ -8,7 +8,7 @@
   --regles: #E0525A;
   --folli: #5FA37E;
   --ovu: #E6A23C;
-  --lut: #8A7BE0;
+  --lut: #3A6FA8;
   --spm: #5E4B8B;
   --good: #3F7A5A;
   --accent-bg: #1C1A22;
@@ -171,6 +171,6 @@ footer nav { display: flex; gap: 16px; }
 .row span:first-child { color: var(--muted); }
 .row span:last-child { font-weight: 800; text-align: right; white-space: nowrap; }
 .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 13px; font-weight: 800; color: #FFFFFF; background: var(--spm); }
-.badge.regles { background: #E0525A; } .badge.folliculaire { background: #3F7A5A; } .badge.ovulation { background: #8A5A12; } .badge.luteale { background: #5E4FC0; } .badge.spm { background: #5E4B8B; } .badge.retard { background: #B23A41; }
+.badge.regles { background: #E0525A; } .badge.folliculaire { background: #3F7A5A; } .badge.ovulation { background: #8A5A12; } .badge.luteale { background: #3A6FA8; } .badge.spm { background: #5E4B8B; } .badge.retard { background: #B23A41; }
 .hidden { display: none !important; }
 .note { font-size: 14px; color: var(--muted); }

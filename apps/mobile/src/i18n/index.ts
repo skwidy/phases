@@ -2,6 +2,8 @@ import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import learnEn from '../content/learn.en.json';
+import learnFr from '../content/learn.fr.json';
 import contentEn from '../content/phases.en.json';
 import contentFr from '../content/phases.fr.json';
 import en from './en.json';
@@ -22,8 +24,8 @@ export function resolvedLanguage(language: AppLanguage): ResolvedLanguage {
 
 void i18n.use(initReactI18next).init({
   resources: {
-    fr: { translation: fr, content: contentFr },
-    en: { translation: en, content: contentEn },
+    fr: { translation: fr, content: contentFr, learn: learnFr },
+    en: { translation: en, content: contentEn, learn: learnEn },
   },
   lng: deviceLanguage(),
   fallbackLng: 'en',

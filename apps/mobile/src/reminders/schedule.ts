@@ -60,9 +60,23 @@ export function quietTime(time: string): string {
   return '08:00';
 }
 
-function windowPad(sigma: number | null): number {
+export function uncertaintyPad(sigma: number | null): number {
   if (sigma === null || sigma <= 2 || sigma > 5) return 0;
   return Math.ceil(sigma);
+}
+
+export function reminderOffsets(
+  length: number,
+  flags: { pms: boolean; period: boolean; ovulation: boolean; confirm: boolean },
+): { kind: ReminderKind; offset: number }[] {
+  const drafts: { kind: ReminderKind; offset: number }[] = [];
+  if (flags.pms) drafts.push({ kind: 'pms', offset: length - 8 });
+  if (flags.ovulation) drafts.push({ kind: 'ovulation', offset: length - 17 });
+  if (flags.period) drafts.push({ kind: 'period', offset: length - 1 });
+  if (flags.confirm) {
+    for (let extra = 0; extra < 4; extra += 1) drafts.push({ kind: 'confirm', offset: length + extra });
+  }
+  return drafts;
 }
 
 function copyFor(
@@ -108,18 +122,13 @@ export function reminderSchedule(
 
   const prediction = predictCycleLength(starts, state.defaults.cycleLength);
   const length = prediction.length;
-  const pad = windowPad(prediction.sigma);
+  const pad = uncertaintyPad(prediction.sigma);
   const evening = quietTime(flags.eveningTime);
   const morning = quietTime(flags.morningTime);
-  const drafts: Draft[] = [];
-  if (flags.pms) drafts.push({ kind: 'pms', offset: length - 8, time: evening });
-  if (flags.ovulation) drafts.push({ kind: 'ovulation', offset: length - 17, time: evening });
-  if (flags.period) drafts.push({ kind: 'period', offset: length - 1, time: evening });
-  if (flags.confirm) {
-    for (let extra = 0; extra < 4; extra += 1) {
-      drafts.push({ kind: 'confirm', offset: length + extra, time: morning });
-    }
-  }
+  const drafts: Draft[] = reminderOffsets(length, flags).map((draft) => ({
+    ...draft,
+    time: draft.kind === 'confirm' ? morning : evening,
+  }));
 
   const nowStamp = `${now.date}T${now.time}`;
   const reminders: ScheduledReminder[] = [];

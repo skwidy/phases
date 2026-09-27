@@ -76,6 +76,38 @@ test('importState accepts a complete version 1 state', async () => {
   expect(store.getState().onboarded).toBe(true);
 });
 
+test('learn stays optional on version 1 and survives a restart', async () => {
+  const current = { ...defaultAppState(), cycles: [{ start: '2026-09-04' as const }], onboarded: true };
+  const { learn: _learn, ...legacy } = current;
+  expect(parseAppState(legacy)?.learn).toEqual({ read: [] });
+  expect(parseAppState(legacy)?.cycles).toEqual([{ start: '2026-09-04' }]);
+  expect(parseAppState({ ...current, version: 2 } as unknown)).toBeNull();
+  expect(
+    parseAppState({ ...current, learn: { read: [' cinq-temps ', 'cinq-temps', '', 4] } } as unknown)?.learn.read,
+  ).toEqual(['cinq-temps']);
+
+  const { storage, read } = memoryStorage();
+  const first = storeWith(storage);
+  await first.persist.rehydrate();
+  first.getState().markLessonRead('amour-ne-suffit-pas');
+  first.getState().markLessonRead('amour-ne-suffit-pas');
+  first.getState().markLessonRead('   ');
+  expect(first.getState().learn.read).toEqual(['amour-ne-suffit-pas']);
+
+  const saved = JSON.parse(read('phases-state') ?? '') as {
+    version: number;
+    state: { version: number; learn: { read: string[] } };
+  };
+  expect(saved.version).toBe(1);
+  expect(saved.state.version).toBe(1);
+  expect(saved.state.learn.read).toEqual(['amour-ne-suffit-pas']);
+
+  const second = storeWith(storage);
+  await second.persist.rehydrate();
+  expect(second.getState().version).toBe(1);
+  expect(second.getState().learn.read).toEqual(['amour-ne-suffit-pas']);
+});
+
 test('persists under phases-state and restores it', async () => {
   const { storage, read } = memoryStorage();
   const first = storeWith(storage);

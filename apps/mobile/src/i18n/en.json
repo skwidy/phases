@@ -118,16 +118,40 @@
   },
   "calendar": {
     "planned": "Predicted",
-    "today_day": "Today · D{{day}}"
+    "today_day": "Today · D{{day}}",
+    "on_day": "{{date}} · D{{day}}",
+    "day_a11y": "{{date}}, {{initial}}, {{phase}}",
+    "day_a11y_planned": "{{date}}, {{initial}}, {{phase}}, {{planned}}",
+    "phase_until": "{{phase}} until {{date}}",
+    "phase_until_likely": "{{phase}} likely until {{date}}",
+    "period_expected": "Period expected {{date}}",
+    "period_was": "Period on {{date}}",
+    "started_that_day": "Period started that day?",
+    "started_hint": "Hold to mark that the period started that day",
+    "reminder_day": "A reminder goes out that day"
   },
   "guide": {
     "title": "The phases",
     "intro": "A typical 28-day cycle. Hers may be shorter or longer.",
+    "intro_self": "A typical 28-day cycle. Yours may be shorter or longer.",
     "now": "Now",
     "may_feel": "What she may feel",
+    "may_feel_self": "What you may feel",
     "helps": "What helps",
+    "helps_self": "What helps you",
     "helps_less": "What helps less",
-    "disclaimer": "Every cycle is different. Phases estimates; only she knows."
+    "helps_less_self": "What helps you less",
+    "disclaimer": "Every cycle is different. Phases estimates; only she knows.",
+    "disclaimer_self": "Every cycle is different. Phases estimates; only you know.",
+    "footer": "Each page: what she may feel, what helps, what helps less.",
+    "footer_self": "Each page: what you may feel, what helps, what helps less.",
+    "letters": {
+      "regles": "P",
+      "folliculaire": "F",
+      "ovulation": "O",
+      "luteale": "L",
+      "spm": "P"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -221,6 +245,7 @@
     "reminders": "Reminders",
     "today": "Today",
     "calendar": "Calendar",
+    "learn": "Learn",
     "settings": "Settings",
     "history": "History",
     "guide": "The phases",

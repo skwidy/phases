@@ -193,7 +193,7 @@ Contenu : `src/content/learn.{fr,en}.json`. Série de 6 leçons courtes (2 à 4 
 | `regles` | #E0525A | #F06A71 |
 | `folliculaire` | #5FA37E | #74BD95 |
 | `ovulation` | #E6A23C | #F2B65A |
-| `luteale` | #8A7BE0 | #A193F0 |
+| `luteale` | #3A6FA8 | #6AAEE6 |
 | `spm` | #5E4B8B | #9A86D4 |
 | `good` | #3F7A5A | #74BD95 |
 | `accentBg` / `accentFg` (bouton principal) | #1C1A22 / #FAF6F0 | #F3F0EA / #0E0D12 |

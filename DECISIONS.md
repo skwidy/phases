@@ -61,3 +61,19 @@
 - Le bandeau des réglages n'apparaît que si la permission est refusée. Le crème de la maquette n'est pas un jeton : fond `surface`, bord `ovulation`.
 - Sur iOS, une notification datée est relue comme un délai, pas comme un jour. L'écran dev lit donc l'identifiant `phases-<type>-AAAA-MM-JJTHH:MM`.
 
+## Étape 7
+
+- Un jour passé prend la phase du cycle réel qui le contient : la longueur est l'écart jusqu'au cycle suivant. Le cycle en cours et les 3 suivants utilisent la longueur prédite. Après la fin prévue, et jusqu'à aujourd'hui, le jour reste en retard : le cycle prédit ne recolore pas un jour déjà passé.
+- La cloche marque les veilles de SPM, de règles et d'ovulation, avec les mêmes décalages que `reminderSchedule`, y compris sur les cycles passés. Les matins de confirmation ne sont pas marqués : ils tombent sur les jours de règles, et la maquette 09 ne les montre pas. Le plafond de 16 et le filtre « déjà passé » ne concernent que la programmation.
+- L'avance de fenêtre (⌈σ⌉) s'applique au cycle en cours et aux cycles prédits, pas à l'historique déjà clos.
+- Le libellé du jour dit le nom de la phase et son initiale. Un jour en retard n'a pas de pastille : ce n'est pas une sixième couleur.
+- La lutéale est bleue (`#3A6FA8` / `#6AAEE6`), le SPM reste violet. Les deux violets d'origine se confondaient, surtout en sombre.
+- Les titres du guide passent au « tu » en mode self. Le corps des fiches reste le JSON commun : il n'existe pas de variante self pour `helps`. La barre souligne la fiche ouverte. Le badge « Maintenant » suit la phase du jour.
+
+## Apprendre
+
+- `learn` est optionnel dans un état version 1. S'il manque, ou si `read` n'est pas une liste de textes, la valeur est `{ read: [] }`. La version reste 1 : une autre version ferait rejeter tout l'état par `parseAppState`.
+- Une leçon est marquée lue à l'ouverture, pas en bas de l'écran. « En cours » est la première leçon non lue, une fois qu'au moins une leçon a été ouverte.
+- La carte série utilise la paire `accentBg` / `accentFg`, donc elle s'inverse en mode sombre. La couverture du livre reste le violet clair du thème : c'est un objet dessiné, jamais la vraie couverture.
+- Les tuiles des phases ouvrent `/guide/[phase]`. Aucune route nouvelle pour le cycle.
+

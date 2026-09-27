@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { CalendarIcon } from '@/components/CalendarIcon';
+import { LearnIcon } from '@/components/LearnIcon';
 import { SettingsIcon } from '@/components/SettingsIcon';
 import { TodayIcon } from '@/components/TodayIcon';
 import { useTheme } from '@/theme';
@@ -39,6 +40,13 @@ export default function TabLayout() {
         options={{
           title: t('nav.calendar'),
           tabBarIcon: ({ color, size }) => <CalendarIcon color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="learn"
+        options={{
+          title: t('nav.learn'),
+          tabBarIcon: ({ color, size }) => <LearnIcon color={color} size={size} />,
         }}
       />
       <Tabs.Screen

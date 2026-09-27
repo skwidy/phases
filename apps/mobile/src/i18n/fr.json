@@ -118,16 +118,40 @@
   },
   "calendar": {
     "planned": "Prévu",
-    "today_day": "Aujourd'hui · J{{day}}"
+    "today_day": "Aujourd'hui · J{{day}}",
+    "on_day": "{{date}} · J{{day}}",
+    "day_a11y": "{{date}}, {{initial}}, {{phase}}",
+    "day_a11y_planned": "{{date}}, {{initial}}, {{phase}}, {{planned}}",
+    "phase_until": "{{phase}} jusqu'au {{date}}",
+    "phase_until_likely": "{{phase}} probable jusqu'au {{date}}",
+    "period_expected": "Règles prévues {{date}}",
+    "period_was": "Règles le {{date}}",
+    "started_that_day": "Règles commencées ce jour-là ?",
+    "started_hint": "Maintien pour indiquer que les règles ont commencé ce jour-là",
+    "reminder_day": "Un rappel part ce jour-là"
   },
   "guide": {
     "title": "Les phases",
     "intro": "Un cycle type de 28 jours. Le sien peut être plus court ou plus long.",
+    "intro_self": "Un cycle type de 28 jours. Le tien peut être plus court ou plus long.",
     "now": "Maintenant",
     "may_feel": "Ce qu'elle peut ressentir",
+    "may_feel_self": "Ce que tu peux ressentir",
     "helps": "Ce qui aide",
+    "helps_self": "Ce qui t'aide",
     "helps_less": "Ce qui aide moins",
-    "disclaimer": "Chaque cycle est différent. Phases estime ; elle seule sait."
+    "helps_less_self": "Ce qui t'aide moins",
+    "disclaimer": "Chaque cycle est différent. Phases estime ; elle seule sait.",
+    "disclaimer_self": "Chaque cycle est différent. Phases estime ; toi seule sais.",
+    "footer": "Chaque fiche : ce qu'elle peut ressentir, ce qui aide, ce qui aide moins.",
+    "footer_self": "Chaque fiche : ce que tu peux ressentir, ce qui aide, ce qui aide moins.",
+    "letters": {
+      "regles": "R",
+      "folliculaire": "F",
+      "ovulation": "O",
+      "luteale": "L",
+      "spm": "S"
+    }
   },
   "settings": {
     "title": "Réglages",
@@ -221,6 +245,7 @@
     "reminders": "Rappels",
     "today": "Aujourd'hui",
     "calendar": "Calendrier",
+    "learn": "Apprendre",
     "settings": "Réglages",
     "history": "Historique",
     "guide": "Les phases",

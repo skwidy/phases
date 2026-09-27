@@ -1,3 +1,5 @@
+import learnEn from '../../content/learn.en.json';
+import learnFr from '../../content/learn.fr.json';
 import contentEn from '../../content/phases.en.json';
 import contentFr from '../../content/phases.fr.json';
 import en from '../en.json';
@@ -28,4 +30,5 @@ function keyDiff(left: unknown, right: unknown) {
 test('fr and en share the same key tree', () => {
   expect(keyDiff(fr, en)).toEqual({ missingOnRight: [], missingOnLeft: [] });
   expect(keyDiff(contentFr, contentEn)).toEqual({ missingOnRight: [], missingOnLeft: [] });
+  expect(keyDiff(learnFr, learnEn)).toEqual({ missingOnRight: [], missingOnLeft: [] });
 });

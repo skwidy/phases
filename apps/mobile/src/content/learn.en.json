@@ -153,15 +153,25 @@
   },
   "ui": {
     "minutes": "{{count}} min",
+    "minutes_done": "{{count}} min · read",
+    "minutes_current": "{{count}} min · in progress",
     "lesson_of": "Lesson {{n}} of {{total}}",
+    "lesson_meta": "Lesson {{n}} of {{total}} · {{count}} min",
+    "series_kicker": "Series · {{count}} lessons · {{time}}",
+    "continue_lesson": "Continue · Lesson {{n}}",
+    "quote_mark": "“",
     "key_idea": "Key idea",
     "try": "Try this week",
+    "steps": "The 5 steps, in order",
+    "steps_note": "Each step counts. The last one is not the only one.",
     "next": "Next lesson",
     "finish": "Finish the series",
     "done": "Read",
     "progress": "{{done}} of {{total}} read",
     "continue": "Continue",
     "start": "Start",
+    "why": "Why we recommend it",
+    "lessons": "The {{count}} lessons",
     "sources": "Sources and credits"
   }
 }

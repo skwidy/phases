@@ -153,15 +153,25 @@
   },
   "ui": {
     "minutes": "{{count}} min",
+    "minutes_done": "{{count}} min · lue",
+    "minutes_current": "{{count}} min · en cours",
     "lesson_of": "Leçon {{n}} sur {{total}}",
+    "lesson_meta": "Leçon {{n}} sur {{total}} · {{count}} min",
+    "series_kicker": "Série · {{count}} leçons · {{time}}",
+    "continue_lesson": "Continuer · Leçon {{n}}",
+    "quote_mark": "«",
     "key_idea": "L'idée clé",
     "try": "À essayer cette semaine",
+    "steps": "Les 5 temps, dans l'ordre",
+    "steps_note": "Chaque temps compte. Le dernier n'est pas le seul.",
     "next": "Leçon suivante",
     "finish": "Terminer la série",
     "done": "Lue",
     "progress": "{{done}} sur {{total}} lues",
     "continue": "Continuer",
     "start": "Commencer",
+    "why": "Pourquoi on le recommande",
+    "lessons": "Les {{count}} leçons",
     "sources": "Sources et crédits"
   }
 }

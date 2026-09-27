@@ -31,6 +31,7 @@ export type AppState = {
     discreet: boolean;
   };
   security: { faceId: boolean };
+  learn: { read: string[] };
   onboarded: boolean;
 };
 
@@ -47,6 +48,7 @@ type AppActions = {
   setDiscreet: (discreet: boolean) => void;
   setFaceId: (faceId: boolean) => void;
   setLanguage: (language: AppLanguage) => void;
+  markLessonRead: (id: string) => void;
   importState: (value: unknown) => boolean;
   resetAll: () => void;
 };
@@ -71,6 +73,7 @@ export function defaultAppState(): AppState {
       discreet: false,
     },
     security: { faceId: false },
+    learn: { read: [] },
     onboarded: false,
   };
 }
@@ -81,6 +84,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isIntIn(value: unknown, min: number, max: number): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
+}
+
+function learnFrom(value: unknown): { read: string[] } {
+  if (!isRecord(value) || !Array.isArray(value.read)) return { read: [] };
+  const read: string[] = [];
+  const seen = new Set<string>();
+  for (const item of value.read) {
+    if (typeof item !== 'string') continue;
+    const id = item.trim();
+    if (id === '' || seen.has(id)) continue;
+    seen.add(id);
+    read.push(id);
+  }
+  return { read };
 }
 
 function cycleFrom(start: ISODate, periodLength: number | undefined): CycleRecord {
@@ -148,6 +165,7 @@ export function parseAppState(value: unknown): AppState | null {
       discreet: reminders.discreet,
     },
     security: { faceId: value.security.faceId },
+    learn: learnFrom(value.learn),
     onboarded: value.onboarded,
   };
 }
@@ -211,6 +229,11 @@ function createActions(set: (partial: Partial<AppState>) => void, get: () => App
       if (language !== 'auto' && language !== 'fr' && language !== 'en') return;
       set({ language });
     },
+    markLessonRead: (id) => {
+      const trimmed = id.trim();
+      if (trimmed === '' || get().learn.read.includes(trimmed)) return;
+      set({ learn: { read: [...get().learn.read, trimmed] } });
+    },
     importState: (value) => {
       const parsed = parseAppState(value);
       if (!parsed) return false;
@@ -242,6 +265,7 @@ export function createAppStore(storage: StateStorage, options?: { skipHydration?
           defaults: state.defaults,
           reminders: state.reminders,
           security: state.security,
+          learn: state.learn,
           onboarded: state.onboarded,
         }),
         migrate: (persisted) => parseAppState(persisted) ?? defaultAppState(),

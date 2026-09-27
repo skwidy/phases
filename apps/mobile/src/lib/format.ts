@@ -41,6 +41,24 @@ export function formatWeekday(iso: string, locale: string): string {
   return name.replace(/\./g, '').trim().toLocaleUpperCase(locale);
 }
 
+export function formatMonthName(iso: string, locale: string): string {
+  const formatted = new Intl.DateTimeFormat(locale, {
+    month: 'long',
+    timeZone: 'UTC',
+  }).format(utcDay(iso));
+  return formatted.charAt(0).toLocaleUpperCase(locale) + formatted.slice(1);
+}
+
+export function formatShortWithWeekday(iso: string, locale: string): string {
+  const formatted = new Intl.DateTimeFormat(locale, {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(utcDay(iso));
+  return formatted.replace(/\.$/, '');
+}
+
 export function formatMonth(iso: string, locale: string): string {
   const formatted = new Intl.DateTimeFormat(locale, {
     month: 'long',
