@@ -1,0 +1,52 @@
+import { Tabs } from 'expo-router';
+
+import { CalendarIcon } from '@/components/CalendarIcon';
+import { SettingsIcon } from '@/components/SettingsIcon';
+import { TodayIcon } from '@/components/TodayIcon';
+import { t } from '@/i18n/t';
+import { useTheme } from '@/theme';
+
+export default function TabLayout() {
+  const theme = useTheme();
+
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: theme.text,
+        tabBarInactiveTintColor: theme.textMuted,
+        tabBarStyle: {
+          backgroundColor: theme.surface,
+          borderTopColor: theme.line,
+        },
+        tabBarLabelStyle: {
+          fontFamily: 'ui-rounded',
+          fontSize: 11,
+          fontWeight: '700',
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: t('nav.today'),
+          tabBarIcon: ({ color, size }) => <TodayIcon color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: t('nav.calendar'),
+          tabBarIcon: ({ color, size }) => <CalendarIcon color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t('nav.settings'),
+          tabBarIcon: ({ color, size }) => <SettingsIcon color={color} size={size} />,
+        }}
+      />
+    </Tabs>
+  );
+}

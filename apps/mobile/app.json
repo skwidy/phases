@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Phases",
+    "slug": "phases",
+    "scheme": "phases",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "io.tryphases.app",
+      "supportsTablet": false,
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png",
+        "tinted": "./assets/icon-tinted.png"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "Phases uses the camera only to scan a sync QR code.",
+        "NSFaceIDUsageDescription": "Phases uses Face ID to lock the app.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "privacyManifests": {
+        "NSPrivacyTracking": false,
+        "NSPrivacyCollectedDataTypes": []
+      }
+    },
+    "locales": {
+      "fr": "./src/i18n/infoplist-fr.json",
+      "en": "./src/i18n/infoplist-en.json"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "backgroundColor": "#FAF6F0",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#0E0D12"
+          }
+        }
+      ],
+      ["expo-notifications", { "color": "#1C1A22" }]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

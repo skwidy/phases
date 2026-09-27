@@ -150,5 +150,20 @@
     "new_cycle": "Cycle started {{date}}",
     "apply": "Update",
     "ignore": "Ignore"
+  },
+  "nav": {
+    "welcome": "Welcome",
+    "last_period": "Last period",
+    "reminders": "Reminders",
+    "today": "Today",
+    "calendar": "Calendar",
+    "settings": "Settings",
+    "history": "History",
+    "guide": "The phases",
+    "phase": "Phase",
+    "confirm": "Confirm",
+    "share": "Sync",
+    "receive": "Update received",
+    "lock": "Locked"
   }
 }
