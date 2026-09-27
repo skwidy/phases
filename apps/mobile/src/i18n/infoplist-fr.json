@@ -1,0 +1,5 @@
+{
+  "CFBundleDisplayName": "Phases",
+  "NSCameraUsageDescription": "Phases utilise l'appareil photo uniquement pour scanner un QR code de synchronisation.",
+  "NSFaceIDUsageDescription": "Phases utilise Face ID pour verrouiller l'app."
+}

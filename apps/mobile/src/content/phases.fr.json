@@ -1,0 +1,139 @@
+{
+  "_meta": {
+    "usage": "Contenu éditorial. 'today_partner' / 'today_self' = 1 à 2 lignes pour la carte « Ce qui se passe ». 'tips_*' = banque de gestes : l'écran Aujourd'hui en tire 3 par jour (tirage déterministe par date, voir IMPLEMENTATION.md). 'may_feel', 'helps', 'helps_less' = fiche du guide. Ton : complice, concret, jamais condescendant, jamais médical.",
+    "disclaimer": "Chaque cycle est différent. Phases estime ; elle seule sait."
+  },
+  "regles": {
+    "name": "Règles",
+    "range_hint": "J1–J5 environ",
+    "subtitle": "Le cycle recommence. Énergie souvent basse les premiers jours.",
+    "today_partner": "Début du cycle : fatigue et douleurs au ventre ou au dos sont fréquentes, surtout les deux premiers jours.",
+    "today_self": "Début du cycle : fatigue et douleurs sont fréquentes, surtout les deux premiers jours. Vas-y doucement.",
+    "may_feel": ["Crampes", "Mal de dos", "Fatigue", "Maux de tête", "Besoin de chaleur", "Moins d'envie de sortir"],
+    "helps": ["Bouillotte et plaid à portée de main", "Des soirées calmes, sans obligation", "Prendre en charge les tâches physiques", "Demander plutôt que supposer"],
+    "helps_less": ["Commenter l'humeur ou l'appétit", "Maintenir un programme chargé coûte que coûte"],
+    "tips_partner": [
+      "Prépare la bouillotte avant qu'elle la demande",
+      "Vérifie qu'il reste des antidouleurs et des protections",
+      "Propose une soirée plaid et série",
+      "Prends les courses et le ménage cette semaine",
+      "Décale le sport ou la sortie prévue si elle préfère",
+      "Demande-lui ce qui l'aiderait aujourd'hui",
+      "Un plat chaud qu'elle aime, sans en faire un sujet"
+    ],
+    "tips_self": [
+      "Garde la bouillotte à portée de main",
+      "Allège ton agenda si tu peux",
+      "Hydrate-toi, le corps en demande plus",
+      "Un mouvement doux aide souvent plus que le canapé",
+      "Préviens ton entourage si tu as besoin de calme"
+    ]
+  },
+  "folliculaire": {
+    "name": "Folliculaire",
+    "range_hint": "J6–J12 environ",
+    "subtitle": "L'énergie remonte jour après jour.",
+    "today_partner": "L'œstrogène remonte : énergie, humeur et envie de faire des choses sont souvent en hausse.",
+    "today_self": "L'œstrogène remonte : énergie, humeur et envie de faire des choses sont souvent en hausse.",
+    "may_feel": ["Plus d'énergie", "Bonne humeur", "Envie de projets", "Meilleure concentration", "Sommeil plus facile"],
+    "helps": ["Proposer des activités", "Parler des projets à venir", "Des sorties à deux", "Du sport ensemble"],
+    "helps_less": ["Tout remettre à plus tard", "Monopoliser les soirées en solo"],
+    "tips_partner": [
+      "Bon moment pour parler des vacances ou d'un projet",
+      "Propose une activité que vous n'avez pas faite depuis longtemps",
+      "Réserve un resto ou un ciné ce week-end",
+      "Lance le sujet que tu repousses depuis un moment",
+      "Propose une sortie sportive à deux",
+      "Invite des amis, c'est souvent le bon créneau"
+    ],
+    "tips_self": [
+      "Bon moment pour les projets exigeants",
+      "Cale le sport intense cette semaine",
+      "Planifie ce qui demande de l'énergie sociale",
+      "Profite-en pour avancer sur ce qui traîne",
+      "Note ce que tu ressens si tu veux mieux te connaître"
+    ]
+  },
+  "ovulation": {
+    "name": "Ovulation",
+    "range_hint": "J13–J15 environ",
+    "subtitle": "Souvent le pic d'énergie et de confiance du cycle.",
+    "today_partner": "Autour de l'ovulation, énergie, confiance et envie de sortir sont souvent au plus haut.",
+    "today_self": "Autour de l'ovulation, énergie, confiance et envie de sortir sont souvent au plus haut.",
+    "may_feel": ["Pic d'énergie", "Confiance en soi", "Envie de sortir", "Libido en hausse", "Légère douleur d'un côté du ventre"],
+    "helps": ["Proposer une vraie sortie", "Des moments à deux", "Des compliments sincères"],
+    "helps_less": ["Rester enfermés par habitude", "Ignorer ses propositions"],
+    "tips_partner": [
+      "Propose une vraie sortie, pas juste un apéro",
+      "Un compliment sincère, sans raison particulière",
+      "Planifie un moment à deux sans téléphone",
+      "Dis oui à sa prochaine idée de sortie",
+      "Bon moment pour une soirée entre amis",
+      "Prépare une surprise simple"
+    ],
+    "tips_self": [
+      "Profite de l'énergie pour ce qui te tient à cœur",
+      "Bon moment pour les rendez-vous importants",
+      "Sors, vois du monde si tu en as envie",
+      "Rappel : Phases n'est pas une contraception"
+    ]
+  },
+  "luteale": {
+    "name": "Lutéale",
+    "range_hint": "J16–J28 environ",
+    "subtitle": "Le rythme ralentit, besoin de calme et de cocon.",
+    "today_partner": "Seconde moitié du cycle : le rythme ralentit souvent, avec plus de besoin de calme et de confort.",
+    "today_self": "Seconde moitié du cycle : le rythme ralentit souvent. Écoute ton besoin de calme.",
+    "may_feel": ["Énergie en baisse", "Besoin de cocon", "Appétit en hausse", "Envie de rester à la maison", "Sommeil plus léger"],
+    "helps": ["Un agenda plus léger", "Des soirées à la maison", "De la stabilité et de la prévisibilité", "Prendre des tâches en charge"],
+    "helps_less": ["Multiplier les imprévus", "Les grosses décisions de dernière minute"],
+    "tips_partner": [
+      "Allège l'agenda du week-end",
+      "Propose une soirée à la maison plutôt qu'une sortie",
+      "Anticipe les courses pour la semaine",
+      "Évite de rajouter des imprévus",
+      "Prépare un bon dîner, simple et réconfortant",
+      "Garde les discussions lourdes pour plus tard"
+    ],
+    "tips_self": [
+      "Ralentis sans culpabiliser",
+      "Prépare tes repas à l'avance si tu peux",
+      "Privilégie le sommeil",
+      "Garde du temps pour toi dans l'agenda"
+    ]
+  },
+  "spm": {
+    "name": "SPM",
+    "range_hint": "J22–J28 environ",
+    "subtitle": "Syndrome prémenstruel, à la fin de la phase lutéale.",
+    "today_partner": "Hormones en baisse : fatigue, irritabilité ou douleurs sont fréquentes.",
+    "today_self": "Hormones en baisse : fatigue, irritabilité ou douleurs sont fréquentes. Sois douce avec toi.",
+    "may_feel": ["Fatigue", "Irritabilité", "Seins sensibles", "Ballonnements", "Envie de sucré", "Sommeil agité"],
+    "helps": ["Moins d'agenda, plus de soirées calmes", "Prendre les courses et le dîner en charge", "Écouter sans chercher à résoudre", "Bouillotte et antidouleurs à portée de main"],
+    "helps_less": ["Mettre une réaction sur le compte des hormones", "Caler la grosse discussion cette semaine"],
+    "tips_partner": [
+      "Reporte les sujets qui fâchent",
+      "Prends le dîner en charge",
+      "Demande-lui ce qui l'aiderait",
+      "Écoute sans chercher à résoudre",
+      "Du chocolat au frais, sans commentaire",
+      "Pas de « c'est tes hormones », jamais",
+      "Libère-lui une soirée rien que pour elle",
+      "Anticipe : bouillotte et antidouleurs prêts"
+    ],
+    "tips_self": [
+      "Allège ton agenda si tu peux",
+      "Le sucre calme sur le moment, l'eau et le sommeil plus longtemps",
+      "Préviens ton entourage si tu as besoin d'espace",
+      "Garde la bouillotte à portée de main",
+      "Rien ne presse : reporte les décisions importantes"
+    ]
+  },
+  "retard": {
+    "name": "Règles attendues",
+    "today_partner": "Pas encore confirmées. Quelques jours d'écart, c'est courant.",
+    "today_self": "Pas encore confirmées. Quelques jours d'écart, c'est courant.",
+    "tips_partner": ["Ne pas en faire un sujet", "Garder la bouillotte à portée", "Confirmer dans l'app dès que ça commence"],
+    "tips_self": ["Pas d'inquiétude pour quelques jours d'écart", "Confirme dans l'app dès que ça commence"]
+  }
+}

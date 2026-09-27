@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAMID.io.tryphases.app"],
+        "components": [
+          { "/": "/s", "comment": "Sync links: the payload is in the #fragment" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "_meta": {
+    "usage": "Editorial content. 'today_partner' / 'today_self' = 1–2 lines for the \"What's happening\" card. 'tips_*' = tip bank: the Today screen picks 3 per day (deterministic by date, see IMPLEMENTATION.md). 'may_feel', 'helps', 'helps_less' = guide sheet. Tone: warm, concrete, never condescending, never medical. Written for English speakers, not a word-for-word translation.",
+    "disclaimer": "Every cycle is different. Phases estimates; only she knows."
+  },
+  "regles": {
+    "name": "Period",
+    "range_hint": "About D1–D5",
+    "subtitle": "The cycle starts over. Energy is often low the first days.",
+    "today_partner": "Start of the cycle: tiredness and cramps or back pain are common, especially the first two days.",
+    "today_self": "Start of the cycle: tiredness and cramps are common, especially the first two days. Take it easy.",
+    "may_feel": ["Cramps", "Back pain", "Tiredness", "Headaches", "Craving warmth", "Less up for going out"],
+    "helps": ["Hot water bottle and a blanket within reach", "Quiet evenings, no obligations", "Taking on the physical chores", "Asking instead of assuming"],
+    "helps_less": ["Commenting on her mood or appetite", "Sticking to a packed schedule no matter what"],
+    "tips_partner": [
+      "Get the hot water bottle ready before she asks",
+      "Check there are painkillers and pads or tampons at home",
+      "Suggest a blanket-and-series night",
+      "Take over groceries and cleaning this week",
+      "Move the workout or plans if she'd rather",
+      "Ask her what would help today",
+      "A warm meal she loves, no big deal made of it"
+    ],
+    "tips_self": [
+      "Keep the hot water bottle close",
+      "Lighten your schedule if you can",
+      "Drink more water, your body needs it",
+      "Gentle movement often helps more than the couch",
+      "Let people know if you need some quiet"
+    ]
+  },
+  "folliculaire": {
+    "name": "Follicular",
+    "range_hint": "About D6–D12",
+    "subtitle": "Energy picks up day by day.",
+    "today_partner": "Estrogen is rising: energy, mood and drive are often on the up.",
+    "today_self": "Estrogen is rising: energy, mood and drive are often on the up.",
+    "may_feel": ["More energy", "Good mood", "Up for plans", "Sharper focus", "Easier sleep"],
+    "helps": ["Suggesting things to do", "Talking about upcoming plans", "Going out together", "Working out together"],
+    "helps_less": ["Putting everything off", "Taking every evening for yourself"],
+    "tips_partner": [
+      "Good time to talk about holidays or a project",
+      "Suggest something you haven't done in a while",
+      "Book a restaurant or a movie this weekend",
+      "Bring up the topic you've been putting off",
+      "Suggest a hike, a ride or a run together",
+      "Invite friends over, it's usually a good window"
+    ],
+    "tips_self": [
+      "Good time for demanding projects",
+      "Schedule intense workouts this week",
+      "Plan what takes social energy",
+      "Use it to get through what's been dragging",
+      "Jot down how you feel if you want to learn your pattern"
+    ]
+  },
+  "ovulation": {
+    "name": "Ovulation",
+    "range_hint": "About D13–D15",
+    "subtitle": "Often the peak of energy and confidence in the cycle.",
+    "today_partner": "Around ovulation, energy, confidence and wanting to go out are often at their highest.",
+    "today_self": "Around ovulation, energy, confidence and wanting to go out are often at their highest.",
+    "may_feel": ["Energy peak", "Confidence", "Wanting to go out", "Higher libido", "Mild one-sided belly ache"],
+    "helps": ["Suggesting a real night out", "Time for the two of you", "Sincere compliments"],
+    "helps_less": ["Staying in out of habit", "Brushing off her ideas"],
+    "tips_partner": [
+      "Plan a real night out, not just drinks",
+      "A sincere compliment, for no particular reason",
+      "Plan phone-free time for the two of you",
+      "Say yes to her next plan",
+      "Good time for a night with friends",
+      "Set up a simple surprise"
+    ],
+    "tips_self": [
+      "Put the energy into what matters to you",
+      "Good time for important meetings",
+      "Go out and see people if you feel like it",
+      "Reminder: Phases is not birth control"
+    ]
+  },
+  "luteale": {
+    "name": "Luteal",
+    "range_hint": "About D16–D28",
+    "subtitle": "The pace slows down, more need for calm and comfort.",
+    "today_partner": "Second half of the cycle: the pace often slows, with more need for calm and comfort.",
+    "today_self": "Second half of the cycle: the pace often slows. Listen to your need for calm.",
+    "may_feel": ["Lower energy", "Craving comfort", "Bigger appetite", "Wanting to stay in", "Lighter sleep"],
+    "helps": ["A lighter schedule", "Evenings at home", "Stability and predictability", "Taking chores off her plate"],
+    "helps_less": ["Piling up last-minute changes", "Big decisions sprung on her"],
+    "tips_partner": [
+      "Lighten the weekend plans",
+      "Suggest a night in rather than a night out",
+      "Do the week's groceries ahead",
+      "Avoid adding surprises to the schedule",
+      "Cook something simple and comforting",
+      "Save heavy conversations for later"
+    ],
+    "tips_self": [
+      "Slow down, guilt-free",
+      "Prep meals ahead if you can",
+      "Put sleep first",
+      "Block some time for yourself"
+    ]
+  },
+  "spm": {
+    "name": "PMS",
+    "range_hint": "About D22–D28",
+    "subtitle": "Premenstrual syndrome, at the end of the luteal phase.",
+    "today_partner": "Hormones are dropping: tiredness, irritability or cramps are common.",
+    "today_self": "Hormones are dropping: tiredness, irritability or cramps are common. Go easy on yourself.",
+    "may_feel": ["Tiredness", "Irritability", "Tender breasts", "Bloating", "Sugar cravings", "Restless sleep"],
+    "helps": ["Lighter schedule, more quiet evenings", "Handle groceries and dinner", "Listen without trying to fix", "Hot water bottle and painkillers within reach"],
+    "helps_less": ["Blaming a reaction on hormones", "Scheduling the big talk this week"],
+    "tips_partner": [
+      "Save touchy topics for later",
+      "Handle dinner, no asking",
+      "Ask her what would help",
+      "Listen without trying to fix",
+      "Chocolate in the fridge, no comment",
+      "Never say \"it's your hormones\"",
+      "Give her an evening that's just hers",
+      "Get ahead: hot water bottle and painkillers ready"
+    ],
+    "tips_self": [
+      "Lighten your schedule if you can",
+      "Sugar helps for a minute, water and sleep for longer",
+      "Let people know if you need space",
+      "Keep the hot water bottle close",
+      "No rush: push big decisions back"
+    ]
+  },
+  "retard": {
+    "name": "Period expected",
+    "today_partner": "Not confirmed yet. A few days off is common.",
+    "today_self": "Not confirmed yet. A few days off is common.",
+    "tips_partner": ["Don't make it a thing", "Keep the hot water bottle within reach", "Confirm in the app as soon as it starts"],
+    "tips_self": ["A few days off is nothing to worry about", "Confirm in the app as soon as it starts"]
+  }
+}

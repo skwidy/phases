@@ -1,0 +1,37 @@
+---
+description: Phases project rules — always apply
+alwaysApply: true
+---
+
+# Phases — rules for every change
+
+You are building **Phases**, a free, local-only iPhone app (Expo) that follows a menstrual cycle and sends 3 reminders per cycle. Read `SPEC.md` before any feature work. Visual references: `design/screens/*.png` and `*.html`. Step-by-step plan: `IMPLEMENTATION.md`.
+
+## Hard rules
+
+- **No network.** Never add `fetch`, axios, WebSocket, analytics, crash reporting, ads, remote config, or any SDK that phones home. No accounts, no backend. If a library needs the network, do not use it.
+- **All user-facing text comes from** `apps/mobile/src/i18n/{fr,en}.json` or `apps/mobile/src/content/phases.{fr,en}.json`. Never hardcode strings in components. When you add a key, add it to both languages.
+- **Dates are calendar days** (`'YYYY-MM-DD'` strings). Cycle logic never uses timestamps, `Date.now()` arithmetic or time zones. Use a single `today()` helper (`src/lib/clock.ts`) that returns the local calendar day and can be overridden in dev.
+- **Cycle logic is pure** and lives in `src/cycle/`. It must match the reference implementation `apps/web/assets/sync.js` and its tests in `tests/sync.test.mjs`. Write or update Jest tests before changing it.
+- **Derived data is never stored.** The store holds `AppState` (see SPEC §5) only. Phase, next dates and reminders are computed.
+- **Notifications**: only local, scheduled through one function `syncNotifications()` that cancels everything and reschedules from `reminderSchedule(state, now)`. Never schedule notifications anywhere else.
+- **Tone**: respectful and concrete. Never write copy that blames hormones, mocks her or him, or makes medical or contraceptive claims.
+- Do not use the words "scraping" or tracking-style language in code or copy.
+
+## Stack
+
+Expo SDK 57, Expo Router (file-based, `app/` in `apps/mobile`), TypeScript `strict`, Zustand + `persist` on `expo-sqlite/kv-store`, `expo-notifications`, `react-native-svg`, `react-native-reanimated`, `expo-haptics`, `expo-local-authentication`, `expo-sharing`, `expo-document-picker`, `expo-camera`, `react-native-qrcode-svg`, `expo-localization`, `i18next`, `react-i18next`, Jest (`jest-expo`). Install Expo packages with `npx expo install`, never with a pinned `npm i` version.
+
+## Code style
+
+- Functional components, hooks, no class components. One component per file in `src/components/`.
+- Theme tokens from `src/theme.ts` (SPEC §9); no raw hex in components.
+- Font: `fontFamily: 'ui-rounded'` (iOS system rounded).
+- Keep screens thin: logic in `src/cycle/`, `src/reminders/`, `src/sync/`, `src/store/`.
+- Accessibility: every touchable has `accessibilityRole` and a label; targets ≥ 44 pt.
+
+## Working method
+
+- One `IMPLEMENTATION.md` step at a time. Finish with: typecheck passes (`npx tsc --noEmit`), tests pass (`npm test`), the app runs in Expo Go.
+- Before editing, list the files you will touch. After editing, summarise what changed and how to test it on the iPhone.
+- If the SPEC is ambiguous, pick the simplest option that respects the hard rules and write the assumption in `DECISIONS.md`.
