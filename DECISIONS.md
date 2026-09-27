@@ -34,3 +34,16 @@
 - « Activer les rappels » demande la permission puis appelle `completeOnboarding`, que la permission soit accordée ou refusée. Aucune notification n'est programmée.
 - Les libellés des quatre rappels n'existaient pas dans les JSON : ils sont sous `onboarding`. Les pistes de progression, les jours futurs et l'interrupteur éteint utilisent `line` et `textMuted`. Le chiffre du jour choisi est en `accentFg` clair, pour rester lisible sur `regles` dans les deux modes.
 
+## Étape 5
+
+- Les arcs de l'anneau sont proportionnels au nombre de jours de chaque phase, avec 4 d'espacement (2 de chaque côté de la couture en haut). Le SPM remplace la fin de la lutéale, donc l'arc lutéal visible s'arrête la veille du SPM. Les longueurs du SVG de la maquette 04 ne sont pas exactement proportionnelles ; le calcul l'est, pour rester juste de 21 à 45 jours.
+- Le point du jour est au milieu de l'arc de ce jour. En retard, les arcs passent à 0,35 et le point, en pointillés `regles`, est en haut. Le remplissage du point est le blanc du thème clair, pour rester blanc en mode sombre.
+- En cycle irrégulier, les phases encore à venir sont à 0,6. Le bandeau utilise `surface` et `ovulation` : le crème de la maquette n'est pas un jeton.
+- Sans cycle, l'anneau est un simple cercle, le titre est `today.empty`, et le bouton principal ouvre quand même la confirmation.
+- Les 3 gestes sont un tirage stable pour la journée (`dayNumber`). S'il y en a moins de 3, on les affiche tous. L'ordre reste celui du contenu.
+- La pastille de rappel est la prochaine date parmi les rappels activés, sur les 3 prochains cycles (veille du SPM, veille de l'ovulation, veille des règles, matin du J1 puis J+1 à J+3). Rien n'est programmé. Si aucun rappel n'est activé, la pastille est absente. Quand 2 < σ ≤ 5, la pastille des règles montre la fenêtre à la place du compte à rebours.
+- L'écran Aujourd'hui relit `today()` à chaque focus, pour que la date de l'écran dev s'applique au retour.
+- « Autre date… » ouvre le sélecteur natif, borné de J−7 à aujourd'hui. Les jours futurs restent désactivés, y compris J+1 et J+2 de la rangée.
+- Le récapitulatif suit `mergeCycles` puis `todayStatus` sur la date choisie, sans écrire l'état avant Confirmer. Sans cycle précédent, la ligne « cycle précédent » est absente. L'interrupteur d'envoi n'est pas enregistré : l'envoi arrive à l'étape 9. En mode self sans prénom, le libellé est `confirm.send_update_self`.
+- « Pas encore, redemande demain » ne fait rien.
+

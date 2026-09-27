@@ -1,8 +1,10 @@
 import { addDays } from '../dates';
 import {
+  phaseEndDate,
   phaseOfDay,
   predictCycleLength,
   predictPeriodLength,
+  retainedCycleLengths,
   todayStatus,
   type CycleState,
 } from '../engine';
@@ -158,6 +160,15 @@ test('sigma between 2 and 5 opens a window around the next period', () => {
     start: addDays(status.nextPeriod ?? '', -pad),
     end: addDays(status.nextPeriod ?? '', pad),
   });
+});
+
+test('retained lengths are the last six intervals between 21 and 45 days', () => {
+  const dates = chain('2026-01-01', [10, 24, 28, 32, 26, 30, 22, 40]);
+  expect(retainedCycleLengths(dates)).toEqual([28, 32, 26, 30, 22, 40]);
+});
+
+test('SPM ends the day before the next period', () => {
+  expect(phaseEndDate('2026-09-04', 24, 28, 5)).toBe('2026-10-01');
 });
 
 test('period length is the median of the recorded lengths', () => {

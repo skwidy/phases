@@ -36,6 +36,11 @@ export function weekdayInitial(locale: string): string[] {
   });
 }
 
+export function formatWeekday(iso: string, locale: string): string {
+  const name = new Intl.DateTimeFormat(locale, { weekday: 'short', timeZone: 'UTC' }).format(utcDay(iso));
+  return name.replace(/\./g, '').trim().toLocaleUpperCase(locale);
+}
+
 export function formatMonth(iso: string, locale: string): string {
   const formatted = new Intl.DateTimeFormat(locale, {
     month: 'long',

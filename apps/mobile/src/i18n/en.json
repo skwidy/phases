@@ -69,7 +69,13 @@
     "what_to_do_self": "For you",
     "started_partner": "Her period started",
     "started_self": "My period started",
-    "not_yet": "Not yet, ask me tomorrow"
+    "not_yet": "Not yet, ask me tomorrow",
+    "cycle_day": "D{{day}}",
+    "ring": "Day {{day}} of {{length}}, {{phase}}",
+    "ring_late": "Period expected, D+{{count}}",
+    "expected": "expected {{date}}",
+    "period_window": "Period {{start}} – {{end}}",
+    "empty": "No date yet"
   },
   "confirm": {
     "which_day": "Which day?",
@@ -80,7 +86,10 @@
     "next_period": "Next period",
     "around": "around {{date}}",
     "send_update": "Send the update to {{name}}",
-    "send_update_sub": "By link, after you confirm"
+    "send_update_self": "Send the update",
+    "send_update_sub": "By link, after you confirm",
+    "days": "{{count}} days",
+    "range": "{{start}} – {{end}}"
   },
   "notif": {
     "pms_title": "PMS likely starts tomorrow",

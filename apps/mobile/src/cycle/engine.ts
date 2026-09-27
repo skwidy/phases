@@ -46,11 +46,15 @@ function median(xs: readonly number[]): number {
   return s.length % 2 ? s[mid] : Math.round((s[mid - 1] + s[mid]) / 2);
 }
 
-export function predictCycleLength(cycles: readonly ISODate[], fallback = 28): CyclePrediction {
+export function retainedCycleLengths(cycles: readonly ISODate[]): number[] {
   const days = cycles.map(dayNumber).sort((a, b) => a - b);
   const lengths: number[] = [];
   for (let i = 1; i < days.length; i++) lengths.push(days[i] - days[i - 1]);
-  const valid = lengths.filter((l) => l >= MIN_CYCLE && l <= MAX_CYCLE).slice(-6);
+  return lengths.filter((length) => length >= MIN_CYCLE && length <= MAX_CYCLE).slice(-6);
+}
+
+export function predictCycleLength(cycles: readonly ISODate[], fallback = 28): CyclePrediction {
+  const valid = retainedCycleLengths(cycles);
   if (valid.length === 0) return { length: fallback, sigma: null, irregular: false };
   const length = median(valid);
   let sigma: number | null = null;
@@ -78,6 +82,23 @@ export function phasesFor(length: number, periodLength: number) {
     luteale: [o + 2, length] as const,
     spm: [length - 6, length] as const,
   };
+}
+
+export function phaseEndDate(
+  start: ISODate,
+  day: number,
+  length: number,
+  periodLength: number,
+): ISODate {
+  const phases = phasesFor(length, periodLength);
+  const phase = phaseOfDay(day, length, periodLength);
+  const endDay =
+    phase === 'retard' || phase === 'spm'
+      ? length
+      : phase === 'luteale'
+        ? phases.spm[0] - 1
+        : phases[phase][1];
+  return addDays(start, endDay - 1);
 }
 
 export function phaseOfDay(day: number, length: number, periodLength: number): Phase {

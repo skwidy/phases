@@ -69,7 +69,13 @@
     "what_to_do_self": "Pour toi",
     "started_partner": "Ses règles ont commencé",
     "started_self": "Mes règles ont commencé",
-    "not_yet": "Pas encore, redemande demain"
+    "not_yet": "Pas encore, redemande demain",
+    "cycle_day": "J{{day}}",
+    "ring": "Jour {{day}} sur {{length}}, {{phase}}",
+    "ring_late": "Règles attendues, J+{{count}}",
+    "expected": "prévues le {{date}}",
+    "period_window": "Règles {{start}} – {{end}}",
+    "empty": "Aucune date pour l'instant"
   },
   "confirm": {
     "which_day": "Quel jour ?",
@@ -80,7 +86,10 @@
     "next_period": "Règles suivantes",
     "around": "vers le {{date}}",
     "send_update": "Envoyer la mise à jour à {{name}}",
-    "send_update_sub": "Par lien, après confirmation"
+    "send_update_self": "Envoyer la mise à jour",
+    "send_update_sub": "Par lien, après confirmation",
+    "days": "{{count}} jours",
+    "range": "{{start}} – {{end}}"
   },
   "notif": {
     "pms_title": "SPM demain, probablement",
