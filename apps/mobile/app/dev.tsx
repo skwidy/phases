@@ -1,7 +1,7 @@
 import { Redirect, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, Text, TextInput } from 'react-native';
+import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { isIsoDate } from '@/cycle/dates';
@@ -65,6 +65,7 @@ export default function DevScreen() {
         <Text style={{ color: theme.textMuted, fontSize: typeScale.secondary, marginBottom: space.grid * 2 }}>
           {t('dev.clock_note')}
         </Text>
+        <LanguageChoice />
         <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '700', marginBottom: space.grid }}>
           {t('dev.displayed_day')}
         </Text>
@@ -168,5 +169,54 @@ function ActionButton({
         </Text>
       ) : null}
     </Pressable>
+  );
+}
+
+function LanguageChoice() {
+  const theme = useTheme();
+  const { t } = useTranslation();
+  const language = useAppStore((state) => state.language);
+  const setLanguage = useAppStore((state) => state.setLanguage);
+  const options = [
+    ['auto', t('dev.language_auto')],
+    ['fr', t('dev.language_fr')],
+    ['en', t('dev.language_en')],
+  ] as const;
+
+  return (
+    <View style={{ marginBottom: space.grid * 2 }}>
+      <Text style={{ color: theme.text, fontSize: typeScale.body, fontWeight: '700', marginBottom: space.grid }}>
+        {t('settings.language')}
+      </Text>
+      <View style={{ flexDirection: 'row', gap: space.grid }}>
+        {options.map(([value, label]) => {
+          const selected = language === value;
+          return (
+            <Pressable
+              key={value}
+              accessibilityRole="button"
+              accessibilityLabel={label}
+              accessibilityState={{ selected }}
+              onPress={() => setLanguage(value)}
+              style={({ pressed }) => ({
+                flex: 1,
+                minHeight: 44,
+                borderRadius: radii.button,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: selected ? theme.accentBg : theme.surface,
+                borderWidth: selected ? 0 : 1,
+                borderColor: theme.line,
+                opacity: pressed ? 0.7 : 1,
+              })}
+            >
+              <Text style={{ color: selected ? theme.accentFg : theme.text, fontSize: typeScale.secondary, fontWeight: '700' }}>
+                {label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
   );
 }

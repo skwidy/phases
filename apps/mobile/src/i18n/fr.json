@@ -39,7 +39,20 @@
     "reminders_title": "On te prévient la veille.",
     "reminders_text": "Trois rappels par cycle, jamais plus. Heures et choix modifiables à tout moment.",
     "reminders_permission": "iOS va te demander l'autorisation. Si tu refuses, l'app marche quand même, sans rappels.",
-    "reminders_enable": "Activer les rappels"
+    "reminders_enable": "Activer les rappels",
+    "pms_row": "Veille du SPM",
+    "pms_sub": "{{time}} · environ 7 jours de sensibilité",
+    "period_row": "Veille des règles",
+    "period_sub": "{{time}} · de quoi préparer la soirée",
+    "confirm_row": "Jour J : ça a commencé ?",
+    "confirm_sub": "{{time}} · un tap pour recaler",
+    "ovulation_row": "Veille de l'ovulation",
+    "ovulation_sub": "{{time}} · pic d'énergie",
+    "discreet_sub": "« {{label}} »",
+    "month_prev": "Mois précédent",
+    "month_next": "Mois suivant",
+    "step_down": "Moins un jour",
+    "step_up": "Plus un jour"
   },
   "today": {
     "title_partner": "Elle est en {{phase}}",
@@ -165,7 +178,10 @@
     "relative_history_sub": "Dernier jour 1 il y a 20 jours, puis 5 cycles de 28 jours",
     "reset": "Tout effacer",
     "invalid_date": "Écris la date au format AAAA-MM-JJ",
-    "cycle_count": "{{count}} cycles enregistrés"
+    "cycle_count": "{{count}} cycles enregistrés",
+    "language_auto": "Auto",
+    "language_fr": "Français",
+    "language_en": "English"
   },
   "nav": {
     "welcome": "Bienvenue",

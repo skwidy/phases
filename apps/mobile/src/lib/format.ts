@@ -28,3 +28,19 @@ export function weekdayShort(locale: string): string[] {
   const format = new Intl.DateTimeFormat(locale, { weekday: 'short', timeZone: 'UTC' });
   return Array.from({ length: 7 }, (_, index) => format.format(new Date(start + index * DAY_MS)));
 }
+
+export function weekdayInitial(locale: string): string[] {
+  return weekdayShort(locale).map((name) => {
+    const letter = name.replace(/\./g, '').trim().charAt(0);
+    return letter.toLocaleUpperCase(locale);
+  });
+}
+
+export function formatMonth(iso: string, locale: string): string {
+  const formatted = new Intl.DateTimeFormat(locale, {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(utcDay(iso));
+  return formatted.charAt(0).toLocaleUpperCase(locale) + formatted.slice(1);
+}

@@ -1,9 +1,10 @@
 import '@/lib/applyRoundedFont';
 import '@/i18n';
 
-import { Stack } from 'expo-router';
+import { Redirect, Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import * as SystemUI from 'expo-system-ui';
 
 import { syncLanguage } from '@/i18n';
@@ -12,7 +13,10 @@ import { useTheme } from '@/theme';
 
 export default function RootLayout() {
   const theme = useTheme();
+  const pathname = usePathname();
   const language = useAppStore((state) => state.language);
+  const onboarded = useAppStore((state) => state.onboarded);
+  const [ready, setReady] = useState(() => useAppStore.persist.hasHydrated());
 
   useEffect(() => {
     syncLanguage(language);
@@ -21,6 +25,16 @@ export default function RootLayout() {
   useEffect(() => {
     void SystemUI.setBackgroundColorAsync(theme.bg);
   }, [theme.bg]);
+
+  useEffect(() => {
+    if (useAppStore.persist.hasHydrated()) setReady(true);
+    return useAppStore.persist.onFinishHydration(() => setReady(true));
+  }, []);
+
+  const inOnboarding = pathname.startsWith('/onboarding');
+  const inDev = pathname === '/dev';
+
+  if (!ready) return <View style={{ flex: 1, backgroundColor: theme.bg }} />;
 
   return (
     <>
@@ -31,6 +45,8 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: theme.bg },
         }}
       />
+      {!onboarded && !inOnboarding && !inDev ? <Redirect href="/onboarding/welcome" /> : null}
+      {onboarded && inOnboarding ? <Redirect href="/" /> : null}
     </>
   );
 }

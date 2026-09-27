@@ -25,3 +25,12 @@
 - `startCycle` passe par `mergeCycles`. La durée de règles ne suit un nouveau départ que si la date est la même. `editCycle` emporte la durée de règles vers la nouvelle date.
 - La langue `auto` suit `expo-localization` : français si `languageCode` commence par `fr`, sinon anglais. i18next interpole `{{name}}` sans échappement HTML.
 - `weekdayShort` commence le lundi pour une locale `fr`, le dimanche sinon. Les dates sont formatées en UTC pour rester sur le jour calendaire.
+
+## Étape 4
+
+- La redirection vers l'onboarding attend la fin de la réhydratation. L'écran `/dev` reste ouvert même si `onboarded` est faux, pour pouvoir injecter un historique ou changer la langue.
+- Continuer à l'écran 2 n'exige pas de date. Sans jour choisi, aucun cycle n'est créé ; les durées sont enregistrées quand même. Un jour choisi passe par `startCycle`.
+- « Je ne sais pas, je lui demande » ouvre la feuille de partage du système avec le texte `onboarding.ask_message` (`Share` de React Native). `expo-sharing` reste pour les fichiers, à l'étape d'export.
+- « Activer les rappels » demande la permission puis appelle `completeOnboarding`, que la permission soit accordée ou refusée. Aucune notification n'est programmée.
+- Les libellés des quatre rappels n'existaient pas dans les JSON : ils sont sous `onboarding`. Les pistes de progression, les jours futurs et l'interrupteur éteint utilisent `line` et `textMuted`. Le chiffre du jour choisi est en `accentFg` clair, pour rester lisible sur `regles` dans les deux modes.
+

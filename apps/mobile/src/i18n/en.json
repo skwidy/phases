@@ -39,7 +39,20 @@
     "reminders_title": "We'll tell you the day before.",
     "reminders_text": "Three reminders per cycle, never more. Change times or choices anytime.",
     "reminders_permission": "iOS will ask for permission. If you say no, the app still works, without reminders.",
-    "reminders_enable": "Turn on reminders"
+    "reminders_enable": "Turn on reminders",
+    "pms_row": "Day before PMS",
+    "pms_sub": "{{time}} · about 7 sensitive days",
+    "period_row": "Day before the period",
+    "period_sub": "{{time}} · time to prepare the evening",
+    "confirm_row": "Day one: has it started?",
+    "confirm_sub": "{{time}} · one tap to recalibrate",
+    "ovulation_row": "Day before ovulation",
+    "ovulation_sub": "{{time}} · energy peak",
+    "discreet_sub": "“{{label}}”",
+    "month_prev": "Previous month",
+    "month_next": "Next month",
+    "step_down": "One day less",
+    "step_up": "One day more"
   },
   "today": {
     "title_partner": "She's in her {{phase}} days",
@@ -165,7 +178,10 @@
     "relative_history_sub": "Last day 1 was 20 days ago, then 5 cycles of 28 days",
     "reset": "Clear everything",
     "invalid_date": "Enter the date as YYYY-MM-DD",
-    "cycle_count": "{{count}} cycles saved"
+    "cycle_count": "{{count}} cycles saved",
+    "language_auto": "Auto",
+    "language_fr": "Français",
+    "language_en": "English"
   },
   "nav": {
     "welcome": "Welcome",
