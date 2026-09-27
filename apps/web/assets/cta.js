@@ -1,11 +1,24 @@
-/* Mobile sticky CTA: visible once the hero buttons scroll out, hidden near the download section. */
+/* Header: sticky state + compact theme switch on small screens. No network, no storage. */
 (function () {
-  var bar = document.querySelector('.m-cta');
-  var hero = document.querySelector('.hero-v2 .btn-row');
-  var end = document.querySelector('.cta');
-  if (!bar || !hero || !('IntersectionObserver' in window)) return;
-  var heroOut = false, endIn = false;
-  function update() { bar.hidden = !(heroOut && !endIn); }
-  new IntersectionObserver(function (e) { heroOut = !e[0].isIntersecting && e[0].boundingClientRect.top < 0; update(); }).observe(hero);
-  new IntersectionObserver(function (e) { endIn = e[0].isIntersecting; update(); }, { rootMargin: '0px 0px -10% 0px' }).observe(end);
+  var top = document.querySelector('.top');
+  if (top) {
+    var onScroll = function () { top.classList.toggle('is-stuck', window.scrollY > 8); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+  // On phones only the active theme button is shown: tapping it moves to the next theme.
+  var group = document.querySelector('.theme');
+  var small = window.matchMedia('(max-width: 720px)');
+  if (group) {
+    group.addEventListener('click', function (e) {
+      if (!small.matches) return;
+      var btn = e.target.closest('[data-theme-choice]');
+      if (!btn || btn.getAttribute('aria-pressed') !== 'true') return;
+      e.stopPropagation();
+      var all = group.querySelectorAll('[data-theme-choice]');
+      for (var i = 0; i < all.length; i++) {
+        if (all[i] === btn) { all[(i + 1) % all.length].click(); break; }
+      }
+    }, true);
+  }
 })();
